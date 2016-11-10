@@ -1,0 +1,330 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"or",
+				"orderid"
+			],
+			[
+				"O",
+				"orderid"
+			],
+			[
+				"o",
+				"orderid"
+			],
+			[
+				"Ode",
+				"Orderlines"
+			],
+			[
+				"oder",
+				"orderdate"
+			],
+			[
+				"order",
+				"orderdate"
+			],
+			[
+				"coun",
+				"country"
+			],
+			[
+				"cat",
+				"categoryname"
+			],
+			[
+				"marign",
+				"margin-top"
+			],
+			[
+				"margin",
+				"margin-bottom"
+			],
+			[
+				"align",
+				"vertical-align"
+			],
+			[
+				"padin",
+				"padding"
+			],
+			[
+				"p",
+				"padding"
+			],
+			[
+				"pading",
+				"padding-left"
+			],
+			[
+				"con",
+				"container"
+			],
+			[
+				"back",
+				"background-color"
+			],
+			[
+				"bak",
+				"backface-visibility"
+			],
+			[
+				"mar",
+				"margin"
+			],
+			[
+				"ng-in",
+				"ng-init\tAngularJS"
+			],
+			[
+				"pos",
+				"position"
+			],
+			[
+				"$cope",
+				"$scope\tAngularJS"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 150.0,
+		"last_filter": "Package Control: in",
+		"selected_items":
+		[
+			[
+				"Package Control: in",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: ",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: ins",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 528.0
+	},
+	"console":
+	{
+		"height": 126.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = 'df21e130d211cfc94d9b0905775a7c0f' + '1e3d39e33b79698005270310898eea76'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/C/Users/HungPC/Desktop/loopback-example-database/CONTRIBUTING.md",
+		"/C/Users/HungPC/Dropbox/CSDL/L3/BT.sql",
+		"/C/Users/HungPC/Dropbox/CSDL/notes.sql",
+		"/C/Users/HungPC/Dropbox/CSDL/L7/dellstore2-normal-1.0.sql",
+		"/C/Users/HungPC/Dropbox/CSDL/L7/BT.sql",
+		"/C/Users/HungPC/Dropbox/CSDL/L7/sisinfo.sql",
+		"/C/Users/HungPC/Dropbox/CSDL/code/hospital/index.html",
+		"/C/Users/HungPC/Dropbox/CSDL/code/hospital/css/home.css",
+		"/E/Desktop/Angular/timeline/index.html",
+		"/E/Desktop/Angular/timeline/css/style.css",
+		"/E/Desktop/Angular/timeline/data/data.json",
+		"/E/Desktop/Angular/timeline/css/bakcup.css",
+		"/E/Desktop/Angular/timeline/js/main.js"
+	],
+	"find":
+	{
+		"height": 26.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"up",
+			"pg",
+			"psql",
+			"Quantity",
+			"max",
+			"prod_id",
+			"common_prod_id",
+			"prod_id",
+			"category",
+			"distin",
+			" ",
+			"categoryname",
+			"customerid",
+			"documen",
+			"span",
+			"h1",
+			">\n",
+			"300",
+			"1200",
+			"col-md-5 col-sm-5 col-xs-5 col-lg-5",
+			"47",
+			"24",
+			"45",
+			"43",
+			"46",
+			"47",
+			"5",
+			"100px",
+			"box",
+			"position",
+			"250%;",
+			"4px;",
+			"-9%;",
+			"width: 10px;",
+			"border-width: 15px;",
+			"10",
+			"*10",
+			"15",
+			"20",
+			"type: 3",
+			"\t\t\t",
+			"\t\t\t\t",
+			"Tiên",
+			"\t\t\t\t",
+			"type: 3",
+			"type: 1",
+			"\t\t\t",
+			"\t\t",
+			"\t\t\t",
+			"date",
+			"\t\t\t",
+			"\t",
+			"contents",
+			"100",
+			"200",
+			"colors"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 26.0
+	},
+	"input":
+	{
+		"height": 34.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "app.sublime-project",
+	"replace":
+	{
+		"height": 48.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 180.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

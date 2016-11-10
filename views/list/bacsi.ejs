@@ -1,0 +1,20 @@
+<!-- <% include ../layout %> -->
+
+<!-- <%= data %> -->
+<%
+ 	var test = data[1]; 
+	var hoten = test.hoten;
+%>
+
+
+<html>
+	<title>Bác Sĩ</title>
+
+	<%-hoten%>
+
+
+	<script>
+		var val = '<%-test%>';
+		console.log(val);
+	</script>
+</html>

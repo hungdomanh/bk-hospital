@@ -1,0 +1,42 @@
+body {
+  /*padding: 50px;*/
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.wellcome {
+	text-align: center;
+	color: blue;
+}
+
+#avatar {
+    /* This image is 687 wide by 1024 tall, similar to your aspect ratio */
+    background-image: url('http://www.reviewcompany.vn/public/media/uploads/company/logo/2014-06-21/c5c3183a-19b7-4e2b-9a2e-d0cfedc4da54.jpg');
+    
+    /* make a square container */
+    width: 150px;
+    height: 100px;
+
+    /* fill the container, preserving aspect ratio, and cropping to fit */
+    background-size: cover;
+
+    /* center the image vertically and horizontally */
+    background-position: center;
+
+    /* round the edges to a circle with border radius 1/2 container size */
+    border-radius: 50%;
+}
+
+.container-fluid {
+	/*background-color: #018A41;*/
+}
+
+h1 {
+	color: red;
+}
+h3 {
+	margin: 0 auto
+}
