@@ -1,7 +1,11 @@
 # bk_hospital
 Bai tap lon CSDL
 
-command line: 
+Command line: 
+
+git clone https://github.com/hungdomanh/bk-hospital.git
+
+cd bk-hospital
 
 npm install 
 
