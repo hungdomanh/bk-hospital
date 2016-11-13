@@ -5,7 +5,7 @@ Require: Installed nodejs
 
 Command line:
 
-git clone -b hung https://github.com/hungdomanh/bk-hospital.git
+git clone  https://github.com/hungdomanh/bk-hospital.git
 
 cd bk-hospital
 
