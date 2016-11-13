@@ -1,8 +1,16 @@
 # bk_hospital
 Bai tap lon CSDL
 
-command line: 
+Require: Installed nodejs
 
-npm install 
+Command line:
+
+git clone -b hung https://github.com/hungdomanh/bk-hospital.git
+
+cd bk-hospital
+
+npm install -g nodemon
+
+npm install
 
 nodemon
