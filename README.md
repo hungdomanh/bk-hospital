@@ -14,3 +14,5 @@ npm install -g nodemon
 npm install
 
 nodemon
+
+Chrome: localhost:3000
