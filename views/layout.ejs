@@ -1,0 +1,113 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title><%-title%></title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="/stylesheets/style.css" />
+
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>   
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="/javascripts/layout.js"></script>
+
+</head>
+
+<body ng-app="layout" ng-controller="layoutCtrl">
+
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">Home</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="/">Thông tin<span class="caret"></span></a>
+          <ul class="dropdown-menu" display="none">
+            <li><a href="/tin-tuc">Tin tức</a></li>
+            <li><a href="/chinh-sach">Chính sách chất lượng</a></li>
+            <li><a href="/co-co-vat-chat">Cơ sở vật chất</a></li>
+            <li><a href="/ban-giam-doc">Ban giám đốc</a></li>
+          </ul>
+        </li>
+        <li ng-show=<%-type=='benhnhan'%>>
+          <a href="/user/ho-so-benh-an">Hồ sơ bệnh án <span class="glyphicon glyphicon-question-sign"></span></a>
+        </li>
+        <li ng-show=<%-type=='boss'%> class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="/">Danh sách<span class="caret"></span></a>
+          <ul class="dropdown-menu" display="none">
+            <li><a href="/bac-si">Bác sĩ</a></li>
+            <li><a href="/benh-nhan">Bệnh nhân</a></li>
+            <li><a href="/khoa">Khoa</a></li>
+            <li><a href="/phong">Phòng</a></li>
+            <li><a href="/thuoc">Thuốc</a></li>
+            <li><a href="/benh">Bệnh</a></li>
+            <li><a href="/benh-an">Bệnh Án</a></li>
+            <li><a href="/don-thuoc">Đơn thuốc</a></li>
+            <li><a href="/hoa-don">Hóa đơn</a></li>
+          </ul>
+        </li>
+        <li ng-show=<%-type=='boss'%> class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="/">Thống kê<span class="caret"></span></a>
+          <ul class="dropdown-menu" display="none">
+            <li><a href="/benh-nhan-dang-kham">Bệnh nhân đang khám</a></li>
+            <li><a href="/"></a></li>
+            <li><a href="/"></a></li>
+            <li><a href="/"></a></li>
+            <li><a href="/"></a></li>
+            <li><a href="/"></a></li>
+            <li><a href="/"></a></li>
+            <li><a href="/"></a></li>
+            <li><a href="/"></a></li>
+            <li><a href="/"></a></li>
+          </ul>
+        </li>
+        <li <li ng-show=<%-type=='boss' || type=='bacsi'%> class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="/">Users<span class="caret"></span></a>
+          <ul class="dropdown-menu" display="none">
+            <li><a href="/users-bac-si">Bác sĩ</a></li>
+            <li><a href="/users-benh-nhan">Bệnh nhân</a></li>
+          </ul>
+        </li>
+        <li >
+          <a href="/hoi-dap"> Hỏi đáp <span class="glyphicon glyphicon-question-sign"></span></a>
+        </li>
+  
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+        <li ng-hide=<%-logined%> ><a href="/register"></span> Đăng kí</a></li>
+        <li ng-hide=<%-logined%> ><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Đăng nhập</a></li>
+        <li ng-show=<%-logined%> ><a href="/user/"><span class="glyphicon glyphicon-user"></span> Cá Nhân</a></li>
+        <li ng-show=<%-logined%> ><a href="/logout">Thoát <span class="glyphicon glyphicon-log-out"></span></a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+</body>
+
+
+<!-- BOTTOM -->
+<div id="footer">
+  <div id="container">
+    <div id="copyright">
+    --logined: <%-logined%>
+  --type: <%-type%>
+  --username: <%-username%>
+    </div>
+  </div>
+</div>
+
+</html>

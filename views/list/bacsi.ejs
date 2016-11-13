@@ -1,0 +1,45 @@
+<% include ../layout %>
+<%
+var x = data[1].mabs;
+console.log(data);
+%>
+
+<%=data%>
+
+<div ng-app="bacsi" ng-controller="bacsiCtrl">
+
+	<table>
+	  <tr ng-repeat="x in data">
+	    <td>{{ x.mabs}}</td>
+	    <td>{{ x.hoten }}</td>
+	    <td>{{ x.ngaysinh }}</td>
+	    <td>{{ x.gioitinh }}</td>
+	    <td>{{ x.diachi }}</td>
+	    <td>{{ x.kinhnghiem }}</td>
+
+	  </tr>
+	</table>
+
+
+       
+
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script>
+	var app = angular.module('bacsi',[]);
+	app.controller('bacsiCtrl', ['$scope', function($scope){
+		var s = "<% data %>";
+		// var a = '<%-x%>';
+		// console.log(a);
+		data = JSON.stringify(s);
+		console.log(data[1]+"sdsd");
+		// console.log(data);
+		alert(data[0]+"sdsd");
+	}]);
+
+
+
+
+</script>
