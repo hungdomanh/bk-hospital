@@ -1,11 +1,62 @@
-<h1>Sign up Form</h1>
-<form action="/register" method="POST">
-    <input type="text" name="username" placeholder="username"/>
-    <input type="email" name='email' placeholder="email"/>
-    <input type="text" name="password" placeholder="password"/>
-    <input type="submit" value="Submit"/>
-</form>
+<% include layout.ejs %>
+<div ng-controller="registerCtrl">
+<h1>Sign up</h1>
+<br>
 
+<br>
+<form action="/register-submit" method="POST" ng-init="tontai=false">
+    <input type="text" name="username" placeholder="username" ng-model="username" />
+    <span ng-show="tontai">Đã tồn tại</span><br>
+    <input type="password" name="password" placeholder="password" ng-model="password" /><br>
+    <input type="email" name='email' placeholder="email" ng-model="email" /><br><br>
+    <div ng-show="full"><input  type="submit" value="Đăng kí"/>
+	</div>
+</form>
+<br>
 <li><a href="/register">Sign Up</a></li>
 <li><a href="/login">Login</a></li>
-<li><a href="/logout">Log Out</a></li>
+<!-- <li><a href="/logout">Log Out</a></li> -->
+
+
+
+
+</div>
+
+
+
+
+<script>
+	app.controller('registerCtrl', ['$scope', '$timeout', function($scope, $timeout){
+		$scope.tontai = false;
+		var usernameLast = '';
+		var s = '<%-data%>';
+		var data = JSON.parse(s);
+		$scope.data = data;
+
+		var check = function() {
+			if($scope.username) {
+				for(var i=0; i<data.length; i++) {
+					if($scope.username == data[i].id)    {
+						$scope.tontai = true;
+						usernameLast = $scope.username;
+					}
+				}
+				if($scope.username != usernameLast)	$scope.tontai = false;
+			}
+			
+
+			if(!$scope.tontai && $scope.username && $scope.password) {
+				$scope.full = true;
+			}
+			else 	$scope.full = false;
+		}
+		
+		$timeout(check, 200);
+		for(var i=0; i<10000; i++) {
+			$timeout(check, i*100);
+		}
+
+
+	}]);
+
+</script>

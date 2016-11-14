@@ -15,7 +15,6 @@ client.on('error', function(error) {
   console.log(error);
 });  
 
-
 var type = 'khach';
 
 // HOME PAGE
@@ -46,8 +45,7 @@ router.get('/co-so-vat-chat', function(req, res) {
 router.get('/ban-giam-doc', function(req, res) {
     res.render('ban-giam-doc');
 });
-
-
+// LOGIN
 router.get('/login', function(req, res) {
 	if(!req.session.loggedIn) {
         req.session.type = 'khack';
@@ -60,19 +58,14 @@ router.get('/login', function(req, res) {
     }
 	else {
 		res.redirect('/');
-		// console.log("sdfdfsdfsdfsdfsdfsdfsd");
 	}
 });
-
 router.post('/login', function(req, res) {
-
 	if(req.body.username && req.body.password){
-
 		var username = req.body.username;
 		var password = req.body.password;
         client.query('SELECT * FROM users where id=$1',[username], function(err, result){
             if(err) return console.log("Can't SELECT FROM TABLE");
-            console.log(result.rows[0]);
             if(result.rows[0].pass==password)  {
                 req.session.loggedIn = true;
                 req.session.type = result.rows[0].type;
@@ -93,16 +86,12 @@ router.post('/login', function(req, res) {
                     type: 'khack'
                 });
         });  
-		
     };
-
 });
-
 router.get('/logout', function (req, res) {
     req.session.loggedIn = false;
     req.session.username = null;
     req.session.type = 'khack';
-
     res.render('index',{
         title: "BK",
         logined: req.session.loggedIn,
@@ -111,9 +100,46 @@ router.get('/logout', function (req, res) {
     });
 });
 
+/// register
+router.get('/register', function (req, res) {
+    req.session.loggedIn = false;
+    req.session.username = null;
+    req.session.type = 'khack';
 
+    client.query('SELECT id FROM users', function(err, result){
+        if(err) return console.log("Can't SELECT FROM TABLE");
+        var str = result.rows;
+        var data  = JSON.stringify(result.rows);
+        if(str) 
+         res.render('register', {
+            data: data, 
+            title: 'Đăng kí',
+            logined: req.session.loggedIn,
+            username: req.session.username,
+            type: req.session.type
+
+        });
+        else res.end("CAN'T GET LINK");
+    });  
+});
+router.post('/register-submit', function(req, res) {
+    if(req.body.username && req.body.password && req.body.email){
+        var username = req.body.username;
+        var password = req.body.password;
+        var email = req.body.email;
+
+        client.query("INSERT INTO users (id, pass, email, type) VALUES ($1, $2, $3, \'khach\');",[username, password, email]);
+        res.redirect('/login');
+        res.render('login',{ 
+            title: "SUCCESS",
+            logined: false,
+            username: null,
+            type: 'khack'
+        });
+    };
+});
+// BAC SI
 router.get('/bac-si',  function(req, res) {
-  
     client.query('SELECT * FROM bacsi', function(err, result){
         if(err) return console.log("Can't SELECT FROM TABLE");
 
@@ -207,7 +233,6 @@ router.get('/khoa',  function(req, res) {
         else res.end("CAN'T GET LINK");
     });  
 });
-
 router.post('/add-khoa', function(req, res) {
     if(req.session.type=='boss' && req.body.mak && req.body.khoa){
         var mak = req.body.mak;
@@ -223,7 +248,6 @@ router.post('/add-khoa', function(req, res) {
             type: 'khack'
         });
 });
-
 router.post('/edit-khoa', function(req, res) {
      if(req.session.type=='boss' && req.body.mak && req.body.khoa){
         var mak = req.body.mak;
@@ -240,8 +264,6 @@ router.post('/edit-khoa', function(req, res) {
         });
 
 });
-
-
 router.get('/delete-khoa/:id', function(req, res) {
     if(req.session.type=='boss') {
         res.redirect('/khoa');

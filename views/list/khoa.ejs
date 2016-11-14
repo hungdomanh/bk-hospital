@@ -6,15 +6,15 @@
 <div class='content' ng-controller="khoaCtrl">
 	<div class="container">
 		<div class='row'>
-			<div id="search" class='col-xs-5'>
+			<div class="search" class='col-xs-5'>
 				Tìm Kiếm: <input type="text" ng-model='search'>
 			</div>
-			<div id="add" class='col-xs-2'>
-				<button ng-click="setAdd()" data-target='#addFormModal' data-toggle="modal" id="addButton" ng-show=<%-type=='boss'%>>
+			<div class="add" class='col-xs-2'>
+				<button ng-click="setAdd()" data-target='#addFormModal' data-toggle="modal" class="addButton" ng-show=<%-type=='boss'%>>
 					Thêm mới
 				</button>
 			</div>
-			<div id="sort" class='col-xs-5' ng-init="sort='mak'">
+			<div class="sort" class='col-xs-5' ng-init="sort='mak'">
 				Sắp xếp:
 				<select ng-model="sort">
 		          <option value="mak">Mã Khoa</option>
@@ -29,11 +29,11 @@
 		    <td>{{ x.mak}}</td>
 		    <td>{{ x.khoa }}</td>
 		    <td ng-show=<%-type=='boss'%> >
-		    	<button ng-click="setEdit(x.mak)" id="editButton" data-target='#editFormModal' data-toggle="modal" >
+		    	<button ng-click="setEdit(x.mak)" class="editButton" data-target='#editFormModal' data-toggle="modal" >
 		    		Sửa
 		    	</button>
 		    	<a ng-href="/delete-khoa/{{x.mak}}">
-		    	<button id="deleteButton" >Xóa</button>
+		    	<button class="deleteButton" >Xóa</button>
 		    	</a>
 		    </td>
 
@@ -41,7 +41,7 @@
 		</table>
 
 	<!-- Add Form Modal -->
-	<div class="modal fade" id="addFormModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal fade" class="addFormModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
 	    <form action="/add-khoa" method="post">
@@ -66,7 +66,7 @@
 
 
 	<!-- Edit Form Modal -->
-	<div class="modal fade" id="editFormModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal fade" class="editFormModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
 	    <form action="/edit-khoa" method="post">

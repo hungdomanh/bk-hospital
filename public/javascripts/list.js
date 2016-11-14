@@ -1,8 +1,17 @@
 
-app.controller('khoaCtrl', ['$scope', function($scope){
+// app.controller('khoaCtrl', ['$scope', function($scope){
 
-	 var s = '<%-data%>';
-	 var data = JSON.parse(s);
-	 console.log(data);
-	 $scope.data = data;
-}]);
+// 	 var s = '<%-data%>';
+// 	 var data = JSON.parse(s);
+// 	 console.log(data);
+// 	 $scope.data = data;
+// }]);
+
+
+// app.controller('khoaCtrl', ['$scope', function($scope){
+
+// 	 var s = '<%-data%>';
+// 	 var data = JSON.parse(s);
+// 	 console.log(data);
+// 	 $scope.data = data;
+// }]);

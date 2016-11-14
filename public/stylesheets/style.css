@@ -82,16 +82,16 @@ table tr:nth-child(even) {
     background-color: #abcdef;
 }*/
 
-#sort {
+.sort {
   padding-left: 300px;
   padding-right: 0px;
 }
 
-#add {
+.add {
   text-align: center;
-  /*background-color: #a3a3aa;*/
+  /*background-color: .a3a3aa;*/
 }
 
-#addButton {
+.addButton {
   margin: 0 auto;
 }
