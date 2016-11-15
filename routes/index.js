@@ -141,22 +141,21 @@ router.post('/register-submit', function(req, res) {
 // BAC SI
 router.get('/bac-si',  function(req, res) {
     if(req.session.loggedIn) {
-        client.query('SELECT * FROM bacsi order by mabs', function(err, result){
+        client.query('SELECT * FROM bacsi right join khoadieutri using (mak) order by mabs', function(err, result){
             if(err) return console.log("Can't SELECT FROM TABLE");
-
             var str = result.rows;
             var data  = JSON.stringify(result.rows);
-            if(str) //res.end("req.session.loggedIn");
-             res.render('list/bac-si', {
-                data: data, 
-                title: 'Bác Sĩ',
-                logined: req.session.loggedIn,
-                username: req.session.username,
-                type: req.session.type
+            if(str) 
+                res.render('list/bac-si', {
+                    data: data, 
+                    title: 'Bác Sĩ',
+                    logined: req.session.loggedIn,
+                    username: req.session.username,
+                    type: req.session.type
 
-            });
+                });
             else res.end("CAN'T GET LINK");
-        });  
+        })
     }
     else 
         res.render('login-register/login',{
@@ -165,18 +164,92 @@ router.get('/bac-si',  function(req, res) {
             username: null,
             type: 'khack'
         });
+});
+router.post('/add-bac-si', function(req, res) {
+    if(req.session.type=='boss' && req.body.mabs && req.body.mak 
+        && req.body.hoten && req.body.gioitinh && req.body.diachi 
+        && req.body.kinhnghiem && req.body.ngaysinh && req.body.thangsinh 
+        && req.body.namsinh){
+        var mabs = req.body.mabs ;
+        var mak = req.body.mak ;
+        var hoten = req.body.hoten ;
+        var gioitinh = req.body.gioitinh ;
+        var diachi = req.body.diachi ;
+        var kinhnghiem = req.body.kinhnghiem ;
+        var trangthai = 0;
+        var ngaysinh = req.body.ngaysinh ;
+        var thangsinh = req.body.thangsinh ;
+        var namsinh = req.body.namsinh ;
+        if(ngaysinh < 10 )  ngaysinh = '0' + ngaysinh;
+        if(thangsinh < 10 ) thangsinh = '0' + thangsinh;
+        var s = ngaysinh + '/' + thangsinh +'/' + namsinh;
 
-
-    client.query('SELECT * FROM bacsi', function(err, result){
-        if(err) return console.log("Can't SELECT FROM TABLE");
-
-        var str = result.rows;
-        // console.log(str);
-        if(str)  res.render('list/bacsi', {data: str, title: 'Bác Sĩ'});
-        else res.send("CAN'T GET LINK");
-    });  
+        res.redirect('/bac-si');
+        client.query('INSERT INTO bacsi VALUES($1, $2, $3, $4, $5, $6, $7, $8)',
+            [mabs, hoten, s, gioitinh, diachi, mak, kinhnghiem, trangthai]
+        );
+        
+    }
+    else 
+        res.render('login-register/login',{ 
+            title: "TRY Login",
+            logined: false,
+            username: null,
+            type: 'khack'
+        });
+});
+router.post('/edit-bac-si', function(req, res) {
+    console.log(req.body.trangthai);
+    if(req.session.type=='boss' && req.body.mabs && req.body.mak 
+        && req.body.hoten && req.body.gioitinh && req.body.diachi 
+        && req.body.kinhnghiem && req.body.ngaysinh && req.body.thangsinh 
+        && req.body.namsinh && req.body.trangthai){
+        var mabs = req.body.mabs ;
+        var mak = req.body.mak ;
+        var hoten = req.body.hoten ;
+        var gioitinh = req.body.gioitinh ;
+        var diachi = req.body.diachi ;
+        var kinhnghiem = req.body.kinhnghiem ;
+        var trangthai =  req.body.trangthai;
+        var ngaysinh = req.body.ngaysinh ;
+        var thangsinh = req.body.thangsinh ;
+        var namsinh = req.body.namsinh ;
+        if(ngaysinh < 10 )  ngaysinh = '0' + ngaysinh;
+        if(thangsinh < 10 ) thangsinh = '0' + thangsinh;
+        var s = ngaysinh + '/' + thangsinh +'/' + namsinh;
+        res.redirect('/bac-si');
+        client.query('UPDATE bacsi SET hoten = $2, ngaysinh = $3, gioitinh = $4, diachi = $5, mak = $6, kinhnghiem = $7, trangthai = $8 WHERE mabs = $1',
+            [mabs, hoten, s, gioitinh, diachi, mak, kinhnghiem, trangthai]
+        );
+    }
+    else 
+        res.render('login-register/login',{ 
+            title: "TRY Login",
+            logined: false,
+            username: null,
+            type: 'khack'
+        });
+});
+router.post('/delete-bac-si', function(req, res) {
+    if(req.session.type=='boss') {
+        res.redirect('/bac-si');
+        client.query('DELETE FROM bacsi WHERE mabs=$1 ',[req.body.mabs], function(err, result){
+            if(err) {
+                console.log(err);
+            }
+        });
+    }
+    else 
+        res.render('login-register/login',{ 
+            title: "TRY Login",
+            logined: false,
+            username: null,
+            type: 'khack'
+        });
 });
 
+
+// BENH
 router.get('/benh',  function(req, res) {
   
     client.query('SELECT * FROM benh', function(err, result){
@@ -300,10 +373,10 @@ router.post('/edit-khoa', function(req, res) {
         });
 
 });
-router.get('/delete-khoa/:id', function(req, res) {
+router.post('/delete-khoa', function(req, res) {
     if(req.session.type=='boss') {
         res.redirect('/khoa');
-        client.query('DELETE FROM khoadieutri WHERE mak=$1 ',[req.params.id], function(err, result){
+        client.query('DELETE FROM khoadieutri WHERE mak=$1 ',[req.body.mak], function(err, result){
             if(err) {
                 console.log(err);
             }

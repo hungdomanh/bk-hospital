@@ -15,17 +15,13 @@ a {
 #avatar {
     /* This image is 687 wide by 1024 tall, similar to your aspect ratio */
     background-image: url('http://www.reviewcompany.vn/public/media/uploads/company/logo/2014-06-21/c5c3183a-19b7-4e2b-9a2e-d0cfedc4da54.jpg');
-    
     /* make a square container */
     width: 100px;
     height: 70px;
-
     /* fill the container, preserving aspect ratio, and cropping to fit */
     background-size: cover;
-
     /* center the image vertically and horizontally */
     background-position: center;
-
     /* round the edges to a circle with border radius 1/2 container size */
     border-radius: 50%;
 }
@@ -57,8 +53,8 @@ table tr:nth-child(even) {
 }
 /*BOTTOM*/
 #container {
-    position: relative;
-      top: 100%;
+  position: relative;
+  top: 100%;
 }
 /*CONTENT*/
 .content {
@@ -97,9 +93,10 @@ float: right;
 .addButton {
   margin: 0 auto;
 }
-/*
+
 .search-add-sort {
+  margin: 10px;
 }
-*/
+
 .search {
 }

@@ -4,9 +4,9 @@
 
 <div class='content' ng-controller="bacsiCtrl">
 	<div class="container">
-		<div class='row col-xs-12'>
+		<div class='row search-add-sort'>
 			<div class='col-xs-5 search'>
-				Tìm Kiếm: <input type="text" ng-model='search'>
+				Tìm Kiếm: <input type="text" ng-model='search'> {{bacsi.length}} Bác Sĩ
 			</div>
 			<div class='col-xs-2 add'>
 				<button ng-click="setAdd()" data-target='#bacsiAddFormModal' data-toggle="modal" class="addButton" ng-show=<%-type=='boss'%>>
@@ -16,29 +16,33 @@
 			<div class='col-xs-5 sort' ng-init="sort='mabs'">
 				Sắp xếp:
 				<select ng-model="sort">
-		          <option value="mabs">Mã Bác Sĩ</option>
+		          <option value="mabs">ID</option>
+		          <option value="mak">Khoa</option>
 		          <option value="hoten">Họ Tên</option>
 		          <option value="ngaysinh">Ngày Sinh</option>
 		          <option value="gioitinh">Giới Tính</option>
 		          <option value="diachi">Địa Chỉ</option>
 		          <option value="kinhnghiem">Kinh Nghiệm</option>
+		          <option value="trangthai">Trạng Thái</option>
 		        </select>
 			</div>
 		</div>
 
 		<table>
 			<tr class="days">
-		       <th scope="col" title="Monday">Mã</th>
-		       <th scope="col" title="Tuesday">Họ Tên</th>
-		       <th scope="col" title="Wednesday">Ngày Sinh</th>
-		       <th scope="col" title="Thursday">Giới Tính</th>
-		       <th scope="col" title="Friday">Địa Chỉ</th>
-		       <th scope="col" title="Saturday">Kinh Nghiệm</th>
-		       <th scope="col" title="Sunday">Trạng Thái</th>
-		       <th scope="col" title="admin">Quản trị</th>
+		       <th scope="col" title="mbs">ID</th>
+		       <th scope="col" title="mbk">Khoa</th>
+		       <th scope="col" title="hoten">Họ Tên</th>
+		       <th scope="col" title="ngaysinh">Ngày Sinh</th>
+		       <th scope="col" title="gioitinh">Giới Tính</th>
+		       <th scope="col" title="diachi">Địa Chỉ</th>
+		       <th scope="col" title="kinhnghiem">Kinh Nghiệm</th>
+		       <th scope="col" title="trangthai">Trạng Thái</th>
+		       <th scope="col" title="quantri">Quản trị</th>
 		     </tr>
-		  <tr ng-repeat="x in data | orderBy: sort | filter: search track by $index">
+		  <tr ng-repeat="x in bacsi | orderBy: sort | filter: search track by $index"  ng-show='x.mabs'>
 		    <td>{{ x.mabs}}</td>
+		    <td>{{ x.mak}}</td>
 		    <td>{{ x.hoten }}</td>
 		    <td>{{ x.ngaysinh }}</td>
 		    <td>{{ x.gioitinh }}</td>
@@ -49,9 +53,10 @@
 		    	<button ng-click="setEdit(x.mabs)" class="editButton" data-target='#bacsiEditFormModal' data-toggle="modal" >
 		    		Sửa
 		    	</button>
-		    	<a ng-href="/delete-bacsi/{{x.mabs}}">
-		    	<button class="deleteButton" >Xóa</button>
-		    	</a>
+		    	<button ng-click="setEdit(x.mabs)" class="deleteButton" data-target='#bacsiDeleteFormModal' data-toggle="modal" >
+		    		Xóa
+		    	</button>
+
 		    </td>
 
 		  </tr>
@@ -67,13 +72,16 @@
 		      </div>
 		      <div class="modal-body">
 		        Mã Bác Sĩ: {{mabsAdd}} <input type="hidden" value={{mabsAdd}} name="mabs"><br><br>
-		        Họ Tên: <input type="text" name="hoten"><br><br>
-		        Ngày Sinh: <input type="date" name="ngaysinh"><br><br>
-		        Giới tính: <input type="radio" name="sex" value="nam" />Nam
-						   <input type="radio" name="sex" value="nu" />Nữ<br><br>
-		        Địa chỉ: <input type="text" name="diachi"><br><br>
-		        Năm Kinh Nghiệm: <input type="number" name="kinhnghiem"> năm<br><br>
-		        Trạng thái: Hoạt động:<input type="checkbox" name="kinhnghiem"><br>
+		        Mã Khoa:    <input type="number" ng-model='makAdd' name="mak"> {{khoa[makAdd]}}<br><br>
+		        Họ Tên:     <input type="text" name="hoten"><br><br>
+		        Ngày Sinh:  <input type="number" name="ngaysinh" max='31' min='1'  placeholder="Ngày">
+		        			<input type="number" name="thangsinh" max='12' min='1' placeholder="Tháng">
+		        			<input type="number" name="namsinh" max='2017' min='1900' placeholder="Năm"><br><br>
+		        Giới tính:  <input type="radio" name="gioitinh" value="Nam" />Nam
+						    <input type="radio" name="gioitinh" value="Nữ" />Nữ<br><br>
+		        Địa chỉ:    <input type="text" name="diachi"><br><br>
+		        Năm Kinh Nghiệm:      <input type="number" name="kinhnghiem"> năm<br><br>
+
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -83,9 +91,6 @@
 	    </div>
 	  </div>
 	</div>
-
-
-
 	<!-- Edit Form Modal -->
 	<div class="modal fade" id="bacsiEditFormModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	  <div class="modal-dialog" role="document">
@@ -96,13 +101,18 @@
 		      </div>
 		      <div class="modal-body">
 		        Mã Bác Sĩ: {{mabsEdit}} <input type="hidden" value={{mabsEdit}} name="mabs"><br><br>
-		        Họ Tên: <input type="text" value={{hotenEdit}} name="hoten"><br><br>
-		        Ngày Sinh: <input type="date" value={{ngaysinhEdit}} name="ngaysinh"><br><br>
-		        Giới tính: <input type="radio" value="nam" ng-model='nam' name="sex" />Nam
-						   <input type="radio" value="nu" ng-model='nu' name="sex" />Nữ<br><br>
-		        Địa chỉ: <input type="text" value={{diachiEdit}} name="diachi"><br><br>
-		        Năm Kinh Nghiệm: <input type="number" value={{kinhnghiemEdit}} name="kinhnghiem"> năm<br><br>
-		         Trạng thái: Hoạt động: <input type="checkbox" value={{trangthaiEdit}}) name="kinhnghiem"><br>
+		        Mã Khoa:    <input type="number" value={{makEdit}} name="mak"><br><br>
+		        Họ Tên:     <input type="text"   value={{hotenEdit}} name="hoten"><br><br>
+		        Ngày Sinh:  <input type="number" value={{ngaysinhEdit}} name="ngaysinh" max='31' min='1' class='ngaysinh'  placeholder="Ngày">
+		        			<input type="number" value={{thangsinhEdit}} name="thangsinh" max='12' min='1' class='thangsinh' placeholder="Tháng">
+		        			<input type="number" value={{namsinhEdit}} name="namsinh" max='2017' min='1900' class='namsinh' placeholder="Năm"><br><br>
+		        Giới tính:  <input type="radio"  value="Nam" ng-checked='nam' name="gioitinh" />Nam
+						    <input type="radio"  value="Nữ"  ng-checked='nu'  name="gioitinh" />Nữ<br><br>
+		        Địa chỉ:    <input type="text"   value={{diachiEdit}} name="diachi"><br><br>
+		        Năm Kinh Nghiệm:   <input type="number" value={{kinhnghiemEdit}} name="kinhnghiem"> năm<br><br>
+		        Trạng thái: <input type="radio"  value="1" ng-checked='trangthaiEdit' name="trangthai" />Hoạt động
+						    <input type="radio"  value="0" ng-checked='!trangthaiEdit' name="trangthai" />Nghỉ<br><br>
+
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -112,26 +122,88 @@
 	    </div>
 	  </div>
 	</div>
-
-
+	<!-- Delete Form Modal -->
+	<div class="modal fade" id="bacsiDeleteFormModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	    <form action="/delete-bac-si" method="post">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>Xóa</h4>
+		      </div>
+		      <div class="modal-body">
+		        Mã Bác Sĩ: {{mabsEdit}} <input type="hidden" value={{mabsEdit}} name="mabs"><br><br>
+		        Mã Khoa:    {{makEdit}}  <br><br>
+		        Họ Tên:     {{hotenEdit}}<br><br>
+		        Ngày Sinh:  {{ngaysinhEdit}}/{{thangsinhEdit}}/{{namsinhEdit}} <br><br>
+		        Giới tính:  <span ng-show = 'nam'>Nam</span>
+		        			<span ng-show = 'nu'>Nữ</span>
+		        Địa chỉ:    {{diachiEdit}} <br><br>
+		        Năm Kinh Nghiệm:   {{kinhnghiemEdit}} năm<br><br>
+		        Trạng thái: <span ng-show = 'trangthaiEdit'>Hoạt động</span>
+		        			<span ng-hide = 'trangthaiEdit'>Nghỉ</span>
+		        
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+		        <button type="submit" class="btn btn-danger" value="Save">Xóa</button>
+		      </div>
+	     </form>
+	    </div>
+	  </div>
+	</div>
 	</div>  <!-- container -->
 </div>  <!-- controller -->
 
 <script>
 	app.controller('bacsiCtrl', ['$scope', function($scope){
 
-		 var s = '<%-data%>';
-		 var data = JSON.parse(s);
-		 // console.log(data.length); 
-		 $scope.data = data;
+		var s = '<%-data%>';
+		var data = JSON.parse(s);
+		$scope.data = data;
+		var bacsi = [];
+		var khoa = [];
 
-		 $scope.setEdit = function(index){
-		 	for(var i =0; i<data.length; i++) {
-		 		if(data[i].mabs == index)	{
-		 			$scope.mabsEdit = data[i].mabs;
-		 			$scope.hotenEdit = data[i].hoten;
-		 			$scope.ngaysinhEdit = data[i].ngaysinh;
-		 			if(data[i].gioitinh == 'Nam') {
+		var test = function(x, arr) {
+			for(var i=0; i < arr.length; i++) {
+				if(x == arr[i].mak) return true;
+			}
+			return false;
+		}
+		var j = 0;
+		for(var i=0; i<data.length; i++) {
+			if(data[i].mabs) {
+				bacsi[i] = {};
+				bacsi[i].mabs = data[i].mabs;
+				bacsi[i].mak = data[i].mak ;
+				bacsi[i].ngaysinh = data[i].ngaysinh ;
+				bacsi[i].gioitinh = data[i].gioitinh ;
+				bacsi[i].diachi = data[i].diachi ;
+				bacsi[i].hoten = data[i].hoten ;
+				bacsi[i].trangthai = data[i].trangthai ;
+				bacsi[i].kinhnghiem = data[i].kinhnghiem ;
+			}
+
+			khoa[data[i].mak] = data[i].khoa;
+
+			
+			
+		}
+		$scope.bacsi = bacsi;
+		$scope.khoa = khoa;
+
+
+
+		$scope.setEdit = function(index){
+		 	for(var i =0; i<bacsi.length; i++) {
+		 		if(bacsi[i].mabs == index)	{
+		 			$scope.mabsEdit = bacsi[i].mabs;
+		 			$scope.makEdit = bacsi[i].mak;
+		 			$scope.hotenEdit = bacsi[i].hoten;
+		 			var s = bacsi[i].ngaysinh;
+		 			$scope.ngaysinhEdit = parseInt(s.slice(0, 2), 10);
+		 			$scope.thangsinhEdit = parseInt(s.slice(3, 5), 10);
+		 			$scope.namsinhEdit = parseInt(s.slice(6, 10), 10); 			
+		 			if(bacsi[i].gioitinh == 'Nam') {
 		 				$scope.nam = true;
 		 				$scope.nu = false;
 		 			}
@@ -139,28 +211,26 @@
 		 				$scope.nam = false;
 		 				$scope.nu = true;
 		 			}
-
-		 			$scope.diachiEdit = data[i].diachi;
-		 			$scope.kinhnghiemEdit = data[i].kinhnghiem;
-		 			$scope.trangthaiEdit = data[i].trangthai;
+		 			$scope.diachiEdit = bacsi[i].diachi;
+		 			$scope.kinhnghiemEdit = bacsi[i].kinhnghiem;
+		 			$scope.trangthaiEdit = bacsi[i].trangthai;
 
 		 		}
 		 	}
 		 }
 
-		$scope.setAdd = function(index){
+		$scope.setAdd = function(){
 			var test = 0;
-		 	for(var i =0; i<data.length-1; i++) {
-		 		if(data[i+1].mabs - data[i].mabs > 1) {
-		 			$scope.mabsAdd = data[i].mabs+1;
+		 	for(var i = 0; i<bacsi.length-1; i++) {
+		 		if( bacsi[i+1].mabs - bacsi[i].mabs > 1) {
+		 			$scope.mabsAdd = bacsi[i].mabs+1;
 		 			test = 1;
 		 		}
 		 	}
 		 	if(test == 0) {
-		 		$scope.mabsAdd = data[data.length-1].mabs+1;
+		 		$scope.mabsAdd = bacsi[i].mabs+1;
 		 	}
 		 };
-
 
 	}]);
 
