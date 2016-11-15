@@ -82,16 +82,24 @@ table tr:nth-child(even) {
     background-color: #abcdef;
 }*/
 
+
 .sort {
-  padding-left: 300px;
+  padding-left: 25%;
   padding-right: 0px;
+  
+float: right;
 }
 
 .add {
   text-align: center;
-  /*background-color: .a3a3aa;*/
 }
 
 .addButton {
   margin: 0 auto;
+}
+/*
+.search-add-sort {
+}
+*/
+.search {
 }
