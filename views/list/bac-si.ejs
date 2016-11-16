@@ -29,17 +29,17 @@
 		</div>
 
 		<table>
-			<tr class="days">
-		       <th scope="col" title="mbs">ID</th>
-		       <th scope="col" title="mbk">Khoa</th>
-		       <th scope="col" title="hoten">Họ Tên</th>
-		       <th scope="col" title="ngaysinh">Ngày Sinh</th>
-		       <th scope="col" title="gioitinh">Giới Tính</th>
-		       <th scope="col" title="diachi">Địa Chỉ</th>
-		       <th scope="col" title="kinhnghiem">Kinh Nghiệm</th>
-		       <th scope="col" title="trangthai">Trạng Thái</th>
-		       <th scope="col" title="quantri">Quản trị</th>
-		     </tr>
+			<tr class="titleTable">
+				<th scope="col" title="mbs">		ID			</th>
+				<th scope="col" title="mbk">		Khoa		</th>
+				<th scope="col" title="hoten">		Họ Tên		</th>
+				<th scope="col" title="ngaysinh">	Ngày Sinh	</th>
+				<th scope="col" title="gioitinh">	Giới Tính	</th>
+				<th scope="col" title="diachi">		Địa Chỉ		</th>
+				<th scope="col" title="kinhnghiem">	Kinh Nghiệm	</th>
+				<th scope="col" title="trangthai">	Trạng Thái  </th>
+				<th scope="col" title="quantri">	Quản trị	</th>
+			</tr>
 		  <tr ng-repeat="x in bacsi | orderBy: sort | filter: search track by $index"  ng-show='x.mabs'>
 		    <td>{{ x.mabs}}</td>
 		    <td>{{ x.mak}}</td>
@@ -68,7 +68,8 @@
 	    <div class="modal-content">
 	    <form action="/add-bac-si" method="post">
 		      <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>Thêm mới</h4>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4>Thêm mới</h4>
 		      </div>
 		      <div class="modal-body">
 		        Mã Bác Sĩ: {{mabsAdd}} <input type="hidden" value={{mabsAdd}} name="mabs"><br><br>

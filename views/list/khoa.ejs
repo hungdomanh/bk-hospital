@@ -11,33 +11,37 @@
 			</div>
 			<div  class="col-xs-2 add">
 				<button ng-click="setAdd()" data-target='#khoaAddFormModal' data-toggle="modal" class="addButton" ng-show=<%-type=='boss'%>>
-					Thêm mới
+				Thêm mới
 				</button>
 			</div>
 			<div  class="col-xs-5 sort " ng-init="sort='mak'">
-				Sắp xếp: <select ng-model="sort">
-		          <option value="mak">Mã Khoa</option>
-		          <option value="khoa">Tên Khoa</option>
+				Sắp xếp: 
+				<select ng-model="sort">
+					<option value ="mak">Mã Khoa</option>
+					<option value ="khoa">Tên Khoa</option>
 		        </select>
 			</div>
 		</div>
 
 		<table>
-		  <tr ng-repeat="x in data | orderBy: sort | filter: search track by $index">
+			<tr class="titleTable">
+				<th scope="col" title="mbk">		Mã Khoa		</th>
+				<th scope="col" title="khoa">		Khoa		</th>
+				<th scope="col" title="quantri">	Quản trị	</th>
+			</tr>
+			<tr ng-repeat="x in data | orderBy: sort | filter: search track by $index">
 
-		    <td>{{ x.mak}}</td>
-		    <td>{{ x.khoa }}</td>
-		    <td ng-show=<%-type=='boss'%> >
-		    	<button ng-click="setEdit(x.mak)" class="editButton" data-target='#khoaEditFormModal' data-toggle="modal" >
-		    		Sửa
-		    	</button>
-		    	<button ng-click="setEdit(x.mak)" class="deleteButton" data-target='#khoaDeleteFormModal' data-toggle="modal" >
-		    		Xóa
-		    	</button>
-
-		    </td>
-
-		  </tr>
+				<td>{{ x.mak}}</td>
+				<td>{{ x.khoa }}</td>
+				<td ng-show=<%-type=='boss'%> >
+					<button ng-click="setEdit(x.mak)" class="editButton" data-target='#khoaEditFormModal' data-toggle="modal" >
+						Sửa
+					</button>
+					<button ng-click="setEdit(x.mak)" class="deleteButton " data-target='#khoaDeleteFormModal' data-toggle="modal" >
+						Xóa
+					</button>
+				</td>
+			</tr>
 		</table>
 
 	<!-- Add Form Modal -->
@@ -46,7 +50,8 @@
 	    <div class="modal-content">
 	    <form action="/add-khoa" method="post">
 		      <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>Thêm mới</h4>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4>Thêm mới</h4>
 		      </div>
 		      <div class="modal-body">
 		        Mã Khoa: {{makAdd}} <input type="hidden" value={{makAdd}} name="mak">
@@ -62,14 +67,14 @@
 	    </div>
 	  </div>
 	</div>
-
 	<!-- Edit Form Modal -->
 	<div class="modal fade" id="khoaEditFormModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
 	    <form action="/edit-khoa" method="post">
 		      <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>Chỉnh sửa</h4>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4>Chỉnh sửa</h4>
 		      </div>
 		      <div class="modal-body">
 		        Mã Khoa: {{makEdit}} <input type="hidden" value={{makEdit}} name="mak">
@@ -85,14 +90,14 @@
 	    </div>
 	  </div>
 	</div>
-
 	<!-- Delete Form Modal -->
 	<div class="modal fade" id="khoaDeleteFormModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
 	    <form action="/delete-khoa" method="post">
 		      <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>Xóa</h4>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4>Xóa</h4>
 		      </div>
 		      <div class="modal-body">
 		        Mã Khoa: {{makEdit}} <input type="hidden" value={{makEdit}} name="mak">
