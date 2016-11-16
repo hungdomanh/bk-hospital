@@ -21,6 +21,7 @@ var type = 'khach';
 router.get('/', function(req, res) {
     if(!req.session.loggedIn) req.session.loggedIn = false;
     if(!req.session.type)     req.session.type = 'khack';
+    req.session.lastPage = '/';
 	res.render('home',{
 		title: "BK-Hospital",
 		logined: req.session.loggedIn,
@@ -32,19 +33,39 @@ router.get('/', function(req, res) {
 ///////////////////////////////////////////////////////////////////////////// THONG TIN
 // TIN TUC
 router.get('/thong-tin/tin-tuc', function(req, res) {
-    res.render('thong-tin/tin-tuc');
+    res.render('thong-tin/tin-tuc',{
+        title: "BK",
+        logined: req.session.loggedIn,
+        username: req.session.username,
+        type: req.session.type
+    });
 });
 // CHINH_SACH CHAT LUONG
 router.get('/thong-tin/chinh-sach-chat-luong', function(req, res) {
-    res.render('thong-tin/chinh-sach-chat-luong');
+    res.render('thong-tin/chinh-sach-chat-luong',{
+        title: "BK",
+        logined: req.session.loggedIn,
+        username: req.session.username,
+        type: req.session.type
+    });
 });
 // CO SO VAT CHAT   
 router.get('/thong-tin/co-so-vat-chat', function(req, res) {
-    res.render('thong-tin/co-so-vat-chat');
+    res.render('thong-tin/co-so-vat-chat',{
+        title: "BK",
+        logined: req.session.loggedIn,
+        username: req.session.username,
+        type: req.session.type
+    });
 });
 // BAN GIAM DOC
 router.get('/thong-tin/ban-giam-doc', function(req, res) {
-    res.render('thong-tin/ban-giam-doc');
+    res.render('thong-tin/ban-giam-doc',{
+        title: "BK",
+        logined: req.session.loggedIn,
+        username: req.session.username,
+        type: req.session.type
+    });
 });
 /////////////////////////////////////////////////////////////////////////////  LOGIN - REGISTER
 router.get('/login', function(req, res) {
@@ -58,10 +79,12 @@ router.get('/login', function(req, res) {
         });
     }
 	else {
+        if(!req.session.lastPage) req.session.lastPage ='/';
 		res.redirect('/');
 	}
 });
 router.post('/login', function(req, res) {
+    if(!req.session.lastPage)   req.session.lastPage ='/';
 	if(req.body.username && req.body.password){
 		var username = req.body.username;
 		var password = req.body.password;
@@ -140,6 +163,7 @@ router.post('/register-submit', function(req, res) {
 ///////////////////////////////////////////////////////////////////////////// DANH SACH
 // BAC SI
 router.get('/bac-si',  function(req, res) {
+    req.session.lastPage = '/bac-si';
     if(req.session.loggedIn) {
         client.query('SELECT * FROM bacsi right join khoadieutri using (mak) order by mabs', function(err, result){
             if(err) return console.log("Can't SELECT FROM TABLE");
@@ -166,6 +190,7 @@ router.get('/bac-si',  function(req, res) {
         });
 });
 router.post('/add-bac-si', function(req, res) {
+    req.session.lastPage = '/bac-si';
     if(req.session.type=='boss' && req.body.mabs && req.body.mak 
         && req.body.hoten && req.body.gioitinh && req.body.diachi 
         && req.body.kinhnghiem && req.body.ngaysinh && req.body.thangsinh 
@@ -199,7 +224,7 @@ router.post('/add-bac-si', function(req, res) {
         });
 });
 router.post('/edit-bac-si', function(req, res) {
-    console.log(req.body.trangthai);
+    req.session.lastPage = '/bac-si';
     if(req.session.type=='boss' && req.body.mabs && req.body.mak 
         && req.body.hoten && req.body.gioitinh && req.body.diachi 
         && req.body.kinhnghiem && req.body.ngaysinh && req.body.thangsinh 
@@ -231,6 +256,7 @@ router.post('/edit-bac-si', function(req, res) {
         });
 });
 router.post('/delete-bac-si', function(req, res) {
+    req.session.lastPage = '/bac-si';
     if(req.session.type=='boss') {
         res.redirect('/bac-si');
         client.query('DELETE FROM bacsi WHERE mabs=$1 ',[req.body.mabs], function(err, result){
@@ -249,18 +275,104 @@ router.post('/delete-bac-si', function(req, res) {
 });
 
 
-// BENH
+// BENH  can them khoa dieu tri
 router.get('/benh',  function(req, res) {
-  
-    client.query('SELECT * FROM benh', function(err, result){
-        if(err) return console.log("Can't SELECT FROM TABLE");
+    req.session.lastPage = '/benh';
+    if(req.session.loggedIn) {
+        client.query('SELECT mab, mat, benh, makdt, thuoc FROM benh join thuoc using (mat) order by mab', function(err, result){
+            if(err) return console.log("Can't SELECT FROM TABLE");
+            var str = result.rows;
+            var data  = JSON.stringify(result.rows);
+            if(str) 
+                res.render('list/benh', {
+                    data: data, 
+                    title: 'Bệnh',
+                    logined: req.session.loggedIn,
+                    username: req.session.username,
+                    type: req.session.type
 
-        var str = result.rows;
-        if(str)  res.render('list/benh', {data: str, title: 'Bệnh'});
-        else res.send("CAN'T GET LINK");
-    });  
+                });
+            else res.end("CAN'T GET LINK");
+        })
+    }
+    else 
+        res.render('login-register/login',{
+            title: "Login",
+            logined: false,
+            username: null,
+            type: 'khack'
+        });
+});
+router.post('/add-benh', function(req, res) {
+    req.session.lastPage = '/benh';
+    if(req.session.type=='boss' && req.body.mab && req.body.mat
+        && req.body.benh && req.body.makdt){
+        var mab = req.body.mab ;
+        var benh = req.body.benh ;
+        var mat = req.body.mat ;
+        var makdt = req.body.makdt ;
+
+        res.redirect('/benh');
+        client.query('INSERT INTO benh VALUES($1, $2, $3, $4)',
+            [mab, benh, mat, makdt]
+        );
+        
+    }
+    else
+        res.render('login-register/login',{ 
+            
+            title: "TRY Login",
+            logined: false,
+            username: null,
+            type: 'khack'
+        });
+});
+router.post('/edit-benh', function(req, res) {
+    req.session.lastPage = '/benh';
+    if(req.session.type=='boss' && req.body.mab && req.body.mat
+        && req.body.benh && req.body.makdt){
+        var mab = req.body.mab ;
+        var benh = req.body.benh ;
+        var mat = req.body.mat ;
+        var makdt = req.body.makdt ;
+
+        res.redirect('/benh');
+        client.query('INSERT INTO benh VALUES($1, $2, $3, $4)',
+            [mab, benh, mat, makdt]
+        );
+        
+    }
+    else 
+        res.render('login-register/login',{ 
+            title: "TRY Login",
+            logined: false,
+            username: null,
+            type: 'khack'
+        });
+});
+router.post('/delete-benh', function(req, res) {
+    req.session.lastPage = '/benh';
+    if(req.session.type=='boss') {
+        res.redirect('/benh');
+        client.query('DELETE FROM bacsi WHERE mab=$1 ',[req.body.mab], function(err, result){
+            if(err) {
+                console.log(err);
+            }
+        });
+    }
+    else 
+        res.render('login-register/login',{ 
+            title: "TRY Login",
+            logined: false,
+            username: null,
+            type: 'khack'
+        });
 });
 
+
+
+
+// BENH AN
 router.get('/benh-an',  function(req, res) {
 
     pg.connect(connect, function(err, client, done){
@@ -306,9 +418,7 @@ router.get('/hoa-don',  function(req, res) {
   
     client.query('SELECT * FROM hoadon', function(err, result){
         if(err) return console.log("Can't SELECT FROM TABLE");
-
         var str = result.rows;
-        // console.log(str);
         if(str)  res.render('list/hoadon', {data: str, title: 'Hóa Đơn'});
         else res.send("CAN'T GET LINK");
     });  
@@ -321,7 +431,7 @@ router.get('/khoa',  function(req, res) {
 
             var str = result.rows;
             var data  = JSON.stringify(result.rows);
-            if(str) //res.end("req.session.loggedIn");
+            if(str) 
              res.render('list/khoa', {
                 data: data, 
                 title: 'Khoa',

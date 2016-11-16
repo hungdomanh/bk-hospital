@@ -10,15 +10,12 @@
     <input type="password" name="password" placeholder="password" ng-model="password" /><br>
     <input type="email" name='email' placeholder="email" ng-model="email" /><br><br>
     <div ng-show="full"><input  type="submit" value="Đăng kí"/>
+    <button ng-hide="full">Đăng kí</button>
 	</div>
 </form>
 <br>
 <li><a href="/register">Sign Up</a></li>
 <li><a href="/login">Login</a></li>
-<!-- <li><a href="/logout">Log Out</a></li> -->
-
-
-
 
 </div>
 
@@ -43,8 +40,6 @@
 				}
 				if($scope.username != usernameLast)	$scope.tontai = false;
 			}
-			
-
 			if(!$scope.tontai && $scope.username && $scope.password) {
 				$scope.full = true;
 			}
