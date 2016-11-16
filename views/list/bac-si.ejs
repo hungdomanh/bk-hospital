@@ -172,15 +172,16 @@
 		var j = 0;
 		for(var i=0; i<data.length; i++) {
 			if(data[i].mabs) {
-				bacsi[i] = {};
-				bacsi[i].mabs = data[i].mabs;
-				bacsi[i].mak = data[i].mak ;
-				bacsi[i].ngaysinh = data[i].ngaysinh ;
-				bacsi[i].gioitinh = data[i].gioitinh ;
-				bacsi[i].diachi = data[i].diachi ;
-				bacsi[i].hoten = data[i].hoten ;
-				bacsi[i].trangthai = data[i].trangthai ;
-				bacsi[i].kinhnghiem = data[i].kinhnghiem ;
+				bacsi[j] = {};
+				bacsi[j].mabs = data[i].mabs;
+				bacsi[j].mak = data[i].mak ;
+				bacsi[j].ngaysinh = data[i].ngaysinh ;
+				bacsi[j].gioitinh = data[i].gioitinh ;
+				bacsi[j].diachi = data[i].diachi ;
+				bacsi[j].hoten = data[i].hoten ;
+				bacsi[j].trangthai = data[i].trangthai ;
+				bacsi[j].kinhnghiem = data[i].kinhnghiem ;
+				j++;
 			}
 
 			khoa[data[i].mak] = data[i].khoa;

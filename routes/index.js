@@ -94,7 +94,7 @@ router.post('/login', function(req, res) {
                 req.session.loggedIn = true;
                 req.session.type = result.rows[0].type;
                 req.session.username = username;
-
+                res.redirect(req.session.lastPage);
                 res.render('home',{
                     title: "BK-Hospital",
                     logined: req.session.loggedIn,
@@ -279,7 +279,7 @@ router.post('/delete-bac-si', function(req, res) {
 router.get('/benh',  function(req, res) {
     req.session.lastPage = '/benh';
     if(req.session.loggedIn) {
-        client.query('SELECT mab, mat, benh, makdt, thuoc FROM benh join thuoc using (mat) order by mab', function(err, result){
+        client.query('SELECT mab, mat, benh, makdt, thuoc FROM benh right join thuoc using (mat) order by mab', function(err, result){
             if(err) return console.log("Can't SELECT FROM TABLE");
             var str = result.rows;
             var data  = JSON.stringify(result.rows);

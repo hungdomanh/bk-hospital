@@ -68,7 +68,7 @@
 					Mã Thuốc:   <input type="number" name="mat" ng-model="matAdd"><br><br>
 					Thuốc: {{thuoc[matAdd]}}
 					Mã Khoa:    <input type="number" name="mak" ng-model="makAdd"><br><br>
-			        <!-- Khoa: {{khoa[makAdd]}}<br><br> -->
+			        Khoa: {{khoa[makAdd]}} <br><br>
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
@@ -87,12 +87,12 @@
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>Chỉnh sửa</h4>
 			</div>
 			<div class="modal-body">
-				Mã Bệnh: {{mabAdd}} <input type ="hidden" value={{mabAdd}} name="mab"><br><br>
-				Bệnh:               <input type ="text" name="benh"><br><br>
-				Mã Thuốc:           <input type ="number" name="mat" ng-model="matAdd"><br><br>
-				Thuốc: {{thuoc[matAdd]}}
-				Mã Khoa:            <input type ="number" name="mak" ng-model="makAdd"><br><br>
-				<!-- Khoa: {{khoa[makAdd]}}<br><br> -->
+				Mã Bệnh: {{mabEdit}} <input type ="hidden" value={{mabEdit}} name="mab"><br><br>
+				Bệnh:               <input type ="text" value={{benhEdit}} name="benh"><br><br>
+				Mã Thuốc:           <input type ="number" name="mat" ng-model="matEdit"><br><br>
+				Thuốc: {{thuoc[matEdit]}} <br><br>
+				Mã Khoa:            <input type ="number" name="mak" ng-model="makEdit"><br><br>
+				Khoa: {{khoa[makEdit]}}<br><br>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
@@ -111,12 +111,12 @@
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>Xóa</h4>
 		      </div>
 		      <div class="modal-body">
-				Mã Bệnh: {{mabAdd}} <input type ="hidden" value={{mabAdd}} name="mab"><br><br>
-				Bệnh:               <input type ="text" name="benh"><br><br>
-				Mã Thuốc:           <input type ="number" name="mat" ng-model="matAdd"><br><br>
-				Thuốc: {{thuoc[matAdd]}}
-				Mã Khoa:            <input type ="number" name="mak" ng-model="makAdd"><br><br>
-				<!-- Khoa: {{khoa[makAdd]}}<br><br> -->
+				Mã Bệnh:  {{mabEdit}} <br><br>
+				Bệnh:     {{benhEdit}}  <br><br>
+				Mã Thuốc: {{matEdit}}       <br><br>
+				Thuốc:    {{thuoc[matEdit]}}  <br><br>
+				Mã Khoa:    {{makEdit}}       <br><br>
+				Khoa: {{khoa[makEdit]}}<br><br>
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
@@ -134,66 +134,35 @@
 
 		var s = '<%-data%>';
 		var data = JSON.parse(s);
-		$scope.data = data;
 		var benh = [];
 		var khoa = [];
+		var thuoc = [];
 
-		var test = function(x, arr) {
-			for(var i=0; i < arr.length; i++) {
-				if(x == arr[i].mak) return true;
-			}
-			return false;
-		}
-		var j = 0;
+		var j =0;
 		for(var i=0; i<data.length; i++) {
+
 			if(data[i].mab) {
-				benh[i] = {};
-				benh[i].mab = data[i].mab;
-				benh[i].mak = data[i].mak ;
-				benh[i].ngaysinh = data[i].ngaysinh ;
-				benh[i].gioitinh = data[i].gioitinh ;
-				benh[i].diachi = data[i].diachi ;
-				benh[i].hoten = data[i].hoten ;
-				benh[i].trangthai = data[i].trangthai ;
-				benh[i].kinhnghiem = data[i].kinhnghiem ;
+				benh[j] = {};
+				benh[j].mab = data[i].mab;
+				benh[j].benh = data[i].benh ;
+				benh[j].mat = data[i].mat ;
+				benh[j].thuoc = data[i].thuoc ;
+				benh[j].mak = data[i].mak ;
+				benh[j].khoa = data[i].khoa ;
+				j++;
 			}
+
 
 			khoa[data[i].mak] = data[i].khoa;
-
-			
-			
+			thuoc[data[i].mat] = data[i].thuoc;
 		}
+
+		$scope.data = data;
 		$scope.benh = benh;
 		$scope.khoa = khoa;
+		$scope.thuoc = thuoc;
 
-
-
-		$scope.setEdit = function(index){
-		 	for(var i =0; i<benh.length; i++) {
-		 		if(benh[i].mab == index)	{
-		 			$scope.mabEdit = benh[i].mab;
-		 			$scope.makEdit = benh[i].mak;
-		 			$scope.hotenEdit = benh[i].hoten;
-		 			var s = benh[i].ngaysinh;
-		 			$scope.ngaysinhEdit = parseInt(s.slice(0, 2), 10);
-		 			$scope.thangsinhEdit = parseInt(s.slice(3, 5), 10);
-		 			$scope.namsinhEdit = parseInt(s.slice(6, 10), 10); 			
-		 			if(benh[i].gioitinh == 'Nam') {
-		 				$scope.nam = true;
-		 				$scope.nu = false;
-		 			}
-		 			else {
-		 				$scope.nam = false;
-		 				$scope.nu = true;
-		 			}
-		 			$scope.diachiEdit = benh[i].diachi;
-		 			$scope.kinhnghiemEdit = benh[i].kinhnghiem;
-		 			$scope.trangthaiEdit = benh[i].trangthai;
-
-		 		}
-		 	}
-		 }
-
+		console.log(benh);
 		$scope.setAdd = function(){
 			var test = 0;
 		 	for(var i = 0; i<benh.length-1; i++) {
@@ -203,10 +172,21 @@
 		 		}
 		 	}
 		 	if(test == 0) {
-		 		$scope.mabAdd = benh[i].mab+1;
+		 		$scope.mabAdd = data[i].mab+1;
 		 	}
 		 };
 
+		$scope.setEdit = function(index){
+		 	for(var i =0; i<benh.length; i++) {
+		 		if(benh[i].mab == index)	{
+		 			$scope.mabEdit = benh[i].mab;
+		 			$scope.makEdit = benh[i].mak;
+		 			$scope.matEdit = benh[i].mat;
+		 			$scope.benhEdit = benh[i].benh;
+		 			
+		 		}
+		 	}
+		 }
 	}]);
 
 </script>
