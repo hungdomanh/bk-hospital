@@ -27,7 +27,7 @@
 			<tr class="titleTable">
 				<th scope="col" title="mbk">		Mã Khoa		</th>
 				<th scope="col" title="khoa">		Khoa		</th>
-				<th scope="col" title="quantri">	Quản trị	</th>
+				<th ng-show=<%-type=='boss'%> scope="col" title="quantri">	Quản trị	</th>
 			</tr>
 			<tr ng-repeat="x in data | orderBy: sort | filter: search track by $index">
 

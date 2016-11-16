@@ -42,7 +42,7 @@
         <li ng-show=<%-type=='benhnhan'%>>
           <a href="/user/ho-so-benh-an">Hồ sơ bệnh án <span class="glyphicon glyphicon-question-sign"></span></a>
         </li>
-        <li ng-show=<%-type=='boss'%> class="dropdown">
+        <li ng-show=<%-type=='boss' || type=='bacsi'%> class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" href="/">Danh sách<span class="caret"></span></a>
           <ul class="dropdown-menu" display="none">
             <li><a href="/bac-si">Bác sĩ</a></li>

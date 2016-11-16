@@ -34,7 +34,7 @@
 				<th scope ="col" title="thuoc">Tên Thuốc</th>
 				<th scope ="col" title="mak">Mã Khoa</th>
 				<!-- <th scope ="col" title="khoa">Khoa Điều Trị</th> -->
-				<th scope ="col" title="quantri">Quản Trị</th>
+				<th ng-show=<%-type=='boss'%> scope ="col" title="quantri">Quản Trị</th>
 		     </tr>
 		  <tr ng-repeat="x in benh | orderBy: sort | filter: search track by $index"  ng-show='x.mab'>
 		    <td>{{ x.mab}}</td>

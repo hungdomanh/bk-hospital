@@ -38,7 +38,7 @@
 				<th scope="col" title="diachi">		Địa Chỉ		</th>
 				<th scope="col" title="kinhnghiem">	Kinh Nghiệm	</th>
 				<th scope="col" title="trangthai">	Trạng Thái  </th>
-				<th scope="col" title="quantri">	Quản trị	</th>
+				<th ng-show=<%-type=='boss'%> scope="col" title="quantri">	Quản trị	</th>
 			</tr>
 		  <tr ng-repeat="x in bacsi | orderBy: sort | filter: search track by $index"  ng-show='x.mabs'>
 		    <td>{{ x.mabs}}</td>
@@ -48,7 +48,7 @@
 		    <td>{{ x.gioitinh }}</td>
 		    <td>{{ x.diachi }}</td>
 		    <td>{{ x.kinhnghiem }}</td>
-		    <td>{{ x.trangthai }}</td>
+		    <td><span ng-show="x.trangthai">Hoạt động</span><span ng-hide="x.trangthai">Trống</span></td>
 		    <td ng-show=<%-type=='boss'%> >
 		    	<button ng-click="setEdit(x.mabs)" class="editButton" data-target='#bacsiEditFormModal' data-toggle="modal" >
 		    		Sửa
@@ -56,9 +56,7 @@
 		    	<button ng-click="setEdit(x.mabs)" class="deleteButton" data-target='#bacsiDeleteFormModal' data-toggle="modal" >
 		    		Xóa
 		    	</button>
-
 		    </td>
-
 		  </tr>
 		</table>
 
@@ -82,7 +80,6 @@
 						    <input type="radio" name="gioitinh" value="Nữ" />Nữ<br><br>
 		        Địa chỉ:    <input type="text" name="diachi"><br><br>
 		        Năm Kinh Nghiệm:      <input type="number" name="kinhnghiem"> năm<br><br>
-
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
@@ -112,7 +109,7 @@
 		        Địa chỉ:    <input type="text"   value={{diachiEdit}} name="diachi"><br><br>
 		        Năm Kinh Nghiệm:   <input type="number" value={{kinhnghiemEdit}} name="kinhnghiem"> năm<br><br>
 		        Trạng thái: <input type="radio"  value="1" ng-checked='trangthaiEdit' name="trangthai" />Hoạt động
-						    <input type="radio"  value="0" ng-checked='!trangthaiEdit' name="trangthai" />Nghỉ<br><br>
+						    <input type="radio"  value="0" ng-checked='!trangthaiEdit' name="trangthai" />Trống<br><br>
 
 		      </div>
 		      <div class="modal-footer">
@@ -137,11 +134,11 @@
 		        Họ Tên:     {{hotenEdit}}<br><br>
 		        Ngày Sinh:  {{ngaysinhEdit}}/{{thangsinhEdit}}/{{namsinhEdit}} <br><br>
 		        Giới tính:  <span ng-show = 'nam'>Nam</span>
-		        			<span ng-show = 'nu'>Nữ</span>
+		        			<span ng-show = 'nu'>Nữ</span><br><br>
 		        Địa chỉ:    {{diachiEdit}} <br><br>
 		        Năm Kinh Nghiệm:   {{kinhnghiemEdit}} năm<br><br>
 		        Trạng thái: <span ng-show = 'trangthaiEdit'>Hoạt động</span>
-		        			<span ng-hide = 'trangthaiEdit'>Nghỉ</span>
+		        			<span ng-hide = 'trangthaiEdit'>Trống</span>
 		        
 		      </div>
 		      <div class="modal-footer">

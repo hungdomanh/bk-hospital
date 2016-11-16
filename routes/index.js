@@ -385,26 +385,122 @@ router.get('/benh-an',  function(req, res) {
 
             var str = result.rows;
             // console.log(str);
-            if(str)  res.render('list/benhan', {data: str, title: 'Bệnh Án'});
+            if(str)  res.render('list/benh-an', {data: str, title: 'Bệnh Án'});
             else res.send("CAN'T GET LINK");
         });  
     });
 });
 // BENH NHAN /////////////////////////////
 router.get('/benh-nhan',  function(req, res) {
-    
-    client.query('SELECT * FROM benhnhan', function(err, result){
-        if(err) return console.log("Can't SELECT FROM TABLE");
-
-        var str = result.rows;
-        // console.log(str);
-        if(str)  res.render('list/benhnhan', {data: str, title: 'Bệnh Nhân'});
-        else res.send("CAN'T GET LINK");
-    });  
+    req.session.lastPage = '/benh-nhan';
+    if(req.session.loggedIn) {
+        client.query('SELECT * FROM benhnhan order by mabn', function(err, result){
+            if(err) return console.log("Can't SELECT FROM TABLE");
+            var str = result.rows;
+            var data  = JSON.stringify(result.rows);
+            console.log(data);
+            if(str) 
+                res.render('list/benh-nhan', {
+                    data: data, 
+                    title: 'Bệnh Nhân',
+                    logined: req.session.loggedIn,
+                    username: req.session.username,
+                    type: req.session.type
+                });
+            else res.end("CAN'T GET LINK");
+        })
+    }
+    else 
+        res.render('login-register/login',{
+            title: "Login",
+            logined: false,
+            username: null,
+            type: 'khack'
+        });
 });
+router.post('/add-benh-nhan', function(req, res) {
+    req.session.lastPage = '/benh-nhan';
+    console.log(req.body.trangthai );
+    if(req.session.type=='boss' && req.body.mabn && req.body.trangthai 
+        && req.body.hoten && req.body.gioitinh && req.body.diachi 
+        && req.body.dienthoai && req.body.ngaysinh && req.body.thangsinh 
+        && req.body.namsinh){
+        var mabn = req.body.mabn ;
+        var hoten = req.body.hoten ;
+        var gioitinh = req.body.gioitinh ;
+        var diachi = req.body.diachi ;
+        var trangthai = req.body.trangthai;
+        var dienthoai = req.body.dienthoai +'0';
+        var ngaysinh = req.body.ngaysinh ;
+        var thangsinh = req.body.thangsinh ;
+        var namsinh = req.body.namsinh ;
+        if(ngaysinh < 10 )  ngaysinh = '0' + ngaysinh;
+        if(thangsinh < 10 ) thangsinh = '0' + thangsinh;
+        var s = ngaysinh + '/' + thangsinh +'/' + namsinh;
 
 
+        res.redirect('/benh-nhan');
+        client.query('INSERT INTO benhnhan VALUES($1, $2, $3, $4, $5, $6, $7)',
+            [mabn, hoten, s, gioitinh, diachi, dienthoai, trangthai]
+        );
+    }
+    else 
+        res.render('login-register/login',{ 
+            title: "TRY Login",
+            logined: false,
+            username: null,
+            type: 'khack'
+        });
+});
+router.post('/edit-benh-nhan', function(req, res) {
+    req.session.lastPage = '/benh-nhan';
+    if(req.session.type=='boss' && req.body.mabn && req.body.trangthai 
+        && req.body.hoten && req.body.gioitinh && req.body.diachi 
+        && req.body.dienthoai && req.body.ngaysinh){
+        var mabn = req.body.mabn ;
+        var hoten = req.body.hoten ;
+        var gioitinh = req.body.gioitinh ;
+        var diachi = req.body.diachi ;
+        var trangthai = req.body.trangthai;
+        var dienthoai = req.body.dienthoai +'0';
+        var ngaysinh = req.body.ngaysinh ;
+        var thangsinh = req.body.thangsinh ;
+        var namsinh = req.body.namsinh ;
+        if(ngaysinh < 10 )  ngaysinh = '0' + ngaysinh;
+        if(thangsinh < 10 ) thangsinh = '0' + thangsinh;
+        var s = ngaysinh + '/' + thangsinh +'/' + namsinh;
 
+        res.redirect('/benh-nhan');
+        client.query('UPDATE benhnhan SET hoten = $2, ngaysinh = $3, gioitinh = $4, diachi = $5, dienthoai = $6, trangthai = $7 WHERE mabn = $1',
+            [mabn, hoten, s, gioitinh, diachi, dienthoai, trangthai]
+        );
+    }
+    else 
+        res.render('login-register/login',{ 
+            title: "TRY Login",
+            logined: false,
+            username: null,
+            type: 'khack'
+        });
+});
+router.post('/delete-benh-nhan', function(req, res) {
+    req.session.lastPage = '/benh-nhan';
+    if(req.session.type=='boss') {
+        res.redirect('/benh-nhan');
+        client.query('DELETE FROM benhnhan WHERE mabn=$1 ',[req.body.mabn], function(err, result){
+            if(err) {
+                console.log(err);
+            }
+        });
+    }
+    else 
+        res.render('login-register/login',{ 
+            title: "TRY Login",
+            logined: false,
+            username: null,
+            type: 'khack'
+        });
+});
 
 
 // DON THUOC /////////////////////////////

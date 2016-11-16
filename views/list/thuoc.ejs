@@ -31,7 +31,7 @@
 				<th scope="col" title="thuoc">		Thuốc	</th>
 				<th scope="col" title="donvi"> 		Đơn Vị 	</th>
 				<th scope="col" title="gia">		Giá	(VNĐ)</th>
-				<th scope="col" title="quantri">	Quản trị</th>
+				<th ng-show=<%-type=='boss'%> scope="col" title="quantri">	Quản trị</th>
 			</tr>
 			<tr ng-repeat="x in data | orderBy: sort | filter: search track by $index">
 

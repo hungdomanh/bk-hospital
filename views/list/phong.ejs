@@ -31,7 +31,7 @@
 				<th scope="col" title="phong">		Phòng		</th>
 				<th scope="col" title="gia1ngaydem">Giá/24h	(VNĐ) 	</th>
 				<th scope="col" title="trangthai">	Trạng Thái	</th>
-				<th scope="col" title="quantri">	Quản trị	</th>
+				<th ng-show=<%-type=='boss'%> scope="col" title="quantri">	Quản trị	</th>
 			</tr>
 			<tr ng-repeat="x in data | orderBy: sort | filter: search track by $index">
 
