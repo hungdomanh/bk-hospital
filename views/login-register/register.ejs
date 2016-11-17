@@ -1,25 +1,45 @@
 <% include ../layout.ejs %>
-<div ng-controller="registerCtrl">
-<h1>Sign up</h1>
-<br>
 
-<br>
-<form action="/register-submit" method="POST" ng-init="tontai=false">
-    <input type="text" name="username" placeholder="username" ng-model="username" />
-    <span ng-show="tontai">Đã tồn tại</span><br>
-    <input type="password" name="password" placeholder="password" ng-model="password" /><br>
-    <input type="email" name='email' placeholder="email" ng-model="email" /><br><br>
-    <div ng-show="full"><input  type="submit" value="Đăng kí"/>
-    <button ng-hide="full">Đăng kí</button>
+
+
+<!-- </div> -->
+<div ng-controller="registerCtrl">
+<div  class='content'>
+
+
+
+
+  <div class="row">
+   <div class="col-md-5"></div>
+   <div class="col-md-2">
+   
+    <h1>Sign up</h1>
+   <form action="/register-submit" method="POST" ng-init="tontai=false">
+
+
+    <div class="form-group ">
+           <label for="email">Tài khoản :</label>
+           <input class="form-control" type="text" name="username" placeholder="Username" ng-model="username">
+           <br><span ng-show="tontai">Đã tồn tại</span>
+    </div>
+
+    <!-- <input type="password" name="password" placeholder="password" ng-model="password" /><br> -->
+    <div class="form-group">
+          <label for="pwd">Password:</label>
+          <input class="form-control" type="password" name="password" placeholder="Password" ng-model="password">
+    </div>
+    <div>
+    <label for="pwd">Email:</label>
+    	<input class="form-control" type="email" name='email' placeholder="" ng-model="email" /><br><br>
+    <div ng-show="full"><input class="btn btn-default"  type="submit" value="Đăng kí"/>
+    </div>
 	</div>
 </form>
-<br>
-<li><a href="/register">Sign Up</a></li>
-<li><a href="/login">Login</a></li>
-
-</div>
-
-
+     
+  </div>
+  </div>
+  </div>
+  </div>
 
 
 <script>
@@ -40,6 +60,8 @@
 				}
 				if($scope.username != usernameLast)	$scope.tontai = false;
 			}
+			
+
 			if(!$scope.tontai && $scope.username && $scope.password) {
 				$scope.full = true;
 			}
@@ -51,6 +73,9 @@
 			$timeout(check, i*100);
 		}
 
+		var loginError = function() {
+			alert('dang ki lai')
+		}
 
 	}]);
 
