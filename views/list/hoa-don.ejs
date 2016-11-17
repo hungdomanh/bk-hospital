@@ -1,1 +1,75 @@
-HOA DON
+<% include ../layout.ejs %>
+
+<script src="/javascripts/list.js"></script>
+
+<div class='content' ng-controller="hoadonCtrl">
+	<div class="container">
+		<div class='row search-add-sort'>
+			<div class='col-xs-5 search'>
+				Tìm Kiếm: <input type="text" ng-model='search'> {{hoadon.length}} Đơn Thuốc
+			</div>
+			<div class='col-xs-2 add'>
+				
+			</div>
+			<div class='col-xs-5 sort' ng-init="sort='mab'">
+				Sắp xếp:
+				<select ng-model="sort">
+					<option value ="mabn">Mã Bệnh Nhân</option>
+					<option value ="benhnhan">Bệnh Nhân</option>
+					<option value ="benh">Bệnh</option>					
+					<option value ="tienthuoc">Tiền Thuốc</option>
+					<option value ="tienphong">Tiền Phòng</option>
+					<option value ="tienkhambenh">Tiền Khám Bệnh</option>
+					<option value ="tongchiphi">Tổng Chi Phí</option>
+					<option value ="ngaycap">Ngày Cấp</option>
+		        </select>
+			</div>
+		</div>
+
+		<table>
+			<tr class="days">
+				<th scope ="col" >Mã Bệnh Nhân </th>
+				<th scope ="col" >Bệnh Nhân</th>
+				<th scope ="col" >Bệnh</th>				
+				<th scope ="col" >Tiền Thuốc</th>
+				<th scope ="col" >Tiền Phòng</th>
+				<th scope ="col" >Tiền Khám Bệnh</th>
+				<th scope ="col" >Tổng Chi Phí</th>
+				<th scope ="col" >Ngày Cấp</th>
+		     </tr>
+		  <tr ng-repeat="x in hoadon | orderBy: sort | filter: search track by $index">
+		    <td>{{ x.mabn}}</td>
+		    <td>{{ x.benhnhan}}</td>
+		    <td>{{ x.benh}}</td>
+		    <td>{{ x.tienthuoc}}</td>
+		    <td>{{ x.tienphong}}</td>
+		    <td>{{ x.tienkhambenh}}</td>
+		    <td>{{ x.tongchiphi}}</td>
+		    <td>{{ x.ngaycap}}</td>
+		  </tr>
+		</table>
+
+	</div>  <!-- container -->
+</div>  <!-- controller -->
+
+<script>
+	app.controller('hoadonCtrl', ['$scope', function($scope){
+
+		var s = '<%-data%>';
+		var data = JSON.parse(s);
+		$scope.hoadon = data;
+
+	}]);
+
+</script>
+
+
+
+
+<!-- 
+
+
+
+
+ -->
+

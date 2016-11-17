@@ -1,0 +1,78 @@
+<% include ../layout.ejs %>
+
+<script src="/javascripts/list.js"></script>
+
+<div class='content' ng-controller="khambenhCtrl">
+	<div class="container">
+		<div class='row search-add-sort'>
+			<div class='col-xs-5 search'>
+				Tìm Kiếm: <input type="text" ng-model='search'> {{khambenh.length}} Lượt Khám Bệnh
+			</div>
+			<div class='col-xs-2 add'>
+				
+			</div>
+			<div class='col-xs-5 sort' ng-init="sort='mabn'">
+				Sắp xếp:
+				<select ng-model="sort">
+					<option value ="makb">Mã Khám Bệnh</option>
+					<option value ="benhnhan">Bệnh Nhân</option>
+					<option value ="bacsi">Bác Sĩ</option>
+					<option value ="phong">Phòng</option>	
+					<option value ="benh">Bệnh</option>					
+					<option value ="thuoc">Thuốc</option>
+					<option value ="ngaykham">Ngày Khám</option>
+					<option value ="noidung">Nội Dung</option>
+					<option value ="gia">Chi Phí</option>
+		        </select>
+			</div>
+		</div>
+
+		<table>
+			<tr class="days">
+				<th scope ="col" >Mã Khám Bệnh </th>
+				<th scope ="col" >Bệnh Nhân</th>
+				<th scope ="col" >Bác Sĩ</th>				
+				<th scope ="col" >Phòng</th>
+				<th scope ="col" >Bệnh </th>
+				<th scope ="col" >Thuốc</th>
+				<th scope ="col" >Ngày Khám</th>
+				<th scope ="col" >Nội Dung</th>
+				<th scope ="col" >Chi Phí</th>
+		     </tr>
+		  <tr ng-repeat="x in khambenh | orderBy: sort | filter: search track by $index">
+		    <td>{{ x.makb}}</td>
+		    <td>{{ x.benhnhan}}</td>
+		    <td>{{ x.bacsi}}</td>
+		    <td>{{ x.phong}}</td>
+		    <td>{{ x.benh}}</td>
+		    <td>{{ x.thuoc}}</td>
+		    <td>{{ x.ngaykham}}</td>
+		    <td>{{ x.noidung}}</td>
+		    <td>{{ x.chiphi}}</td>
+		  </tr>
+		</table>
+
+	</div>  <!-- container -->
+</div>  <!-- controller -->
+
+<script>
+	app.controller('khambenhCtrl', ['$scope', function($scope){
+
+		var s = '<%-data%>';
+		var data = JSON.parse(s);
+		$scope.khambenh = data;
+
+	}]);
+
+</script>
+
+
+
+
+<!-- 
+
+
+
+
+ -->
+

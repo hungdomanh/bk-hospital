@@ -37,7 +37,7 @@
 				<th scope ="col" >Phòng</th>
 				<th scope ="col" >Giá (VNĐ)</th>
 		     </tr>
-		  <tr ng-repeat="x in donthuoc | orderBy: sort | filter: search track by $index"  ng-show='x.mab'>
+		  <tr ng-repeat="x in donthuoc | orderBy: sort | filter: search track by $index">
 		    <td>{{ x.madt}}</td>
 		    <td>{{ x.benhnhan}}</td>
 		    <td>{{ x.bacsi}}</td>

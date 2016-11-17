@@ -394,23 +394,34 @@ router.post('/delete-benh', function(req, res) {
 
 
 
-
 // BENH AN /////////////////////////////
 router.get('/benh-an',  function(req, res) {
-
-    pg.connect(connect, function(err, client, done){
-        if(err) {
-            return console.log("Can not connect postgresql");
-        }
-        client.query('SELECT * FROM benhan', function(err, result){
-            if(err) return console.log("Can't SELECT FROM TABLE");
-
+    req.session.lastPage = '/benh-an';
+    if(loai23(req.session.type)) {
+    client.query('select maba, benhnhan.hoten as benhnhan, bacsi.hoten as bacsi, phong.phong, benh.benh, ngayvao, ngayra from benhan left join benhnhan using (mabn) left join bacsi using (mabs) left join phong using (map) left join benh using (mab) ', function(err, result){
+        if(err) return console.log("Can't SELECT FROM TABLE");
             var str = result.rows;
-            if(str)  res.render('list/benh-an', {data: str, title: 'Bệnh Án'});
-            else res.send("CAN'T GET LINK");
+            var data  = JSON.stringify(result.rows);
+            if(str) 
+             res.render('list/benh-an', {
+                data: data, 
+                title: 'Bệnh Án',
+                logined: req.session.loggedIn,
+                username: req.session.username,
+                type: req.session.type
+            });
+            else res.end("CAN'T GET LINK");
         });  
-    });
+    }
+    else 
+        res.render('login-register/login',{
+            title: "Login",
+            logined: false,
+            username: null,
+            type: 'khack'
+        }); 
 });
+
 // BENH NHAN /////////////////////////////
 router.get('/benh-nhan',  function(req, res) {
     req.session.lastPage = '/benh-nhan';
@@ -527,10 +538,8 @@ router.get('/don-thuoc',  function(req, res) {
    if(loai23(req.session.type)) {
       client.query('select madt, benhnhan.hoten as benhnhan, bacsi.hoten as bacsi, thuoc.thuoc, soluong, benh.benh, phong.phong, donthuoc.gia from donthuoc left join benhnhan using (mabn) left join bacsi using (mabs) left join thuoc using (mat) left join phong using (map) left join benh using (mab) ', function(err, result){
             if(err) return console.log("Can't SELECT FROM TABLE");
-
             var str = result.rows;
             var data  = JSON.stringify(result.rows);
-            console.log(data);
             if(str) 
              res.render('list/don-thuoc', {
                 data: data, 
@@ -538,7 +547,6 @@ router.get('/don-thuoc',  function(req, res) {
                 logined: req.session.loggedIn,
                 username: req.session.username,
                 type: req.session.type
-
             });
             else res.end("CAN'T GET LINK");
         });  
@@ -553,13 +561,30 @@ router.get('/don-thuoc',  function(req, res) {
 });
 // HOA DON /////////////////////////////
 router.get('/hoa-don',  function(req, res) {
-  
-    client.query('SELECT * FROM hoadon', function(err, result){
+    req.session.lastPage = '/hoa-don';
+    if(loai23(req.session.type)) {
+    client.query('select mabn, benhnhan.hoten, benh.benh, tienthuoc, tienphong, tienkhambenh, tongchiphi, ngaycap from hoadon left join benhnhan using (mabn) left join benh using (mab)', function(err, result){
         if(err) return console.log("Can't SELECT FROM TABLE");
-        var str = result.rows;
-        if(str)  res.render('list/hoadon', {data: str, title: 'Hóa Đơn'});
-        else res.send("CAN'T GET LINK");
-    });  
+            var str = result.rows;
+            var data  = JSON.stringify(result.rows);
+            if(str) 
+             res.render('list/don-thuoc', {
+                data: data, 
+                title: 'Hóa Đơn',
+                logined: req.session.loggedIn,
+                username: req.session.username,
+                type: req.session.type
+            });
+            else res.end("CAN'T GET LINK");
+        });  
+    }
+    else 
+        res.render('login-register/login',{
+            title: "Login",
+            logined: false,
+            username: null,
+            type: 'khack'
+        });
 });
 
 // KHOA /////////////////////////
@@ -640,13 +665,30 @@ router.post('/delete-khoa', function(req, res) {
 
 // KHAM BENH /////////////////////////////
 router.get('/kham-benh',  function(req, res) {
-  
-    client.query('SELECT * FROM hoadon', function(err, result){
+    req.session.lastPage = '/hoa-don';
+    if(loai23(req.session.type)) {
+    client.query('select makb, benhnhan.hoten as benhnhan, bacsi.hoten as bacsi, phong.phong, benh.benh, thuoc.thuoc, ngaykham, noidung, khambenh.gia from khambenh left join benhnhan using (mabn) left join bacsi using (mabs) left join thuoc using (mat) left join phong using (map) left join benh using (mab)', function(err, result){
         if(err) return console.log("Can't SELECT FROM TABLE");
-        var str = result.rows;
-        if(str)  res.render('list/hoadon', {data: str, title: 'Hóa Đơn'});
-        else res.send("CAN'T GET LINK");
-    });  
+            var str = result.rows;
+            var data  = JSON.stringify(result.rows);
+            if(str) 
+             res.render('list/kham-benh', {
+                data: data, 
+                title: 'Khám Bệnh',
+                logined: req.session.loggedIn,
+                username: req.session.username,
+                type: req.session.type
+            });
+            else res.end("CAN'T GET LINK");
+        });  
+    }
+    else 
+        res.render('login-register/login',{
+            title: "Login",
+            logined: false,
+            username: null,
+            type: 'khack'
+        }); 
 });
 
 // PHONG /////////////////////////
