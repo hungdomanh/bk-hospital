@@ -1,8 +1,9 @@
 <% include ../layout.ejs %>
-<div class='content'>
-<h2>Login:</h2>
+<div class='content' ng-controller="loginCtrl">
+<h2><%-title%></h2>
 
 <form action="/login" method="POST">
+	<h4 class="textErrorLogin"></h4>
 	Username: <input type="text" name="username" placeholder="Username"><br>
 	Password: <input type="password" name="password" placeholder="Password"><br>
 	<input type="submit" value="Login">
@@ -10,5 +11,18 @@
 <br>
 <br>
 <li><a href="/register">Sign Up</a></li>
+
+
+
+<script>
+	app.controller('loginCtrl', ['$scope', function($scope){
+		
+
+
+
+	}]);
+
+
+</script>
 
 </div>

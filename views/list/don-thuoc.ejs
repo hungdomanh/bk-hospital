@@ -1,1 +1,75 @@
-DON THUOC
+<% include ../layout.ejs %>
+
+<script src="/javascripts/list.js"></script>
+
+<div class='content' ng-controller="donthuocCtrl">
+	<div class="container">
+		<div class='row search-add-sort'>
+			<div class='col-xs-5 search'>
+				Tìm Kiếm: <input type="text" ng-model='search'> {{donthuoc.length}} Đơn Thuốc
+			</div>
+			<div class='col-xs-2 add'>
+				
+			</div>
+			<div class='col-xs-5 sort' ng-init="sort='mab'">
+				Sắp xếp:
+				<select ng-model="sort">
+					<option value ="madt">Mã Đơn Thuốc</option>
+					<option value ="benhnhan">Bệnh Nhân</option>
+					<option value ="bacsi">Bác Sĩ</option>					
+					<option value ="thuoc">Thuốc</option>
+					<option value ="soluong">Số lượng</option>
+					<option value ="benh">Bệnh</option>
+					<option value ="phong">Phòng</option>
+					<option value ="gia">Giá (VNĐ)</option>					
+		        </select>
+			</div>
+		</div>
+
+		<table>
+			<tr class="days">
+				<th scope ="col" >Mã Đơn Thuốc</th>
+				<th scope ="col" >Bệnh Nhân</th>
+				<th scope ="col" >Bác Sĩ</th>				
+				<th scope ="col" >Thuốc</th>
+				<th scope ="col" >Số lượng</th>
+				<th scope ="col" >Bệnh</th>
+				<th scope ="col" >Phòng</th>
+				<th scope ="col" >Giá (VNĐ)</th>
+		     </tr>
+		  <tr ng-repeat="x in donthuoc | orderBy: sort | filter: search track by $index"  ng-show='x.mab'>
+		    <td>{{ x.madt}}</td>
+		    <td>{{ x.benhnhan}}</td>
+		    <td>{{ x.bacsi}}</td>
+		    <td>{{ x.thuoc}}</td>
+		    <td>{{ x.soluong}}</td>
+		    <td>{{ x.benh}}</td>
+		    <td>{{ x.phong}}</td>
+		    <td>{{ x.gia}}</td>
+		  </tr>
+		</table>
+
+	</div>  <!-- container -->
+</div>  <!-- controller -->
+
+<script>
+	app.controller('donthuocCtrl', ['$scope', function($scope){
+
+		var s = '<%-data%>';
+		var data = JSON.parse(s);
+		$scope.donthuoc = data;
+
+	}]);
+
+</script>
+
+
+
+
+<!-- 
+
+
+
+
+ -->
+

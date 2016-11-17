@@ -5,9 +5,10 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
+var env = require('dotenv').config();
 
 // connect 
-var connect = 'postgres://tsephbbjgpmaka:mH6kFB2sIc2zOYpdVgQ_CYYzu0@ec2-54-163-251-104.compute-1.amazonaws.com:5432/d115c9p8d0kjh1';
+var connect = process.env.connectString;
 require('pg').defaults.ssl = true;
 var client = new pg.Client(connect);
 client.connect();
@@ -71,6 +72,7 @@ router.get('/thong-tin/ban-giam-doc', function(req, res) {
 router.get('/login', function(req, res) {
 	if(!req.session.loggedIn) {
         req.session.type = 'khack';
+       
         res.render('login-register/login', {
         	title: "Login", 
         	logined: req.session.loggedIn,
@@ -88,28 +90,49 @@ router.post('/login', function(req, res) {
 	if(req.body.username && req.body.password){
 		var username = req.body.username;
 		var password = req.body.password;
-        client.query('SELECT * FROM users where id=$1',[username], function(err, result){
-            if(err) return console.log("Can't SELECT FROM TABLE");
-            if(result.rows[0].pass==password)  {
-                req.session.loggedIn = true;
-                req.session.type = result.rows[0].type;
-                req.session.username = username;
-                res.redirect(req.session.lastPage);
-                res.render('home',{
-                    title: "BK-Hospital",
-                    logined: req.session.loggedIn,
-                    username: username,
-                    type: req.session.type
-                });
+
+        client.query('SELECT id FROM users order by id', function(err, result){
+            var ids = result.rows;
+            var test = 0;
+            // var data  = JSON.stringify(result.rows);
+            for(var i=0; i<ids.length; i++) {
+                if(ids[i].id == username) {
+                    test = 1;
+                    client.query('SELECT * FROM users where id=$1',[username], function(err, result){
+                        if(err) return console.log("Can't SELECT FROM TABLE");
+                        if(result.rows[0].pass==password)  {
+                            req.session.loggedIn = true;
+                            req.session.type = result.rows[0].type;
+                            req.session.username = username;
+                            res.redirect(req.session.lastPage);
+                            res.render('home',{
+                                title: "BK-Hospital",
+                                logined: req.session.loggedIn,
+                                username: username,
+                                type: req.session.type
+                            });
+                        }
+                        else
+                            res.render('login-register/login',{
+                                title: "TRY Login",
+                                logined: false,
+                                username: null,
+                                type: 'khack'
+                            });
+                    });
+                }
             }
-            else
+            if(test == 0)   {
                 res.render('login-register/login',{
                     title: "TRY Login",
                     logined: false,
                     username: null,
                     type: 'khack'
                 });
-        });  
+            }
+        });
+
+          
     };
 });
 router.get('/logout', function (req, res) {
@@ -160,7 +183,6 @@ router.post('/register-submit', function(req, res) {
         });
     };
 });
-
 
 ///////////////////////////////////////////////////////////////////////////// DANH SACH
 // BAC SI /////////////////////////////
@@ -384,7 +406,6 @@ router.get('/benh-an',  function(req, res) {
             if(err) return console.log("Can't SELECT FROM TABLE");
 
             var str = result.rows;
-            // console.log(str);
             if(str)  res.render('list/benh-an', {data: str, title: 'Bệnh Án'});
             else res.send("CAN'T GET LINK");
         });  
@@ -398,7 +419,6 @@ router.get('/benh-nhan',  function(req, res) {
             if(err) return console.log("Can't SELECT FROM TABLE");
             var str = result.rows;
             var data  = JSON.stringify(result.rows);
-            console.log(data);
             if(str) 
                 res.render('list/benh-nhan', {
                     data: data, 
@@ -420,7 +440,6 @@ router.get('/benh-nhan',  function(req, res) {
 });
 router.post('/add-benh-nhan', function(req, res) {
     req.session.lastPage = '/benh-nhan';
-    console.log(req.body.trangthai );
     if(req.session.type=='boss' && req.body.mabn && req.body.trangthai 
         && req.body.hoten && req.body.gioitinh && req.body.diachi 
         && req.body.dienthoai && req.body.ngaysinh && req.body.thangsinh 
@@ -437,7 +456,6 @@ router.post('/add-benh-nhan', function(req, res) {
         if(ngaysinh < 10 )  ngaysinh = '0' + ngaysinh;
         if(thangsinh < 10 ) thangsinh = '0' + thangsinh;
         var s = ngaysinh + '/' + thangsinh +'/' + namsinh;
-
 
         res.redirect('/benh-nhan');
         client.query('INSERT INTO benhnhan VALUES($1, $2, $3, $4, $5, $6, $7)',
@@ -462,7 +480,7 @@ router.post('/edit-benh-nhan', function(req, res) {
         var gioitinh = req.body.gioitinh ;
         var diachi = req.body.diachi ;
         var trangthai = req.body.trangthai;
-        var dienthoai = req.body.dienthoai +'0';
+        var dienthoai = '0' + req.body.dienthoai;
         var ngaysinh = req.body.ngaysinh ;
         var thangsinh = req.body.thangsinh ;
         var namsinh = req.body.namsinh ;
@@ -505,15 +523,33 @@ router.post('/delete-benh-nhan', function(req, res) {
 
 // DON THUOC /////////////////////////////
 router.get('/don-thuoc',  function(req, res) {
-  
-    client.query('SELECT * FROM donthuoc', function(err, result){
-        if(err) return console.log("Can't SELECT FROM TABLE");
+   req.session.lastPage = '/don-thuoc';
+   if(loai23(req.session.type)) {
+      client.query('select madt, benhnhan.hoten as benhnhan, bacsi.hoten as bacsi, thuoc.thuoc, soluong, benh.benh, phong.phong, donthuoc.gia from donthuoc left join benhnhan using (mabn) left join bacsi using (mabs) left join thuoc using (mat) left join phong using (map) left join benh using (mab) ', function(err, result){
+            if(err) return console.log("Can't SELECT FROM TABLE");
 
-        var str = result.rows;
-        // console.log(str);
-        if(str)  res.render('list/donthuoc', {data: str, title: 'Đơn Thuốc'});
-        else res.send("CAN'T GET LINK");
-    });  
+            var str = result.rows;
+            var data  = JSON.stringify(result.rows);
+            console.log(data);
+            if(str) 
+             res.render('list/don-thuoc', {
+                data: data, 
+                title: 'Đơn Thuốc',
+                logined: req.session.loggedIn,
+                username: req.session.username,
+                type: req.session.type
+
+            });
+            else res.end("CAN'T GET LINK");
+        });  
+    }
+    else 
+        res.render('login-register/login',{
+            title: "Login",
+            logined: false,
+            username: null,
+            type: 'khack'
+        });
 });
 // HOA DON /////////////////////////////
 router.get('/hoa-don',  function(req, res) {
@@ -553,7 +589,6 @@ router.get('/khoa',  function(req, res) {
             username: null,
             type: 'khack'
         });
-   
 });
 router.post('/add-khoa', function(req, res) {
     if(req.session.type=='boss' && req.body.mak && req.body.khoa){
@@ -601,6 +636,17 @@ router.post('/delete-khoa', function(req, res) {
             username: null,
             type: 'khack'
         });
+});
+
+// KHAM BENH /////////////////////////////
+router.get('/kham-benh',  function(req, res) {
+  
+    client.query('SELECT * FROM hoadon', function(err, result){
+        if(err) return console.log("Can't SELECT FROM TABLE");
+        var str = result.rows;
+        if(str)  res.render('list/hoadon', {data: str, title: 'Hóa Đơn'});
+        else res.send("CAN'T GET LINK");
+    });  
 });
 
 // PHONG /////////////////////////
