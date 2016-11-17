@@ -5,10 +5,13 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
-var env = require('dotenv').config({silent: true});
+var path = require('path');
+var config = require('./config.js');
+
+
 
 // connect 
-var connect = process.env.connectString;
+var connect = config.database;
 require('pg').defaults.ssl = true;
 var client = new pg.Client(connect);
 client.connect();
