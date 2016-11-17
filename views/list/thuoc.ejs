@@ -1,0 +1,166 @@
+<% include ../layout.ejs %>
+
+
+<script src="/javascripts/list.js"></script>
+
+<div class='content' ng-controller="thuocCtrl">
+	<div class="container">
+		<div class="row search-add-sort">
+			<div  class="col-xs-5 search">
+				Tìm Kiếm: <input type="text" ng-model='search'> {{data.length}} Thuốc
+			</div>
+			<div  class="col-xs-2 add">
+				<button ng-click="setAdd()" data-target='#thuocAddFormModal' data-toggle="modal" class="addButton" ng-show=<%-type=='boss'%>>
+				Thêm mới
+				</button>
+			</div>
+			<div  class="col-xs-5 sort " ng-init="sort='mat'">
+				Sắp xếp: 
+				<select ng-model="sort">
+					<option value ="mat">Mã Thuốc</option>
+					<option value ="thuoc">Tên Thuốc</option>
+					<option value ="donvi">Đơn Vị</option>
+					<option value ="gia">Giá (VNĐ)</option>
+		        </select>
+			</div>
+		</div>
+
+		<table>
+			<tr class="titleTable">
+				<th scope="col" title="mat">		ID		</th>
+				<th scope="col" title="thuoc">		Thuốc	</th>
+				<th scope="col" title="donvi"> 		Đơn Vị 	</th>
+				<th scope="col" title="gia">		Giá	(VNĐ)</th>
+				<th ng-show=<%-type=='boss'%> scope="col" title="quantri">	Quản trị</th>
+			</tr>
+			<tr ng-repeat="x in data | orderBy: sort | filter: search track by $index">
+
+				<td>{{ x.mat}}</td>
+				<td>{{ x.thuoc }}</td>
+				<td>{{ x.donvi}}</td>
+				<td>{{ x.gia }}</td>
+				<td ng-show=<%-type=='boss'%> >
+					<button ng-click="setEdit(x.mat)" class="editButton" data-target='#thuocEditFormModal' data-toggle="modal" >
+						Sửa
+					</button>
+					<button ng-click="setEdit(x.mat)" class="deleteButton " data-target='#thuocDeleteFormModal' data-toggle="modal" >
+						Xóa
+					</button>
+				</td>
+			</tr>
+		</table>
+
+	<!-- Add Form Modal -->
+	<div class="modal fade" id="thuocAddFormModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	    <form action="/add-thuoc" method="post">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4>Thêm mới</h4>
+		      </div>
+		      <div class="modal-body">
+				Mã Thuốc: {{matAdd}}    <input type ="hidden" value={{matAdd}} name="mat"><br><br>
+				Tên Thuốc Mới: 			<input type="text" name="thuoc"><br><br>
+				Đơn Vị :     			<input type="text" name="donvi"><br><br>
+				Giá: 					<input type="number" name="gia" /><br><br>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+		        <button type="submit" class="btn btn-primary" value="Save">Lưu</button>
+		      </div>
+	     </form>
+	    </div>
+	  </div>
+	</div>
+	<!-- Edit Form Modal -->
+	<div class="modal fade" id="thuocEditFormModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	    <form action="/edit-thuoc" method="post">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4>Chỉnh sửa</h4>
+		      </div>
+		      <div class="modal-body">
+		      	Mã Thuốc: {{matEdit}}    <input type ="hidden" value={{matEdit}} name="mat"><br><br>
+				Tên Thuốc Mới: 			<input type="text" value={{thuocEdit}} name="thuoc"><br><br>
+				Đơn Vị :     			<input type="text" value={{donviEdit}}  name="donvi"><br><br>
+				Giá: 					<input type="number" value={{giaEdit}}  name="gia" /><br><br>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+		        <button type="submit" class="btn btn-primary" value="Save">Lưu</button>
+		      </div>
+	     </form>
+	    </div>
+	  </div>
+	</div>
+	<!-- Delete Form Modal -->
+	<div class="modal fade" id="thuocDeleteFormModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	    <form action="/delete-thuoc" method="post">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4>Xóa</h4>
+		      </div>
+		      <div class="modal-body">
+		        <div class="modal-body">
+					Mã Thuốc: {{matEdit}}    <input type ="hidden" value={{matEdit}} name="mat"><br><br>
+					Tên Thuốc Mới: 		{{thuocEdit}}<br><br>
+					Đơn Vị :     		{{donviEdit}}<br><br>
+					Giá: 				{{giaEdit}}<br><br>
+		      </div>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+		        <button type="submit" class="btn btn-danger" value="Save">Xóa</button>
+		      </div>
+	     </form>
+	    </div>
+	  </div>
+	</div>
+
+
+	</div>  <!-- container -->
+</div>  <!-- controller -->
+
+<script>
+	app.controller('thuocCtrl', ['$scope', function($scope){
+		 var s = '<%-data%>';
+		 var data = JSON.parse(s);
+		 $scope.data = data;
+
+		 $scope.setEdit = function(index){
+		 	for(var i =0; i<data.length; i++) {
+		 		if(data[i].mat == index)	{
+		 			$scope.matEdit = data[i].mat;
+		 			$scope.thuocEdit = data[i].thuoc;
+		 			$scope.donviEdit = data[i].donvi;
+		 			$scope.giaEdit = data[i].gia;
+		 		}
+		 	}
+		 }
+
+		$scope.setAdd = function(){
+			var test = 0;
+		 	for(var i =0; i<data.length-1; i++) {
+		 		if(data[i+1].mat - data[i].mat > 1) {
+		 			$scope.matAdd = data[i].mat+1;
+		 			test = 1;
+		 		}
+		 	}
+		 	if(test == 0) {
+		 		$scope.matAdd = data[data.length-1].mat+1;
+		 	}
+		 };
+
+
+
+	}]);
+
+</script>
+
+
+

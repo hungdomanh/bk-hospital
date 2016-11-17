@@ -1,0 +1,203 @@
+<% include ../layout.ejs %>
+
+<script src="/javascripts/list.js"></script>
+
+<div class='content' ng-controller="benhCtrl">
+	<div class="container">
+		<div class='row search-add-sort'>
+			<div class='col-xs-5 search'>
+				Tìm Kiếm: <input type="text" ng-model='search'> {{benh.length}} Bệnh
+			</div>
+			<div class='col-xs-2 add'>
+				<button ng-click="setAdd()" data-target='#benhAddFormModal' data-toggle="modal" class="addButton" ng-show=<%-type=='boss'%>>
+					Thêm mới
+				</button>
+			</div>
+			<div class='col-xs-5 sort' ng-init="sort='mab'">
+				Sắp xếp:
+				<select ng-model="sort">
+					<option value ="mab">Mã Bệnh</option>
+					<option value ="mat">Mã Thuốc</option>
+					<option value ="mak">Mã Khoa</option>					
+					<option value ="benh">Tên Bệnh</option>
+					<option value ="thuoc">Tên Thuốc</option>
+					<!-- <option value ="khoa">Khoa Điều Trị</option> -->
+		        </select>
+			</div>
+		</div>
+
+		<table>
+			<tr class="days">
+				<th scope ="col" title="mab">Mã Bệnh</th>
+				<th scope ="col" title="benh">Tên Bệnh</th>
+				<th scope ="col" title="mat">Mã Thuốc</th>				
+				<th scope ="col" title="thuoc">Tên Thuốc</th>
+				<th scope ="col" title="mak">Mã Khoa</th>
+				<!-- <th scope ="col" title="khoa">Khoa Điều Trị</th> -->
+				<th ng-show=<%-type=='boss'%> scope ="col" title="quantri">Quản Trị</th>
+		     </tr>
+		  <tr ng-repeat="x in benh | orderBy: sort | filter: search track by $index"  ng-show='x.mab'>
+		    <td>{{ x.mab}}</td>
+		    <td>{{ x.benh}}</td>
+		    <td>{{ x.mat }}</td>
+		    <td>{{ x.thuoc }}</td>
+		    <td>{{ x.mak }}</td>
+		    <!-- <td>{{ x.khoa }}</td> -->
+		    <td ng-show=<%-type=='boss'%> >
+		    	<button ng-click="setEdit(x.mab)" class="editButton" data-target='#benhEditFormModal' data-toggle="modal" >
+		    		Sửa
+		    	</button>
+		    	<button ng-click="setEdit(x.mab)" class="deleteButton" data-target='#benhDeleteFormModal' data-toggle="modal" >
+		    		Xóa
+		    	</button>
+		    </td>
+		  </tr>
+		</table>
+
+	<!-- Add Form Modal -->
+	<div class="modal fade" id="benhAddFormModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	    <form action="/add-bac-si" method="post">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>Thêm mới</h4>
+		      </div>
+		      <div class="modal-body">
+			        Mã Bệnh: {{mabAdd}} <input type="hidden" value={{mabAdd}} name="mab"><br><br>
+			        Bệnh:     <input type="text" name="benh"><br><br>
+					Mã Thuốc:   <input type="number" name="mat" ng-model="matAdd"><br><br>
+					Thuốc: {{thuoc[matAdd]}}
+					Mã Khoa:    <input type="number" name="mak" ng-model="makAdd"><br><br>
+			        Khoa: {{khoa[makAdd]}} <br><br>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+		        <button type="submit" class="btn btn-primary" value="Save">Lưu</button>
+		      </div>
+	     </form>
+	    </div>
+	  </div>
+	</div>
+	<!-- Edit Form Modal -->
+	<div class="modal fade" id="benhEditFormModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	    <form action="/edit-bac-si" method="post">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>Chỉnh sửa</h4>
+			</div>
+			<div class="modal-body">
+				Mã Bệnh: {{mabEdit}} <input type ="hidden" value={{mabEdit}} name="mab"><br><br>
+				Bệnh:               <input type ="text" value={{benhEdit}} name="benh"><br><br>
+				Mã Thuốc:           <input type ="number" name="mat" ng-model="matEdit"><br><br>
+				Thuốc: {{thuoc[matEdit]}} <br><br>
+				Mã Khoa:            <input type ="number" name="mak" ng-model="makEdit"><br><br>
+				Khoa: {{khoa[makEdit]}}<br><br>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+				<button type="submit" class="btn btn-primary" value="Save">Lưu</button>
+			</div>
+	     </form>
+	    </div>
+	  </div>
+	</div>
+	<!-- Delete Form Modal -->
+	<div class="modal fade" id="benhDeleteFormModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	    <form action="/delete-bac-si" method="post">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>Xóa</h4>
+		      </div>
+		      <div class="modal-body">
+				Mã Bệnh:  {{mabEdit}} <br><br>
+				Bệnh:     {{benhEdit}}  <br><br>
+				Mã Thuốc: {{matEdit}}       <br><br>
+				Thuốc:    {{thuoc[matEdit]}}  <br><br>
+				Mã Khoa:    {{makEdit}}       <br><br>
+				Khoa: {{khoa[makEdit]}}<br><br>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+		        <button type="submit" class="btn btn-danger" value="Save">Xóa</button>
+		      </div>
+	     </form>
+	    </div>
+	  </div>
+	</div>
+	</div>  <!-- container -->
+</div>  <!-- controller -->
+
+<script>
+	app.controller('benhCtrl', ['$scope', function($scope){
+
+		var s = '<%-data%>';
+		var data = JSON.parse(s);
+		var benh = [];
+		var khoa = [];
+		var thuoc = [];
+
+		var j =0;
+		for(var i=0; i<data.length; i++) {
+
+			if(data[i].mab) {
+				benh[j] = {};
+				benh[j].mab = data[i].mab;
+				benh[j].benh = data[i].benh ;
+				benh[j].mat = data[i].mat ;
+				benh[j].thuoc = data[i].thuoc ;
+				benh[j].mak = data[i].mak ;
+				benh[j].khoa = data[i].khoa ;
+				j++;
+			}
+
+
+			khoa[data[i].mak] = data[i].khoa;
+			thuoc[data[i].mat] = data[i].thuoc;
+		}
+
+		$scope.data = data;
+		$scope.benh = benh;
+		$scope.khoa = khoa;
+		$scope.thuoc = thuoc;
+
+		console.log(benh);
+		$scope.setAdd = function(){
+			var test = 0;
+		 	for(var i = 0; i<benh.length-1; i++) {
+		 		if( benh[i+1].mab - benh[i].mab > 1) {
+		 			$scope.mabAdd = benh[i].mab+1;
+		 			test = 1;
+		 		}
+		 	}
+		 	if(test == 0) {
+		 		$scope.mabAdd = data[i].mab+1;
+		 	}
+		 };
+
+		$scope.setEdit = function(index){
+		 	for(var i =0; i<benh.length; i++) {
+		 		if(benh[i].mab == index)	{
+		 			$scope.mabEdit = benh[i].mab;
+		 			$scope.makEdit = benh[i].mak;
+		 			$scope.matEdit = benh[i].mat;
+		 			$scope.benhEdit = benh[i].benh;
+		 			
+		 		}
+		 	}
+		 }
+	}]);
+
+</script>
+
+
+
+
+<!-- 
+
+
+
+
+ -->
+

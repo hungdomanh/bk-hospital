@@ -1,0 +1,156 @@
+<% include ../layout.ejs %>
+
+
+<script src="/javascripts/list.js"></script>
+
+<div class='content' ng-controller="khoaCtrl">
+	<div class="container">
+		<div class="row search-add-sort">
+			<div  class="col-xs-5 search">
+				Tìm Kiếm: <input type="text" ng-model='search'> {{data.length}} Khoa
+			</div>
+			<div  class="col-xs-2 add">
+				<button ng-click="setAdd()" data-target='#khoaAddFormModal' data-toggle="modal" class="addButton" ng-show=<%-type=='boss'%>>
+				Thêm mới
+				</button>
+			</div>
+			<div  class="col-xs-5 sort " ng-init="sort='mak'">
+				Sắp xếp: 
+				<select ng-model="sort">
+					<option value ="mak">Mã Khoa</option>
+					<option value ="khoa">Tên Khoa</option>
+		        </select>
+			</div>
+		</div>
+
+		<table>
+			<tr class="titleTable">
+				<th scope="col" title="mbk">		Mã Khoa		</th>
+				<th scope="col" title="khoa">		Khoa		</th>
+				<th ng-show=<%-type=='boss'%> scope="col" title="quantri">	Quản trị	</th>
+			</tr>
+			<tr ng-repeat="x in data | orderBy: sort | filter: search track by $index">
+
+				<td>{{ x.mak}}</td>
+				<td>{{ x.khoa }}</td>
+				<td ng-show=<%-type=='boss'%> >
+					<button ng-click="setEdit(x.mak)" class="editButton" data-target='#khoaEditFormModal' data-toggle="modal" >
+						Sửa
+					</button>
+					<button ng-click="setEdit(x.mak)" class="deleteButton " data-target='#khoaDeleteFormModal' data-toggle="modal" >
+						Xóa
+					</button>
+				</td>
+			</tr>
+		</table>
+
+	<!-- Add Form Modal -->
+	<div class="modal fade" id="khoaAddFormModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	    <form action="/add-khoa" method="post">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4>Thêm mới</h4>
+		      </div>
+		      <div class="modal-body">
+		        Mã Khoa: {{makAdd}} <input type="hidden" value={{makAdd}} name="mak">
+		        <br>
+		        <br>
+		        Khoa Mới: <input type="text" name="khoa">
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+		        <button type="submit" class="btn btn-primary" value="Save">Lưu</button>
+		      </div>
+	     </form>
+	    </div>
+	  </div>
+	</div>
+	<!-- Edit Form Modal -->
+	<div class="modal fade" id="khoaEditFormModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	    <form action="/edit-khoa" method="post">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4>Chỉnh sửa</h4>
+		      </div>
+		      <div class="modal-body">
+		        Mã Khoa: {{makEdit}} <input type="hidden" value={{makEdit}} name="mak">
+		        <br>
+		        <br>
+		        Khoa: <input type="text" value={{khoaEdit}} name="khoa">
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+		        <button type="submit" class="btn btn-primary" value="Save">Lưu</button>
+		      </div>
+	     </form>
+	    </div>
+	  </div>
+	</div>
+	<!-- Delete Form Modal -->
+	<div class="modal fade" id="khoaDeleteFormModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	    <form action="/delete-khoa" method="post">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4>Xóa</h4>
+		      </div>
+		      <div class="modal-body">
+		        Mã Khoa: {{makEdit}} <input type="hidden" value={{makEdit}} name="mak">
+		        <br>
+		        <br>
+		        Khoa: {{khoaEdit}}
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+		        <button type="submit" class="btn btn-danger" value="Save">Xóa</button>
+		      </div>
+	     </form>
+	    </div>
+	  </div>
+	</div>
+
+
+	</div>  <!-- container -->
+</div>  <!-- controller -->
+
+<script>
+	app.controller('khoaCtrl', ['$scope', function($scope){
+		 var s = '<%-data%>';
+		 var data = JSON.parse(s);
+		 $scope.data = data;
+
+		 $scope.setEdit = function(index){
+		 	for(var i =0; i<data.length; i++) {
+		 		if(data[i].mak == index)	{
+		 			$scope.makEdit = data[i].mak;
+		 			$scope.khoaEdit = data[i].khoa;
+		 		}
+		 	}
+		 }
+
+		$scope.setAdd = function(){
+			var test = 0;
+		 	for(var i =0; i<data.length-1; i++) {
+		 		if(data[i+1].mak - data[i].mak > 1) {
+		 			$scope.makAdd = data[i].mak+1;
+		 			test = 1;
+		 		}
+		 	}
+		 	if(test == 0) {
+		 		$scope.makAdd = data[data.length-1].mak+1;
+		 	}
+		 };
+
+
+
+	}]);
+
+</script>
+
+
+

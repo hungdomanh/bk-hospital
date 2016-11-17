@@ -1,0 +1,91 @@
+
+
+a {
+  color: #00B7FF;
+}
+
+.add {
+  text-align: center;
+}
+
+.addButton {
+  margin: 0 auto;
+}
+
+#avatar {
+    /* This image is 687 wide by 1024 tall, similar to your aspect ratio */
+    background-image: url('http://www.reviewcompany.vn/public/media/uploads/company/logo/2014-06-21/c5c3183a-19b7-4e2b-9a2e-d0cfedc4da54.jpg');
+    /* make a square container */
+    width: 100px;
+    height: 70px;
+    /* fill the container, preserving aspect ratio, and cropping to fit */
+    background-size: cover;
+    /* center the image vertically and horizontally */
+    background-position: center;
+    /* round the edges to a circle with border radius 1/2 container size */
+    border-radius: 50%;
+}
+
+body {
+  /*padding: 50px;*/
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+/*CONTENT*/
+.content {
+    position: absolute;
+    top: 50px;
+    bottom: 0px;
+    left: 0;
+    right: 0;
+    background-color: #BFFAD0;
+    overflow: auto;
+    padding: 10px;
+    padding-bottom: 50px;
+}
+
+h1 {
+	color: red;
+}
+h3 {
+	margin: 0 auto;
+}
+
+/*BOTTOM*/
+/*#footer {
+    position: fixed;
+    bottom: 0;
+    left: 80%;
+    right: 0;
+    height: 30px;
+    background-color: #abcdef;
+}*/
+
+.sort {
+  padding-left: 25%;
+  padding-right: 0px;
+  float: right;
+}
+.search-add-sort {
+  margin: 10px;
+}
+.search {
+}
+/*TABLE*/
+table, th , td {
+  font-size: 20px;
+  border: 1px solid grey;
+  border-collapse: collapse;
+  padding: 5px;
+  margin: 0 auto;
+  margin-top: 20px;
+}
+table tr:nth-child(odd) {
+  background-color: #f1f1f1;
+}
+table tr:nth-child(even) {
+  background-color: #ffffff;
+}
+.wellcome {
+  text-align: center;
+  color: blue;
+}
