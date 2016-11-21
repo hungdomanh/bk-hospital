@@ -30,6 +30,18 @@ body {
   /*padding: 50px;*/
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
+
+/*.checkboxLogin {
+  float: left;
+}
+*/
+.buttonSignUp {
+  float: right;
+  margin-top: -35px;
+  width: 95px;
+}
+
+
 /*CONTENT*/
 .content {
     position: absolute;
@@ -85,6 +97,13 @@ table tr:nth-child(odd) {
 table tr:nth-child(even) {
   background-color: #ffffff;
 }
+
+.textSignUp {
+  color: white;
+}
+
+
+
 .wellcome {
   text-align: center;
   color: blue;
