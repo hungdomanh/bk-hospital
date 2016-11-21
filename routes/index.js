@@ -132,10 +132,18 @@ router.post('/login', function(req, res) {
                     type: 'khack'
                 });
             }
+        });          
+    }
+    else {
+        res.render('login-register/login',{
+            title: "TRY Login",
+            logined: false,
+            username: null,
+            type: 'khack'
         });
+    }
 
-          
-    };
+
 });
 router.get('/logout', function (req, res) {
     req.session.loggedIn = false;
