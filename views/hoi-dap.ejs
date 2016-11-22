@@ -18,7 +18,7 @@
 			</div>
 							
 			<textarea class="form-control" placeholder="Nội dung..." rows="4" id="newQuestion" ng-model="content"></textarea>
-			<div class="row">
+			<div class="row dateAndUser">
 				<span class="col-xs-6">
 					<h4 class="glyphicon glyphicon-user"><%-username%></h4>
 				</span>
@@ -27,35 +27,48 @@
 					<button ng-show="!writed" class="btn btn-info disabled "> Đăng</button>
 					<button ng-show="writed" class="btn btn-info" ng-click="New()"> Đăng</button>
 				</span>
-				<span ></span> 
+				
 			</div>
 			
 		</div>	
 	</div>
 
-	<div class="question" ng-repeat="x in notes">
+	<div class="question" ng-repeat="x in notes  track by $index ">
 		<div class="form-group">
 			<div class="text-center">
-				Chủ đề: {{x.title}}
-			</div>
-							
-			<div class="content">
-				{{x.content}}
-			</div>
-			<div class="row">
-				<span class="col-xs-6">
-					<h4 class="glyphicon glyphicon-user"><%-username%></h4>
-				</span>
-				<span class="col-xs-6 text-right" style="margin-top:10px;">
-					{{date | date: medium}} 
-					<button ng-show="!writed" class="btn btn-info disabled "> Đăng</button>
-					<button ng-show="writed" class="btn btn-info" ng-click="New()"> Đăng</button>
-				</span>
-				<span ></span> 
+				Chủ đề: <b>{{x.title}}</b>
+				<span ng-show=<%-type=='boss'%> ><button class="btn btn-danger" ng-click="Delete($index)">Xóa</button></span>
 			</div>
 			
-		</div>
-		
+			<div class="contentQuestion">
+				<b>Nội dung: </b> {{x.content}}
+			</div>
+			<hr><hr>
+			<div class="row">
+				<span class="col-xs-6">
+					{{date | date: medium}} by <a ng-href="/user/{{x.username}}">{{x.username}}</a>
+				</span>
+				<span class="col-xs-6 text-right" style="margin-top:10px;">
+					 <p class="glyphicon glyphicon-thumbs-up text-info"></p>{{x.like}}
+					 <p ng-click="Like($index)" class="btn-link btn ">Thích</p>
+					 <p class="glyphicon glyphicon glyphicon-comment text-info"></p>{{x.comment.length}}
+					 <p ng-click="Comment($index)" class="btn-link btn">Bình luận</p>
+				</span>
+			</div>
+			
+			<div ng-show="showComment[$parent.$index]" class="comment" ng-repeat="cm in notes[$index].comment"><hr>
+				<div><span class='glyphicon glyphicon-user'></span><a ng-href="/user/{{cm.id}}">{{cm.id}}</a> : {{cm.text}}</div>
+			</div>
+
+			<div ng-show="showComment[$index]"><hr>
+				<div class="input-group">
+				  <input type="text" class="form-control" placeholder="{{username}}" ng-model="textNewComment[$index]">
+				  <span class="input-group-btn">
+				    <button class="btn btn-info" ng-click="NewComment($index)" type="button">Bình luận</button>
+				  </span>
+				</div>
+			</div>	
+		</div>	
 	</div>
 	
 
@@ -71,11 +84,15 @@ app.controller('hoidapCtrl', ['$scope', '$timeout', function($scope, $timeout){
 	var date = new Date();
 	$scope.date = date;
 	$scope.title = "";
-
+	var username = '<%-username%>';
+	$scope.username = username;
 	var s = '<%-data%>';
 	var data = JSON.parse(s);
 	$scope.data = data;
 	localStorage.id = 0;
+	$scope.showComment = [];
+	$scope.textNewComment = [];
+
 
     for(var i=0; i<10000; i++) {
 		$timeout(function(){
@@ -83,7 +100,6 @@ app.controller('hoidapCtrl', ['$scope', '$timeout', function($scope, $timeout){
 	    	else   $scope.writed = false;
 	    },i*100);
 	}
-
 
 	if(localStorage.notes) {
     	$scope.notes = JSON.parse(localStorage.notes);
@@ -93,32 +109,81 @@ app.controller('hoidapCtrl', ['$scope', '$timeout', function($scope, $timeout){
 		    	id: localStorage.id++, 
 		    	title: data[1].khoa, 
 		    	content: 'Learn AngularJS', 
-		    	user:'<%-username%>',
+		    	username: username,
 		    	update: date, 
-		    	like: 0, 
-		    	comment: []
+		    	like: 0,
+		    	liked: [],
+		    	comment: [{id: username, text: "demo demo comment"}]
 		    }
     	];
 
+    var Liked = function(index, username) {
+    	for(var i=0; i<$scope.notes[index].liked.length; i++) {
+    		if(username == $scope.notes[index].liked[i])	return i+1;
+    	}
+    	return false;
+    }
 
-   $scope.New = function () {
+    $scope.Like = function(index) {
+    	if(Liked(index, username)) {
+    		$scope.notes[index].like -= 1;
+    		$scope.notes[index].liked.splice(Liked(index, username)-1, 1);
+    	}
+    	else {
+    		$scope.notes[index].like += 1;
+    		$scope.notes[index].liked.push(username);
+    	}
+    	localStorage.notes = JSON.stringify($scope.notes);
+    }
+
+    $scope.Comment = function(index) {
+    	$scope.showComment[index] = !$scope.showComment[index];
+    }
+
+    $scope.NewComment = function(index) {
+    	if($scope.textNewComment[index].length){
+    		console.log("obj");
+    		var s = {
+    			id: username,
+    			text: $scope.textNewComment[index]
+    		};
+	    	$scope.notes[index].comment.push(s);
+	    	localStorage.notes = JSON.stringify($scope.notes);
+	    	$scope.textNewComment[index] = '';
+	    }
+    }
+
+ 	$scope.New = function () {
    		$scope.notes.push({
    			id: localStorage++,
     		title: $scope.title,
 			content: $scope.content,
+			username: username,
 			update: new Date(),
 			like: 0,
+			liked: [],
 			comment: []
 		});
 		localStorage.notes = JSON.stringify($scope.notes);
-		title: '',
-		content: '',
+		$scope.title = '';
+		$scope.content = '';
+    }
+  
+   $scope.Delete = function(index) {
+   	var r = confirm("Xóa mục thảo luận này?");
+   	if(r)   $scope.notes.splice(index, 1);
    }
 
 
 
 
 }]);
+
+app.filter('reverse', function() {
+  return function(items) {
+    return items.slice().reverse();
+  };
+});
 
 </script>
 

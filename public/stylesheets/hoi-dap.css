@@ -5,19 +5,40 @@ body {
     font-size: 17px;
 }
 
+.comment {
+
+}
+
+.dateAndUser {
+  /*background-color: blue;*/
+  /*padding: 30px;*/
+}
 
 .hoiDapPage {
     /*padding: 30px;*/
 }
 
 .newQuestion {
-  margin: 10px 120px 10px 120px;
+  margin: 10px 120px 50px 120px;
   background-color: #f6f6f6;
   padding: 10px 10px 0px 10px;
-  border-radius: 1% ;
+  border-radius: 1.4% ;
   border: 1px solid grey;
 
 }
 
+.question {
+  margin: 20px 120px 20px 120px;
+  background-color: #f6f6f6;
+  padding: 10px 10px 0px 10px;
+  border-radius: 1.4% ;
+  border: 1px solid grey;
+}
 
 
+.textNewComment {
+  display: inline;
+  border-top: none;
+  border-right: none;
+  border-left: none;
+}

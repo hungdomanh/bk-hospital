@@ -101,6 +101,16 @@ h3 {
     background-position: center;
 }
 
+hr {
+    display: block;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    margin-left: auto;
+    margin-right: auto;
+    border-style: inset;
+    border-width: 1px;
+}
+
 .imgHomePage {
   border-radius: 50%;
   margin: 0 auto;
