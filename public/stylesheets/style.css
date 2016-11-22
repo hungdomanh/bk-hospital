@@ -1,5 +1,4 @@
 
-
 a {
   color: #00B7FF;
 }
@@ -26,62 +25,123 @@ a {
     border-radius: 50%;
 }
 
-body {
-  /*padding: 50px;*/
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+a.back-to-top {
+  display: none;
+  width: 60px;
+  height: 60px;
+  text-indent: -9999px;
+  position: fixed;
+  z-index: 999;
+  right: 20px;
+  bottom: 20px;
+  background: #27AE61 url("../image/up-arrow.png") no-repeat center 43%;
+  -webkit-border-radius: 30px;
+  -moz-border-radius: 30px;
+  border-radius: 30px;
 }
 
-/*.checkboxLogin {
-  float: left;
+body {
+  position: relative;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: #BFFAD0;
 }
-*/
+
 .buttonSignUp {
   float: right;
   margin-top: -35px;
   width: 95px;
 }
 
+#coSoVatChat {
+    background-color: #ffffff; /* White */
+    color: #555555;
+    padding: 30px;
+}
 
-/*CONTENT*/
 .content {
-    position: absolute;
-    top: 50px;
-    bottom: 0px;
-    left: 0;
-    right: 0;
-    background-color: #BFFAD0;
-    overflow: auto;
+  margin-top: 50px;
+  padding: 10px;
+  padding-bottom: 50px;
+  /*margin-bottom: -1000px;*/
+}
+
+#chinhSachChatLuong {
+   background-color: #8596A0; /* Dark Blue */
+    color: white;
+    padding: 30px;
+}
+
+footer {
+    background-color: #2f2f2f; /* Black Gray */
+    color: #fff;
     padding: 10px;
-    padding-bottom: 50px;
+    padding-top: 20px;
 }
 
 h1 {
 	color: red;
 }
+
 h3 {
 	margin: 0 auto;
 }
 
-/*BOTTOM*/
-/*#footer {
-    position: fixed;
-    bottom: 0;
-    left: 80%;
-    right: 0;
-    height: 30px;
-    background-color: #abcdef;
-}*/
+.homePage {
+  position: relative;
+  top: 50px;
+}
+
+#homePage {
+    /*background-color: #1abc9c; /* Green */*/
+    color: #ffffff;
+    padding-bottom: 10px;
+    background-image: url("http://img.infonet.vn/Uploaded/thanhhuyen/2015_10_28/DH_Bach_Khoa.jpg");
+    background-size: cover;
+    /* center the image vertically and horizontally */
+    background-position: center;
+}
+
+.imgHomePage {
+  border-radius: 50%;
+  margin: 0 auto;
+  width: 370px;
+  height: 370px;
+  background-image: url("http://60.hust.edu.vn/documents/22244/28577/2016321+BK2.jpg/ed42f813-0a03-4aeb-8fb9-3054a1cd8474?version=1.1&t=1467688379000");
+  background-size: cover;
+  /*background-position: center;*/
+}
+
+.navbar {
+    /*border: 0;*/
+    border-radius: 0;
+    margin-bottom: 0;
+    box-shadow: 5px 1px 5px grey;
+}
+
+.khachHeader {
+  color: orange;
+  font-size: 40px;
+}
 
 .sort {
   padding-left: 25%;
   padding-right: 0px;
   float: right;
 }
+
 .search-add-sort {
   margin: 10px;
 }
+
 .search {
 }
+
+#tinTuc {
+    background-color: #474e5d; /* Dark Blue */
+    color: #ffffff;
+    padding: 30px;
+}
+
 /*TABLE*/
 table, th , td {
   font-size: 20px;

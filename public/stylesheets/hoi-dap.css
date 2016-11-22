@@ -1,0 +1,23 @@
+body {
+    background-image: url("../image/hoidap.jpg");
+    background-size: cover;
+    background-position: fixed;
+    font-size: 17px;
+}
+
+
+.hoiDapPage {
+    /*padding: 30px;*/
+}
+
+.newQuestion {
+  margin: 10px 120px 10px 120px;
+  background-color: #f6f6f6;
+  padding: 10px 10px 0px 10px;
+  border-radius: 1% ;
+  border: 1px solid grey;
+
+}
+
+
+

@@ -18,7 +18,51 @@
 
 <body ng-app="layout" ng-controller="layoutCtrl">
 
-<nav class="navbar navbar-inverse">
+<!-- Khach -->
+<nav ng-hide=<%-logined%> class="navbar navbar-fixed-top navbar-default">
+  <div class="container-fluid khackHeader">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/"> <span class="glyphicon glyphicon-home"></span> Home</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="/">Thông tin chung<span class="caret"></span></a>
+          <ul class="dropdown-menu" display="none">
+            <li><a href="/#tinTuc">Tin tức</a></li>
+            <li><a href="/#chinhSachChatLuong">Chính sách chất lượng</a></li>
+            <li><a href="/#coSoVatChat">Cơ sở vật chất</a></li>
+            <li><a href="/thong-tin/ban-quan-tri">Ban quản trị</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="/">Danh sách & thống kê<span class="caret"></span></a>
+          <ul class="dropdown-menu" display="none">
+            <li><a href="/thong-ke/benh-thuong-gap">Bệnh thường gặp</a></li>
+            <li><a href="/thong-ke/khoa-dieu-tri">Khoa điều trị</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="/login"><span class="glyphicon glyphicon-star-empty"></span>Đăng kí khám bệnh<span class="glyphicon glyphicon-star-empty"></span></a>
+        </li>
+        <li >
+          <a href="/login"> Hỏi đáp <span class="glyphicon glyphicon-question-sign"></span></a>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="/register"><span class="glyphicon glyphicon-hand-right"></span></span> Đăng kí</a></li>
+        <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Đăng nhập</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- Benh nhan -->
+<nav ng-show=<%-type=='benhnhan'%> class="navbar navbar-fixed-top navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -26,74 +70,184 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="/">Home</a>
+      <a class="navbar-brand" href="/"> <span class="glyphicon glyphicon-home"></span> Home</a>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
         <li class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown" href="/">Thông tin<span class="caret"></span></a>
+          <a class="dropdown-toggle" data-toggle="dropdown" href="/">Thông tin chung<span class="caret"></span></a>
           <ul class="dropdown-menu" display="none">
-            <li><a href="/thong-tin/tin-tuc">Tin tức</a></li>
-            <li><a href="/thong-tin/chinh-sach-chat-luong">Chính sách chất lượng</a></li>
-            <li><a href="/thong-tin/co-so-vat-chat">Cơ sở vật chất</a></li>
-            <li><a href="/thong-tin/ban-giam-doc">Ban giám đốc</a></li>
+            <li><a href="/#tinTuc">Tin tức</a></li>
+            <li><a href="/#chinhSachChatLuong">Chính sách chất lượng</a></li>
+            <li><a href="/#coSoVatChat">Cơ sở vật chất</a></li>
+            <li><a href="/thong-tin/ban-quan-tri">Ban quản trị</a></li>
           </ul>
         </li>
-        <li ng-show=<%-type=='benhnhan'%>>
+        <li  class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="/">Danh sách & thống kê<span class="caret"></span></a>
+          <ul class="dropdown-menu" display="none">
+            <li><a href="/thong-ke/benh-thuong-gap">Bệnh thường gặp</a></li>
+            <li><a href="/thong-ke/khoa-dieu-tri">Khoa điều trị</a></li>
+          </ul>
+        </li>
+        <li>
           <a href="/user/ho-so-benh-an">Hồ sơ bệnh án <span class="glyphicon glyphicon-question-sign"></span></a>
         </li>
-        <li ng-show=<%-type=='boss' || type=='bacsi'%> class="dropdown">
+        <li>
+          <a href="/user/dang-ki-kham-benh"><span class="glyphicon glyphicon-star-empty"></span>Đăng kí khám bệnh<span class="glyphicon glyphicon-star-empty"></span></a>
+        </li>
+        <li >
+          <a href="/hoi-dap"> Hỏi đáp <span class="glyphicon glyphicon-question-sign"></span></a>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right"> 
+        <li><a href="/user"><span class="glyphicon glyphicon-user"></span> Cá Nhân</a></li>
+        <li><a href="/logout">Thoát <span class="glyphicon glyphicon-log-out"></span></a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- Bac si -->
+<nav ng-show=<%-type=='bacsi'%> class="navbar navbar-fixed-top navbar-default  ">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/"> <span class="glyphicon glyphicon-home"></span> Home</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="/">Thông tin chung<span class="caret"></span></a>
+          <ul class="dropdown-menu" display="none">
+            <li><a href="/#tinTuc">Tin tức</a></li>
+            <li><a href="/#chinhSachChatLuong">Chính sách chất lượng</a></li>
+            <li><a href="/#coSoVatChat">Cơ sở vật chất</a></li>
+            <li><a href="/thong-tin/ban-quan-tri">Ban quản trị</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" href="/">Danh sách<span class="caret"></span></a>
           <ul class="dropdown-menu" display="none">
             <li><a href="/bac-si">Bác sĩ</a></li>
-            <li><a href="/benh-nhan">Bệnh nhân</a></li>
-            <li><a href="/khoa">Khoa</a></li>
-            <li><a href="/phong">Phòng</a></li>
-            <li><a href="/thuoc">Thuốc</a></li>
-            <li><a href="/benh">Bệnh</a></li>
-            <li><a href="/kham-benh">Khám Bệnh</a></li>
             <li><a href="/benh-an">Bệnh Án</a></li>
+            <li><a href="/benh-nhan">Bệnh nhân</a></li>
+            <li><a href="/benh">Bệnh</a></li>
             <li><a href="/don-thuoc">Đơn thuốc</a></li>
             <li><a href="/hoa-don">Hóa đơn</a></li>
+            <li><a href="/kham-benh">Khám Bệnh</a></li>
+            <li><a href="/khoa">Khoa</a></li>
+            <li><a href="/phong">Phòng</a></li>
+            <li><a href="/thuoc">Thuốc</a></li>     
           </ul>
         </li>
-        <li ng-show=<%-type=='boss'%> class="dropdown">
+        <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" href="/">Thống kê<span class="caret"></span></a>
           <ul class="dropdown-menu" display="none">
-            <li><a href="/benh-nhan-dang-kham">Bệnh nhân đang khám</a></li>
-            <li><a href="/">Bệnh nhân đã khám</a></li>
-            <li><a href="/">Bác sĩ từng khoa</a></li>
-            <li><a href="/">Phòng (sử dụng - trống)</a></li>
-            <li><a href="/">Bệnh thường gặp</a></li>
-            <li><a href="/">Tiền thu được</a></li>
-            <li><a href="/">Chi phí khám chữa bệnh trung bình 1 lần</a></li>
-            <li><a href="/">Số lượng bệnh án</a></li>
-            <li><a href="/"></a></li>
+            <li><a href="/thong-ke/benh-thuong-gap">Bệnh thường gặp</a></li>
             <li><a href="/"></a></li>
           </ul>
         </li>
-        <li <li ng-show=<%-type=='boss' || type=='bacsi'%> class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown" href="/">Users<span class="caret"></span></a>
+        <li class="dropdown">
+          <a href="/user/kham-benh">Khám bệnh <span class="glyphicon glyphicon-zoom-in"></span></a>
+        </li>
+        <li >
+          <a href="/hoi-dap"> Hỏi đáp <span class="glyphicon glyphicon-question-sign"></span></a>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="/user/"><span class="glyphicon glyphicon-user"></span> Bác Sĩ</a></li>
+        <li><a href="/logout">Thoát <span class="glyphicon glyphicon-log-out"></span></a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- Admin -->
+<nav ng-show=<%-type=='boss'%> class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/"> <span class="glyphicon glyphicon-home"></span> Home</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="/">Thông tin chung<span class="caret"></span></a>
           <ul class="dropdown-menu" display="none">
-            <li><a href="/users-bac-si">Bác sĩ</a></li>
-            <li><a href="/users-benh-nhan">Bệnh nhân</a></li>
+            <li><a href="/#tinTuc">Tin tức</a></li>
+            <li><a href="/#chinhSachChatLuong">Chính sách chất lượng</a></li>
+            <li><a href="/#coSoVatChat">Cơ sở vật chất</a></li>
+            <li><a href="/thong-tin/ban-quan-tri">Ban quản trị</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="/">Danh sách<span class="caret"></span></a>
+          <ul class="dropdown-menu" display="none">
+            <li><a href="/bac-si">Bác sĩ</a></li>
+            <li><a href="/benh-an">Bệnh Án</a></li>
+            <li><a href="/benh-nhan">Bệnh nhân</a></li>
+            <li><a href="/benh">Bệnh</a></li>
+            <li><a href="/don-thuoc">Đơn thuốc</a></li>
+            <li><a href="/hoa-don">Hóa đơn</a></li>
+            <li><a href="/kham-benh">Khám Bệnh</a></li>
+            <li><a href="/khoa">Khoa</a></li>
+            <li><a href="/phong">Phòng</a></li>
+            <li><a href="/thuoc">Thuốc</a></li>            
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="/">Thống kê<span class="caret"></span></a>
+          <ul class="dropdown-menu" display="none">
+            <li><a href="/thong-ke/bac-si-tung-khoa">Bác sĩ từng khoa</a></li>
+            <li><a href="/thong-ke/benh-thuong-gap">Bệnh thường gặp</a></li>
+            <li><a href="/thong-ke/benh-nhan-dang-kham">Bệnh nhân đang khám</a></li>
+            <li><a href="/thong-ke/benh-nhan-da-kham">Bệnh nhân đã khám</a></li>
+            <li><a href="/thong-ke/chi-phi-kham-trung-binh">Chi phí khám chữa bệnh trung bình 1 lần</a></li>
+            <li><a href="/thong-ke/benh-an">Số lượng bệnh án</a></li>
+            <li><a href="/thong-ke/tien-thu-duoc">Tiền thu được</a></li>
           </ul>
         </li>
         <li >
           <a href="/hoi-dap"> Hỏi đáp <span class="glyphicon glyphicon-question-sign"></span></a>
         </li>
-  
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
-        <li ng-hide=<%-logined%> ><a href="/register"></span> Đăng kí</a></li>
-        <li ng-hide=<%-logined%> ><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Đăng nhập</a></li>
-        <li ng-show=<%-logined%> ><a href="/user/"><span class="glyphicon glyphicon-user"></span> Cá Nhân</a></li>
+        <li ng-show=<%-logined%> ><a href="/user/"><span class="glyphicon glyphicon-user"></span> Admin</a></li>
         <li ng-show=<%-logined%> ><a href="/logout">Thoát <span class="glyphicon glyphicon-log-out"></span></a></li>
       </ul>
     </div>
   </div>
 </nav>
+<a href="#" class="back-to-top">Back to Top</a>
+<script type="text/javascript">
+// create the back to top button
+$('body').prepend('<a href="#" class="back-to-top">Back to Top</a>');
+
+var amountScrolled = 300;
+
+$(window).scroll(function() {
+  if ( $(window).scrollTop() > amountScrolled ) {
+    $('a.back-to-top').fadeIn('slow');
+  } else {
+    $('a.back-to-top').fadeOut('slow');
+  }
+});
+
+$('a.back-to-top, a.simple-back-to-top').click(function() {
+  $('html, body').animate({
+    scrollTop: 0
+  }, 700);
+  return false;
+});
+</script>
+ 
 
 </body>
 

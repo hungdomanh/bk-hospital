@@ -61,9 +61,9 @@ router.get('/thong-tin/co-so-vat-chat', function(req, res) {
         type: req.session.type
     });
 });
-// BAN GIAM DOC   /////////////////////
-router.get('/thong-tin/ban-giam-doc', function(req, res) {
-    res.render('thong-tin/ban-giam-doc',{
+// BAN QUAN TRI   /////////////////////
+router.get('/thong-tin/ban-quan-tri', function(req, res) {
+    res.render('thong-tin/ban-quan-tri',{
         title: "BK",
         logined: req.session.loggedIn,
         username: req.session.username,
@@ -142,8 +142,6 @@ router.post('/login', function(req, res) {
             type: 'khack'
         });
     }
-
-
 });
 router.get('/logout', function (req, res) {
     req.session.loggedIn = false;
@@ -308,7 +306,6 @@ router.post('/delete-bac-si', function(req, res) {
         });
 });
 
-
 // BENH  can them khoa dieu tri 
 router.get('/benh',  function(req, res) {
     req.session.lastPage = '/benh';
@@ -401,8 +398,6 @@ router.post('/delete-benh', function(req, res) {
             type: 'khack'
         });
 });
-
-
 
 // BENH AN /////////////////////////////
 router.get('/benh-an',  function(req, res) {
@@ -541,7 +536,6 @@ router.post('/delete-benh-nhan', function(req, res) {
         });
 });
 
-
 // DON THUOC /////////////////////////////
 router.get('/don-thuoc',  function(req, res) {
    req.session.lastPage = '/don-thuoc';
@@ -569,6 +563,7 @@ router.get('/don-thuoc',  function(req, res) {
             type: 'khack'
         });
 });
+
 // HOA DON /////////////////////////////
 router.get('/hoa-don',  function(req, res) {
     req.session.lastPage = '/hoa-don';
@@ -880,7 +875,34 @@ router.post('/delete-thuoc', function(req, res) {
             type: 'khack'
         });
 });
+///////////////////////////////////////////////////////////////////////////// HOI DAP
+router.get('/hoi-dap', function(req, res) {
+    req.session.lastPage = '/hoi-dap';
+    if(req.session.loggedIn) {
+        client.query('SELECT * FROM khoadieutri', function(err, result){
+            if(err) return console.log("Can't SELECT FROM TABLE");
+            var str = result.rows;
+            var data  = JSON.stringify(result.rows);
+            if(str) 
+                res.render('hoi-dap', {
+                    data: data, 
+                    title: 'Hỏi đáp',
+                    logined: req.session.loggedIn,
+                    username: req.session.username,
+                    type: req.session.type
 
+                });
+            else res.end("CAN'T GET LINK");
+        })
+    }
+    else 
+        res.render('login-register/login',{ 
+            title: "TRY Login",
+            logined: false,
+            username: null,
+            type: 'khack'
+        });
+});
 
 
 

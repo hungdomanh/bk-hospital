@@ -1,0 +1,125 @@
+<% include layout.ejs %>
+
+
+<link rel="stylesheet" href="/stylesheets/hoi-dap.css">
+
+<div ng-controller="hoidapCtrl" class="content hoiDapPage container">
+	<h1 class="text-success text-center">Hỏi đáp + Tư vấn</h1>
+
+	<div class="newQuestion">
+		<div class="form-group">
+			<div class="row">
+				<span class="col-xs-6 text-info"><label for="newQuestion"><h3>Câu hỏi mới:</h3></label></span>
+				<span>Chủ đề(nếu có): 	
+					<select ng-model="title"  >
+						<option ng-repeat="x in data track by $index" value="{{x.khoa}}">{{x.khoa}}</option>
+				 	</select>
+				</span>
+			</div>
+							
+			<textarea class="form-control" placeholder="Nội dung..." rows="4" id="newQuestion" ng-model="content"></textarea>
+			<div class="row">
+				<span class="col-xs-6">
+					<h4 class="glyphicon glyphicon-user"><%-username%></h4>
+				</span>
+				<span class="col-xs-6 text-right" style="margin-top:10px;">
+					{{date | date: medium}} 
+					<button ng-show="!writed" class="btn btn-info disabled "> Đăng</button>
+					<button ng-show="writed" class="btn btn-info" ng-click="New()"> Đăng</button>
+				</span>
+				<span ></span> 
+			</div>
+			
+		</div>	
+	</div>
+
+	<div class="question" ng-repeat="x in notes">
+		<div class="form-group">
+			<div class="text-center">
+				Chủ đề: {{x.title}}
+			</div>
+							
+			<div class="content">
+				{{x.content}}
+			</div>
+			<div class="row">
+				<span class="col-xs-6">
+					<h4 class="glyphicon glyphicon-user"><%-username%></h4>
+				</span>
+				<span class="col-xs-6 text-right" style="margin-top:10px;">
+					{{date | date: medium}} 
+					<button ng-show="!writed" class="btn btn-info disabled "> Đăng</button>
+					<button ng-show="writed" class="btn btn-info" ng-click="New()"> Đăng</button>
+				</span>
+				<span ></span> 
+			</div>
+			
+		</div>
+		
+	</div>
+	
+
+
+</div> <!-- CTRL	 -->
+
+
+
+
+
+<script>
+app.controller('hoidapCtrl', ['$scope', '$timeout', function($scope, $timeout){
+	var date = new Date();
+	$scope.date = date;
+	$scope.title = "";
+
+	var s = '<%-data%>';
+	var data = JSON.parse(s);
+	$scope.data = data;
+	localStorage.id = 0;
+
+    for(var i=0; i<10000; i++) {
+		$timeout(function(){
+	    	if($scope.content)	$scope.writed = true
+	    	else   $scope.writed = false;
+	    },i*100);
+	}
+
+
+	if(localStorage.notes) {
+    	$scope.notes = JSON.parse(localStorage.notes);
+    }	
+    else $scope.notes = [
+    		{
+		    	id: localStorage.id++, 
+		    	title: data[1].khoa, 
+		    	content: 'Learn AngularJS', 
+		    	user:'<%-username%>',
+		    	update: date, 
+		    	like: 0, 
+		    	comment: []
+		    }
+    	];
+
+
+   $scope.New = function () {
+   		$scope.notes.push({
+   			id: localStorage++,
+    		title: $scope.title,
+			content: $scope.content,
+			update: new Date(),
+			like: 0,
+			comment: []
+		});
+		localStorage.notes = JSON.stringify($scope.notes);
+		title: '',
+		content: '',
+   }
+
+
+
+
+}]);
+
+</script>
+
+

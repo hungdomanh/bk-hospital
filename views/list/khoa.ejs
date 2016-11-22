@@ -30,7 +30,6 @@
 				<th ng-show=<%-type=='boss'%> scope="col" title="quantri">	Quản trị	</th>
 			</tr>
 			<tr ng-repeat="x in data | orderBy: sort | filter: search track by $index">
-
 				<td>{{ x.mak}}</td>
 				<td>{{ x.khoa }}</td>
 				<td ng-show=<%-type=='boss'%> >
