@@ -18,8 +18,6 @@ client.on('error', function(error) {
   console.log(error);
 });  
 
-var type = 'khach';
-
 // HOME PAGE
 router.get('/', function(req, res) {
     if(!req.session.loggedIn) req.session.loggedIn = false;
@@ -826,7 +824,6 @@ router.post('/add-thuoc', function(req, res) {
         client.query('INSERT INTO thuoc VALUES($1, $2, $3, $4)',
             [mat, thuoc, donvi, gia]
         );
-        
     }
     else
         res.render('login-register/login',{ 
@@ -879,7 +876,7 @@ router.post('/delete-thuoc', function(req, res) {
 router.get('/hoi-dap', function(req, res) {
     req.session.lastPage = '/hoi-dap';
     if(req.session.loggedIn) {
-        client.query('SELECT * FROM khoadieutri', function(err, result){
+        client.query('select * from hoidap FULL JOIN khoadieutri on hoidap.title = khoadieutri.khoa order by hoidap.mahd', function(err, result){
             if(err) return console.log("Can't SELECT FROM TABLE");
             var str = result.rows;
             var data  = JSON.stringify(result.rows);
@@ -903,8 +900,63 @@ router.get('/hoi-dap', function(req, res) {
             type: 'khack'
         });
 });
+router.post('/add-hoi-dap', function(req, res) {
+    req.session.lastPage = '/hoi-dap';
+    console.log(req.body);
+    if(req.session.loggedIn && req.body.mahd){
+        var mahd = req.body.mahd;
+        var title   = req.body.title ;
+        var content = req.body.content ;
+        var username = req.session.username ;
 
+        res.redirect('/hoi-dap');
+        client.query('INSERT INTO hoidap VALUES($1, $2, $3, $4, $5, $6, $7, $8)',
+            [mahd, title, content, username, new Date(), '', '', 0]
+        );
+    }
+    else
+        res.render('login-register/login',{ 
+            title: "TRY Login",
+            logined: false,
+            username: null,
+            type: 'khack'
+        });
+});
 
+router.post('/binh-luan-moi', function(req, res) {
+    req.session.lastPage = '/hoi-dap';
+    console.log(req.body);
+    if(req.session.loggedIn && req.body.mahd){
+        var mahd = req.body.mahd;
+        var title   = req.body.title ;
+        var content = req.body.content ;
+        var username = req.session.username ;
+
+        res.redirect('/hoi-dap');
+        client.query('INSERT INTO hoidap VALUES($1, $2, $3, $4, $5, $6, $7, $8)',
+            [mahd, title, content, username, new Date(), '', '', 0]
+        );
+    }
+    else
+        res.render('login-register/login',{ 
+            title: "TRY Login",
+            logined: false,
+            username: null,
+            type: 'khack'
+        });
+});
+
+router.post('/hello', function(req, res){
+    var data = "addfsdfsdfs";
+    console.log(data);
+    
+    res.send({
+        success: true,
+        hello: JSON.stringify(data)
+    })
+    console.log(hello);
+
+});
 
 
 ///////////////////////////////////////////////////////////////////////////// FUNCTION

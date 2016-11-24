@@ -1,39 +1,39 @@
 <% include layout.ejs %>
 
-
 <link rel="stylesheet" href="/stylesheets/hoi-dap.css">
 
 <div ng-controller="hoidapCtrl" class="content hoiDapPage container">
+	{{hoidap}}
 	<h1 class="text-success text-center">Hỏi đáp + Tư vấn</h1>
-
+	
+<!-- ADD -->
 	<div class="newQuestion">
-		<div class="form-group">
+		<form class="form-group" action="/add-hoi-dap" method="post">
 			<div class="row">
 				<span class="col-xs-6 text-info"><label for="newQuestion"><h3>Câu hỏi mới:</h3></label></span>
-				<span>Chủ đề(nếu có): 	
-					<select ng-model="title"  >
-						<option ng-repeat="x in data track by $index" value="{{x.khoa}}">{{x.khoa}}</option>
+				<span>Chủ đề(nếu có): <input type ="hidden" value={{mahdAdd}} name="mahd"> {{mahdAdd}}
+					<select ng-model="title" name='title' >
+						<option ng-repeat="x in khoa  track by $index" value="{{x.khoa}}">{{x.khoa}}</option>
 				 	</select>
 				</span>
 			</div>
 							
-			<textarea class="form-control" placeholder="Nội dung..." rows="4" id="newQuestion" ng-model="content"></textarea>
+			<textarea class="form-control" placeholder="Nội dung..." rows="4" id="newQuestion" ng-model="content" name='content'></textarea>
 			<div class="row dateAndUser">
 				<span class="col-xs-6">
 					<h4 class="glyphicon glyphicon-user"><%-username%></h4>
 				</span>
 				<span class="col-xs-6 text-right" style="margin-top:10px;">
 					{{date | date: medium}} 
-					<button ng-show="!writed" class="btn btn-info disabled "> Đăng</button>
-					<button ng-show="writed" class="btn btn-info" ng-click="New()"> Đăng</button>
+					<span ng-show="!writed" class="btn btn-info disabled "> Đăng</span>
+					<button ng-show="writed" type="submit" class="btn btn-info" ng-click="setAdd()"> Đăng</button>
 				</span>
-				
 			</div>
 			
-		</div>	
+		</form>	
 	</div>
-
-	<div class="question" ng-repeat="x in notes  track by $index ">
+<!-- SHOW -->
+	<div class="question" ng-repeat="x in hoidap  track by $index ">
 		<div class="form-group">
 			<div class="text-center">
 				Chủ đề: <b>{{x.title}}</b>
@@ -60,14 +60,14 @@
 				<div><span class='glyphicon glyphicon-user'></span><a ng-href="/user/{{cm.id}}">{{cm.id}}</a> : {{cm.text}}</div>
 			</div>
 
-			<div ng-show="showComment[$index]"><hr>
+			<!-- <form action="{{'/binh-luan-moi/' + x.mahd}}" class="form-group" ng-show="showComment[$index]"><hr> -->
 				<div class="input-group">
 				  <input type="text" class="form-control" placeholder="{{username}}" ng-model="textNewComment[$index]">
 				  <span class="input-group-btn">
-				    <button class="btn btn-info" ng-click="NewComment($index)" type="button">Bình luận</button>
+				    <button class="btn btn-info" id="newCommentButton" ng-click="NewComment(x.mahd)" type="submit">Bình luận</button>
 				  </span>
 				</div>
-			</div>	
+			<!-- </form>	 -->
 		</div>	
 	</div>
 	
@@ -80,7 +80,7 @@
 
 
 <script>
-app.controller('hoidapCtrl', ['$scope', '$timeout', function($scope, $timeout){
+app.controller('hoidapCtrl', ['$scope', '$timeout', '$http', function($scope, $timeout, $http){
 	var date = new Date();
 	$scope.date = date;
 	$scope.title = "";
@@ -94,6 +94,26 @@ app.controller('hoidapCtrl', ['$scope', '$timeout', function($scope, $timeout){
 	$scope.textNewComment = [];
 
 
+	var khoa = [], hoidap = [], j=0;
+	for(var i=0; i<data.length; i++) {
+		if(data[i].content) {
+			hoidap[j] = {};
+			hoidap[j].mahd = data[i].mahd;
+			hoidap[j].title = data[i].title ;
+			hoidap[j].content = data[i].content ;
+			hoidap[j].username = data[i].username ;
+			hoidap[j].update = data[i].update ;
+			hoidap[j].likecount = data[i].likecount ;
+			hoidap[j].comment = data[i].comment ;
+			j++;
+		}
+		khoa[i] = {}
+		khoa[i].mak = data[i].mak;
+		khoa[i].khoa = data[i].khoa;
+	}
+	$scope.khoa = khoa;
+	$scope.hoidap = hoidap;
+
     for(var i=0; i<10000; i++) {
 		$timeout(function(){
 	    	if($scope.content)	$scope.writed = true
@@ -101,73 +121,17 @@ app.controller('hoidapCtrl', ['$scope', '$timeout', function($scope, $timeout){
 	    },i*100);
 	}
 
-	if(localStorage.notes) {
-    	$scope.notes = JSON.parse(localStorage.notes);
-    }	
-    else $scope.notes = [
-    		{
-		    	id: localStorage.id++, 
-		    	title: data[1].khoa, 
-		    	content: 'Learn AngularJS', 
-		    	username: username,
-		    	update: date, 
-		    	like: 0,
-		    	liked: [],
-		    	comment: [{id: username, text: "demo demo comment"}]
-		    }
-    	];
 
-    var Liked = function(index, username) {
-    	for(var i=0; i<$scope.notes[index].liked.length; i++) {
-    		if(username == $scope.notes[index].liked[i])	return i+1;
-    	}
-    	return false;
-    }
+	$scope.setAdd = function(){
+		if(hoidap.length > 0)
+			$scope.mahdAdd = hoidap[hoidap.length-1].mahd+1;
+		else $scope.mahdAdd = 0;
+	};
 
-    $scope.Like = function(index) {
-    	if(Liked(index, username)) {
-    		$scope.notes[index].like -= 1;
-    		$scope.notes[index].liked.splice(Liked(index, username)-1, 1);
-    	}
-    	else {
-    		$scope.notes[index].like += 1;
-    		$scope.notes[index].liked.push(username);
-    	}
-    	localStorage.notes = JSON.stringify($scope.notes);
+	$scope.Comment = function(index) {
+      $scope.showComment[index] = !$scope.showComment[index];
     }
-
-    $scope.Comment = function(index) {
-    	$scope.showComment[index] = !$scope.showComment[index];
-    }
-
-    $scope.NewComment = function(index) {
-    	if($scope.textNewComment[index].length){
-    		console.log("obj");
-    		var s = {
-    			id: username,
-    			text: $scope.textNewComment[index]
-    		};
-	    	$scope.notes[index].comment.push(s);
-	    	localStorage.notes = JSON.stringify($scope.notes);
-	    	$scope.textNewComment[index] = '';
-	    }
-    }
-
- 	$scope.New = function () {
-   		$scope.notes.push({
-   			id: localStorage++,
-    		title: $scope.title,
-			content: $scope.content,
-			username: username,
-			update: new Date(),
-			like: 0,
-			liked: [],
-			comment: []
-		});
-		localStorage.notes = JSON.stringify($scope.notes);
-		$scope.title = '';
-		$scope.content = '';
-    }
+   
   
    $scope.Delete = function(index) {
    	var r = confirm("Xóa mục thảo luận này?");
@@ -177,13 +141,53 @@ app.controller('hoidapCtrl', ['$scope', '$timeout', function($scope, $timeout){
 
 
 
+
+   $scope.NewComment = function(index) {
+	   	var onSuccess = function(response) {
+	   		
+	   		var result = JSON.parse(response);
+	   		alert(result);
+
+	   	};
+
+	   	var onFailure = function(response) {
+	   		var result = response.hello;
+	   		switch(result.status) {
+	   			case 401: 
+	   				break;
+	   			case 403: 
+	   				break;
+	   			default:
+	   		}
+	   	};
+	   	$http.post('/hello', $scope.hello).then(onSuccess, onFailure);
+	
+   }
+
+
+
+
+
+
+
+
+
+
 }]);
 
+
+//
 app.filter('reverse', function() {
   return function(items) {
     return items.slice().reverse();
   };
 });
+
+
+
+
+
+
 
 </script>
 
