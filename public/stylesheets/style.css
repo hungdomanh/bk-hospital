@@ -65,10 +65,27 @@ body {
   /*margin-bottom: -1000px;*/
 }
 
+.formUpdateKhach {
+  /*text-align: center;*/
+  margin: 30px;
+  /*color: white;*/
+}
+
 #chinhSachChatLuong {
    background-color: #8596A0; /* Dark Blue */
     color: white;
     padding: 30px;
+}
+.dangKiKhamBenhForm {
+  border-radius: 3%;
+  border: solid 1px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  padding: 10px;
+}
+
+.dangKiKhamBenhForm .text {
+  float: right;
 }
 
 footer {
@@ -88,7 +105,7 @@ h3 {
 
 .homePage {
   position: relative;
-  top: 50px;
+  top: 30px;
 }
 
 #homePage {
@@ -111,6 +128,11 @@ hr {
     border-width: 1px;
 }
 
+.idBenhNhan {
+  font-size: 30px;
+  margin-left: 90px;
+}
+
 .imgHomePage {
   border-radius: 50%;
   margin: 0 auto;
@@ -121,16 +143,16 @@ hr {
   /*background-position: center;*/
 }
 
+
+.modal-body{
+  font-size: 20px;
+}
+
 .navbar {
     /*border: 0;*/
     border-radius: 0;
     margin-bottom: 0;
     box-shadow: 5px 1px 5px grey;
-}
-
-.khachHeader {
-  color: orange;
-  font-size: 40px;
 }
 
 .sort {

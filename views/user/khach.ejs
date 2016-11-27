@@ -1,0 +1,66 @@
+<% include ../layout.ejs %>
+
+<div ng-controller="khachCtrl" class='content container'>
+	<h1 class="text-center">Thông tin cá nhân</h1>
+	<div class='row'>
+	 	<div class="col-xs-4"></div>
+	 	<div class="col-xs-6">
+		    <form action="/user/update-khach" method="post" class="formUpdateKhach">
+			      <div class="modal-header">
+			        
+			      </div>
+			      <div class="modal-body">
+			        ID: {{mabnAdd}} <input type="hidden" value={{mabnAdd}} name="mabn"><br><br>
+			        Họ Tên:     <input type="text" name="hoten"><br><br>
+			        Ngày Sinh:  <input type="number" name="ngaysinh" max='31' min='1' class='ngaysinh'  placeholder="Ngày">
+			        			<input type="number" name="thangsinh" max='12' min='1' class='thangsinh' placeholder="Tháng">
+			        			<input type="number" name="namsinh" max='2017' min='1900' class='namsinh' placeholder="Năm"><br><br>
+			        Giới tính:  <input type="radio"  value="Nam" name="gioitinh" />Nam
+							    <input type="radio"  value="Nữ"  name="gioitinh" />Nữ<br><br>
+			        Địa chỉ:    <input type="text"   name="diachi"><br><br>
+			        Điện Thoại: <input type="number" min='010000000' name="dienthoai"><br><br>
+			        Trạng thái: Khỏe mạnh<br><br>
+					Username: <%-username%>
+			      </div>
+			      <div class=" text-center">
+			        <button type="submit" class="btn btn-primary" value="Save">Cập nhật</button>
+			      </div>
+		     </form>
+		</div>
+	</div>
+	
+
+
+
+
+
+
+</div> <!-- content -->
+
+
+
+
+<script>
+app.controller('khachCtrl', ['$scope', function($scope){
+	var s = '<%-data%>';
+	var data = JSON.parse(s);
+	$scope.data = data;
+
+
+	var test = 0;
+ 	for(var i = 0; i<data.length-1; i++) {
+ 		if( data[i+1].mabn - data[i].mabn > 1) {
+ 			$scope.mabnAdd = data[i].mabn+1;
+ 			test = 1;
+ 		}
+ 	}
+ 	if(test == 0) {
+ 		$scope.mabnAdd = data[i].mabn+1;
+ 	}
+	
+
+
+
+}]);
+
+</script>

@@ -1,0 +1,27 @@
+<% include ../layout.ejs %>
+
+<div ng-controller="userBacSiCtrl" class='content container'>
+	<h1 class="text-center">Thông tin Bác Sĩ</h1>
+
+	<%-data%>
+
+
+
+</div> <!-- content -->
+
+
+
+
+<script>
+app.controller('userBacSiCtrl', ['$scope', function($scope){
+	var s = '<%-data%>';
+	var data = JSON.parse(s);
+	$scope.data = data;
+
+
+
+
+
+}]);
+
+</script>

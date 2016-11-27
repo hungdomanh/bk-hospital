@@ -17,8 +17,7 @@
 </head>
 
 <body ng-app="layout" ng-controller="layoutCtrl">
-
-<!-- Khach -->
+<!-- khach chua dang nhap -->
 <nav ng-hide=<%-logined%> class="navbar navbar-fixed-top navbar-default">
   <div class="container-fluid khackHeader">
     <div class="navbar-header">
@@ -47,16 +46,61 @@
             <li><a href="/thong-ke/khoa-dieu-tri">Khoa điều trị</a></li>
           </ul>
         </li>
-        <li>
-          <a href="/login"><span class="glyphicon glyphicon-star-empty"></span>Đăng kí khám bệnh<span class="glyphicon glyphicon-star-empty"></span></a>
-        </li>
+        
         <li >
           <a href="/login"> Hỏi đáp <span class="glyphicon glyphicon-question-sign"></span></a>
         </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
+        <li>
+          <a href="/login"><span class="glyphicon glyphicon-star-empty"></span>Đăng kí khám bệnh<span class="glyphicon glyphicon-star-empty"></span></a>
+        </li>
         <li><a href="/register"><span class="glyphicon glyphicon-hand-right"></span></span> Đăng kí</a></li>
         <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Đăng nhập</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- Khach -->
+<nav ng-show=<%-type=='khach' && logined%> class="navbar navbar-fixed-top navbar-default">
+  <div class="container-fluid khackHeader">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/"> <span class="glyphicon glyphicon-home"></span> Home</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="/">Thông tin chung<span class="caret"></span></a>
+          <ul class="dropdown-menu" display="none">
+            <li><a href="/#tinTuc">Tin tức</a></li>
+            <li><a href="/#chinhSachChatLuong">Chính sách chất lượng</a></li>
+            <li><a href="/#coSoVatChat">Cơ sở vật chất</a></li>
+            <li><a href="/thong-tin/ban-quan-tri">Ban quản trị</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="/">Danh sách & thống kê<span class="caret"></span></a>
+          <ul class="dropdown-menu" display="none">
+            <li><a href="/thong-ke/benh-thuong-gap">Bệnh thường gặp</a></li>
+            <li><a href="/thong-ke/khoa-dieu-tri">Khoa điều trị</a></li>
+          </ul>
+        </li>
+        
+        <li >
+          <a href="/hoi-dap"> Hỏi đáp <span class="glyphicon glyphicon-question-sign"></span></a>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+          <a href="/user/cap-nhat-thong-tin"><span class="glyphicon glyphicon-star-empty"></span>Đăng kí khám bệnh<span class="glyphicon glyphicon-star-empty"></span></a>
+        </li>
+        <li><a href="/user"><span class="glyphicon glyphicon-user"></span> Cá Nhân</a></li>
+        <li><a href="/logout">Thoát <span class="glyphicon glyphicon-log-out"></span></a></li>
       </ul>
     </div>
   </div>
@@ -93,14 +137,15 @@
         <li>
           <a href="/user/ho-so-benh-an">Hồ sơ bệnh án <span class="glyphicon glyphicon-question-sign"></span></a>
         </li>
-        <li>
-          <a href="/user/dang-ki-kham-benh"><span class="glyphicon glyphicon-star-empty"></span>Đăng kí khám bệnh<span class="glyphicon glyphicon-star-empty"></span></a>
-        </li>
+        
         <li >
           <a href="/hoi-dap"> Hỏi đáp <span class="glyphicon glyphicon-question-sign"></span></a>
         </li>
       </ul>
       <ul class="nav navbar-nav navbar-right"> 
+        <li>
+          <a href="/user/dang-ki-kham-benh"><span class="glyphicon glyphicon-star-empty"></span>Đăng kí khám bệnh<span class="glyphicon glyphicon-star-empty"></span></a>
+        </li>
         <li><a href="/user"><span class="glyphicon glyphicon-user"></span> Cá Nhân</a></li>
         <li><a href="/logout">Thoát <span class="glyphicon glyphicon-log-out"></span></a></li>
       </ul>
@@ -130,7 +175,7 @@
           </ul>
         </li>
         <li class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown" href="/">Danh sách<span class="caret"></span></a>
+          <a class="dropdown-toggle" data-toggle="dropdown" href="/">Danh sách & Thống kê<span class="caret"></span></a>
           <ul class="dropdown-menu" display="none">
             <li><a href="/bac-si">Bác sĩ</a></li>
             <li><a href="/benh-an">Bệnh Án</a></li>
@@ -145,17 +190,16 @@
           </ul>
         </li>
         <li class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown" href="/">Thống kê<span class="caret"></span></a>
+          <a class="dropdown-toggle" data-toggle="dropdown" href="/">Khám bệnh<span class="caret"></span></a>
           <ul class="dropdown-menu" display="none">
-            <li><a href="/thong-ke/benh-thuong-gap">Bệnh thường gặp</a></li>
-            <li><a href="/"></a></li>
+            <li><a href="/user/benh-nhan-dang-cho">Bệnh nhân đang chờ</a></li>
+            <li><a href="/user/benh-nhan-dang-kham">Bệnh nhân đang khám</a></li>
+            <li><a href="/user/benh-nhan-da-kham">Bệnh nhân đã khám</a></li>
           </ul>
-        </li>
-        <li class="dropdown">
-          <a href="/user/kham-benh">Khám bệnh <span class="glyphicon glyphicon-zoom-in"></span></a>
+          
         </li>
         <li >
-          <a href="/hoi-dap"> Hỏi đáp <span class="glyphicon glyphicon-question-sign"></span></a>
+          <a href="/hoi-dap">Hỏi đáp <span class="glyphicon glyphicon-question-sign"></span></a>
         </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -226,26 +270,35 @@
   </div>
 </nav>
 <a href="#" class="back-to-top">Back to Top</a>
+
+
+
+
+
+
+
 <script type="text/javascript">
-// create the back to top button
-$('body').prepend('<a href="#" class="back-to-top">Back to Top</a>');
+  // create the back to top button
+  $('body').prepend('<a href="#" class="back-to-top">Back to Top</a>');
 
-var amountScrolled = 300;
+  var amountScrolled = 300;
 
-$(window).scroll(function() {
-  if ( $(window).scrollTop() > amountScrolled ) {
-    $('a.back-to-top').fadeIn('slow');
-  } else {
-    $('a.back-to-top').fadeOut('slow');
-  }
-});
+  $(window).scroll(function() {
+    if ( $(window).scrollTop() > amountScrolled ) {
+      $('a.back-to-top').fadeIn('slow');
+    } else {
+      $('a.back-to-top').fadeOut('slow');
+    }
+  });
 
-$('a.back-to-top, a.simple-back-to-top').click(function() {
-  $('html, body').animate({
-    scrollTop: 0
-  }, 700);
-  return false;
-});
+  $('a.back-to-top, a.simple-back-to-top').click(function() {
+    $('html, body').animate({
+      scrollTop: 0
+    }, 700);
+    return false;
+  });
+
+
 </script>
  
 

@@ -24,6 +24,7 @@
 		          <option value="diachi">Địa Chỉ</option>
 		          <option value="kinhnghiem">Kinh Nghiệm</option>
 		          <option value="trangthai">Trạng Thái</option>
+		           <option value="username">	Username 	</option>
 		        </select>
 			</div>
 		</div>
@@ -38,6 +39,7 @@
 				<th scope="col" title="diachi">		Địa Chỉ		</th>
 				<th scope="col" title="kinhnghiem">	Kinh Nghiệm	</th>
 				<th scope="col" title="trangthai">	Trạng Thái  </th>
+				<th scope="col" title="username">	Tài Khoản  </th>
 				<th ng-show=<%-type=='boss'%> scope="col" title="quantri">	Quản trị	</th>
 			</tr>
 		  <tr ng-repeat="x in bacsi | orderBy: sort | filter: search track by $index"  ng-show='x.mabs'>
@@ -49,7 +51,8 @@
 		    <td>{{ x.diachi }}</td>
 		    <td>{{ x.kinhnghiem }}</td>
 		    <td><span ng-show="x.trangthai">Hoạt động</span><span ng-hide="x.trangthai">Trống</span></td>
-		    <td ng-show=<%-type=='boss'%> >
+		    <td>{{ x.username }}</td>
+		    <td ng-show=<%-type=='boss'%> class="row" >
 		    	<button ng-click="setEdit(x.mabs)" class="editButton" data-target='#bacsiEditFormModal' data-toggle="modal" >
 		    		Sửa
 		    	</button>
@@ -179,6 +182,7 @@
 				bacsi[j].hoten = data[i].hoten ;
 				bacsi[j].trangthai = data[i].trangthai ;
 				bacsi[j].kinhnghiem = data[i].kinhnghiem ;
+				bacsi[j].username = data[i].username ;
 				j++;
 			}
 

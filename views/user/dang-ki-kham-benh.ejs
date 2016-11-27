@@ -1,0 +1,60 @@
+<% include ../layout.ejs %>
+
+<div ng-controller="dangKiKhamBenhCtrl" class="content">
+<h2 class="text-center text-info">Đăng kí khám bệnh</h2>
+<div class='row'>
+	<div class="col-xs-3"></div>
+	<div class="col-xs-6">
+		<form action="/user/dang-ki-kham-benh" method="post" class="dangKiKhamBenh">
+			<div class="modal-header">
+				<p class="idBenhNhan">
+					ID Cá Nhân: {{data.mabn}} <input type="hidden" value={{data.mabn}} name="mabn"><br><br>
+				</p>
+			</div>
+			<div class="modal-body">
+			Họ Tên:     {{data.hoten}} <br><br>
+			Mô tả triệu chứng:
+			<textarea class="form-control" placeholder="Triệu chứng..." rows="4" ng-model="content" name='content'></textarea>
+
+			</span>
+			
+			
+			</div>
+			<div class=" text-center">
+			<button type="submit" class="btn btn-success" value="Save">Đăng kí khám bệnh</button>
+			</div>
+	     </form>
+		
+
+
+	</div>
+
+
+
+
+
+
+
+
+</div>	<!-- row -->
+</div>  <!-- content -->
+
+<script>
+app.controller('dangKiKhamBenhCtrl', ['$scope', function($scope){
+	var s = '<%-data%>';
+	var data = JSON.parse(s);
+	data = data[0];
+	$scope.data = data;
+
+
+
+
+
+
+
+
+
+
+}]);
+
+</script>

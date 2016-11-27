@@ -1,0 +1,65 @@
+<% include ../layout.ejs %>
+
+<div ng-controller="userBenhNhanCtrl" class='content container'>
+	<h1 class="text-center">Thông tin cá nhân</h1>
+	<div class='row'>
+	 	<div class="col-xs-4"></div>
+	 	<div class="col-xs-6">
+		    <form action="/user/update-benh-nhan" method="post" class="formUpdateKhach">
+			      <div class="modal-header">
+			      	<p class="idBenhNhan">
+			        	ID: {{data.mabn}} <input type="hidden" value={{data.mabn}} name="mabn"><br><br>
+			        </p>
+			      </div>
+			      <div class="modal-body">
+			        
+			        Họ Tên:     <input type="text"   value={{data.hoten}} name="hoten"><br><br>
+			        Ngày Sinh:  <input type="number" value={{ngaysinh}} name="ngaysinh" max='31' min='1' class='ngaysinh'  placeholder="Ngày">
+			        			<input type="number" value={{thangsinh}} name="thangsinh" max='12' min='1' class='thangsinh' placeholder="Tháng">
+			        			<input type="number" value={{namsinh}} name="namsinh" max='2017' min='1900' class='namsinh' placeholder="Năm"><br><br>
+			        Giới tính:  <input type="radio"  value="Nam" ng-checked='nam' name="gioitinh" />Nam
+							    <input type="radio"  value="Nữ"  ng-checked='!nam'  name="gioitinh" />Nữ<br><br>
+			        Địa chỉ:    <input type="text"   value={{data.diachi}} name="diachi"><br><br>
+			        Điện Thoại: <input type="number" value={{data.dienthoai}} min='010000000' name="dienthoai"><br><br>
+			        Trạng thái: <span value="1" ng-show='trangthai' name="trangthai" >Khám bệnh </span>
+							    <span value="0" ng-show='!trangthai' name="trangthai" >Khỏe mạnh</span><br><br>
+					Tài khoản: {{data.username}}  <input type="hidden" value={{data.username}} name="username"><br><br>
+			      </div>
+			      <div class=" text-center">
+			        <button type="submit" class="btn btn-primary" value="Save">Cập nhật</button>
+			      </div>
+		     </form>
+		</div>
+	</div>
+
+
+
+</div> <!-- content -->
+
+
+
+
+<script>
+app.controller('userBenhNhanCtrl', ['$scope', function($scope){
+	var s = '<%-data%>';
+	var data = JSON.parse(s);
+	data = data[0];
+	$scope.data = data;
+
+	var s = data.ngaysinh;
+	$scope.ngaysinh = parseInt(s.slice(0, 2), 10);
+	$scope.thangsinh = parseInt(s.slice(3, 5), 10);
+	$scope.namsinh = parseInt(s.slice(6, 10), 10); 	
+
+
+	if(data.gioitinh == 'Nam')   $scope.nam = true;
+	else $scope.nam = false;
+
+	if(data.trangthai == 1)   $scope.trangthai = true;
+	else $scope.trangthai = false;
+
+
+
+}]);
+
+</script>

@@ -1,0 +1,59 @@
+<% include ../layout %>
+
+<div class="content container " ng-controller="benhNhanDangChoCtrl">
+	
+	<div class="row search-add-sort">
+		<div  class="col-xs-5 search">
+			Tìm Kiếm: <input type="text" ng-model='search'> {{dangkikhambenh.length}} người đang chờ khám bệnh
+		</div>
+		<div  class="col-xs-2 add">
+			
+		</div>
+		<div  class="col-xs-5 sort " ng-init="sort='madkkb'">
+			Sắp xếp: 
+			<select ng-model="sort">
+				<option value ="madkkb">Mã Đăng Kí</option>
+				<option value ="hoten">Họ Tên</option>
+				<option value ="mieuta">Miêu Tả</option>
+	        </select>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-3"></div>
+		<div class="col-xs-6">
+			<form class='dangKiKhamBenhForm' action="/user/nhan-dang-ki-kham-benh/" method="post" ng-repeat="x in dangkikhambenh | orderBy: sort | filter: search track by $index">
+				<b>{{x.madkkb}}. {{x.hoten}}</b> 
+				<input type="hidden" value={{x.madkkb}} name="madkkb">
+				<input type="hidden" value={{x.mabn}} name="mabn">
+				<span class="text">
+					Phòng: 
+					<select name="map" id="">
+						<option ng-repeat="p in phong" value="{{p.map}}">{{p.phong}}</option>
+					</select>
+					<button class="btn btn-success">Nhận khám</button>
+
+				</span>
+				<br>
+				<hr>
+				<p><b>Triệu chứng:</b> {{x.mieuta}}</p> <br>
+			</form>
+		</div>
+		<div class="col-xs-3"></div>
+	</div>
+</div> <!-- content -->
+
+
+<script>
+app.controller('benhNhanDangChoCtrl', ['$scope', '$http', function($scope, $http){
+	
+	$http.get('/table/dangkikhambenh').success(function (res) {
+        $scope.dangkikhambenh = res;
+    });
+
+    $http.get('/table/phong').success(function (res) {
+        $scope.phong = res;
+    });
+
+}])
+
+</script>

@@ -6,10 +6,10 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var path = require('path');
-// var config = require('./config.js');
 
 // connect 
 // var connect = config.database;
+// var config = require('./config.js');
 var connect = 'postgres://tsephbbjgpmaka:mH6kFB2sIc2zOYpdVgQ_CYYzu0@ec2-54-163-251-104.compute-1.amazonaws.com:5432/d115c9p8d0kjh1';
 require('pg').defaults.ssl = true;
 var client = new pg.Client(connect);
@@ -21,7 +21,7 @@ client.on('error', function(error) {
 // HOME PAGE
 router.get('/', function(req, res) {
     if(!req.session.loggedIn) req.session.loggedIn = false;
-    if(!req.session.type)     req.session.type = 'khack';
+    if(!req.session.type)     req.session.type = 'khach';
     req.session.lastPage = '/';
 	res.render('home',{
 		title: "BK-Hospital",
@@ -30,34 +30,6 @@ router.get('/', function(req, res) {
 		type: req.session.type
 	});
 
-});
-///////////////////////////////////////////////////////////////////////////// THONG TIN
-// TIN TUC /////////////////////////////
-router.get('/thong-tin/tin-tuc', function(req, res) {
-    res.render('thong-tin/tin-tuc',{
-        title: "BK",
-        logined: req.session.loggedIn,
-        username: req.session.username,
-        type: req.session.type
-    });
-});
-// CHINH_SACH CHAT LUONG ///////////////
-router.get('/thong-tin/chinh-sach-chat-luong', function(req, res) {
-    res.render('thong-tin/chinh-sach-chat-luong',{
-        title: "BK",
-        logined: req.session.loggedIn,
-        username: req.session.username,
-        type: req.session.type
-    });
-});
-// CO SO VAT CHAT   ///////////////////
-router.get('/thong-tin/co-so-vat-chat', function(req, res) {
-    res.render('thong-tin/co-so-vat-chat',{
-        title: "BK",
-        logined: req.session.loggedIn,
-        username: req.session.username,
-        type: req.session.type
-    });
 });
 // BAN QUAN TRI   /////////////////////
 router.get('/thong-tin/ban-quan-tri', function(req, res) {
@@ -68,10 +40,71 @@ router.get('/thong-tin/ban-quan-tri', function(req, res) {
         type: req.session.type
     });
 });
+/// DANH SACH THONG KE
+
+router.get('/thong-ke/khoa-dieu-tri',  function(req, res) {
+    req.session.lastPage = 'thong-ke/khoa-dieu-tri';
+    if(req.session.loggedIn) {
+        client.query('SELECT * FROM khoadieutri order by mak', function(err, result){
+            if(err) return console.log("Can't SELECT FROM TABLE");
+
+            var str = result.rows;
+            var data  = JSON.stringify(result.rows);
+            if(str) 
+             res.render('list/khoa', {
+                data: data, 
+                title: 'Khoa',
+                logined: req.session.loggedIn,
+                username: req.session.username,
+                type: req.session.type
+
+            });
+            else res.end("CAN'T GET LINK");
+        });  
+    }
+    else 
+        res.render('login-register/login',{
+            title: "Login",
+            logined: false,
+            username: null,
+            type: 'khach'
+        });
+});
+
+router.get('/thong-ke/benh-thuong-gap',  function(req, res) {
+    req.session.lastPage = 'thong-ke/benh-thuong-gap';
+    if(req.session.loggedIn) {
+        client.query('SELECT mab, mat, benh, mak, thuoc FROM benh right join thuoc using (mat) order by mab', function(err, result){
+            if(err) return console.log("Can't SELECT FROM TABLE");
+
+            var str = result.rows;
+            var data  = JSON.stringify(result.rows);
+            if(str) 
+             res.render('list/benh', {
+                data: data, 
+                title: 'Bệnh',
+                logined: req.session.loggedIn,
+                username: req.session.username,
+                type: req.session.type
+
+            });
+            else res.end("CAN'T GET LINK");
+        });  
+    }
+    else 
+        res.render('login-register/login',{
+            title: "Login",
+            logined: false,
+            username: null,
+            type: 'khach'
+        });
+});
+
+
 /////////////////////////////////////////////////////////////////////////////  LOGIN - REGISTER
 router.get('/login', function(req, res) {
 	if(!req.session.loggedIn) {
-        req.session.type = 'khack';
+        req.session.type = 'khach';
        
         res.render('login-register/login', {
         	title: "Login", 
@@ -117,7 +150,7 @@ router.post('/login', function(req, res) {
                                 title: "TRY Login",
                                 logined: false,
                                 username: null,
-                                type: 'khack'
+                                type: 'khach'
                             });
                     });
                 }
@@ -127,7 +160,7 @@ router.post('/login', function(req, res) {
                     title: "TRY Login",
                     logined: false,
                     username: null,
-                    type: 'khack'
+                    type: 'khach'
                 });
             }
         });          
@@ -137,14 +170,15 @@ router.post('/login', function(req, res) {
             title: "TRY Login",
             logined: false,
             username: null,
-            type: 'khack'
+            type: 'khach'
         });
     }
 });
 router.get('/logout', function (req, res) {
     req.session.loggedIn = false;
     req.session.username = null;
-    req.session.type = 'khack';
+    req.session.type = 'khach';
+    res.redirect('/');
     res.render('home',{
         title: "BK",
         logined: req.session.loggedIn,
@@ -155,7 +189,7 @@ router.get('/logout', function (req, res) {
 router.get('/register', function (req, res) {
     req.session.loggedIn = false;
     req.session.username = null;
-    req.session.type = 'khack';
+    req.session.type = 'khach';
 
     client.query('SELECT id FROM users', function(err, result){
         if(err) return console.log("Can't SELECT FROM TABLE");
@@ -185,7 +219,7 @@ router.post('/register-submit', function(req, res) {
             title: "SUCCESS",
             logined: false,
             username: null,
-            type: 'khack'
+            type: 'khach'
         });
     };
 });
@@ -216,7 +250,7 @@ router.get('/bac-si',  function(req, res) {
             title: "Login",
             logined: false,
             username: null,
-            type: 'khack'
+            type: 'khach'
         });
 });
 router.post('/add-bac-si', function(req, res) {
@@ -250,7 +284,7 @@ router.post('/add-bac-si', function(req, res) {
             title: "TRY Login",
             logined: false,
             username: null,
-            type: 'khack'
+            type: 'khach'
         });
 });
 router.post('/edit-bac-si', function(req, res) {
@@ -282,7 +316,7 @@ router.post('/edit-bac-si', function(req, res) {
             title: "TRY Login",
             logined: false,
             username: null,
-            type: 'khack'
+            type: 'khach'
         });
 });
 router.post('/delete-bac-si', function(req, res) {
@@ -300,7 +334,7 @@ router.post('/delete-bac-si', function(req, res) {
             title: "TRY Login",
             logined: false,
             username: null,
-            type: 'khack'
+            type: 'khach'
         });
 });
 
@@ -308,7 +342,7 @@ router.post('/delete-bac-si', function(req, res) {
 router.get('/benh',  function(req, res) {
     req.session.lastPage = '/benh';
     if(req.session.loggedIn) {
-        client.query('SELECT mab, mat, benh, makdt, thuoc FROM benh right join thuoc using (mat) order by mab', function(err, result){
+        client.query('SELECT mab, mat, benh, mak, thuoc FROM benh right join thuoc using (mat) order by mab', function(err, result){
             if(err) return console.log("Can't SELECT FROM TABLE");
             var str = result.rows;
             var data  = JSON.stringify(result.rows);
@@ -329,21 +363,21 @@ router.get('/benh',  function(req, res) {
             title: "Login",
             logined: false,
             username: null,
-            type: 'khack'
+            type: 'khach'
         });
 });
 router.post('/add-benh', function(req, res) {
     req.session.lastPage = '/benh';
     if(req.session.type=='boss' && req.body.mab && req.body.mat
-        && req.body.benh && req.body.makdt){
+        && req.body.benh && req.body.mak){
         var mab = req.body.mab ;
         var benh = req.body.benh ;
         var mat = req.body.mat ;
-        var makdt = req.body.makdt ;
+        var mak = req.body.mak ;
 
         res.redirect('/benh');
         client.query('INSERT INTO benh VALUES($1, $2, $3, $4)',
-            [mab, benh, mat, makdt]
+            [mab, benh, mat, mak]
         );
         
     }
@@ -353,21 +387,23 @@ router.post('/add-benh', function(req, res) {
             title: "TRY Login",
             logined: false,
             username: null,
-            type: 'khack'
+            type: 'khach'
         });
 });
 router.post('/edit-benh', function(req, res) {
     req.session.lastPage = '/benh';
+    console.log(req.session.type +"&&"+ req.body.mab +"&&"+ req.body.mat
+        +"&&"+ req.body.benh +"&&"+ req.body.mak);
     if(req.session.type=='boss' && req.body.mab && req.body.mat
-        && req.body.benh && req.body.makdt){
+        && req.body.benh && req.body.mak){
         var mab = req.body.mab ;
         var benh = req.body.benh ;
         var mat = req.body.mat ;
-        var makdt = req.body.makdt ;
+        var mak = req.body.mak ;
 
         res.redirect('/benh');
-        client.query('INSERT INTO benh VALUES($1, $2, $3, $4)',
-            [mab, benh, mat, makdt]
+        client.query('UPDATE INTO benh VALUES($1, $2, $3, $4)',
+            [mab, benh, mat, mak]
         );
     }
     else 
@@ -375,7 +411,7 @@ router.post('/edit-benh', function(req, res) {
             title: "TRY Login",
             logined: false,
             username: null,
-            type: 'khack'
+            type: 'khach'
         });
 });
 router.post('/delete-benh', function(req, res) {
@@ -393,7 +429,7 @@ router.post('/delete-benh', function(req, res) {
             title: "TRY Login",
             logined: false,
             username: null,
-            type: 'khack'
+            type: 'khach'
         });
 });
 
@@ -421,7 +457,7 @@ router.get('/benh-an',  function(req, res) {
             title: "Login",
             logined: false,
             username: null,
-            type: 'khack'
+            type: 'khach'
         }); 
 });
 
@@ -449,7 +485,7 @@ router.get('/benh-nhan',  function(req, res) {
             title: "Login",
             logined: false,
             username: null,
-            type: 'khack'
+            type: 'khach'
         });
 });
 router.post('/add-benh-nhan', function(req, res) {
@@ -471,9 +507,13 @@ router.post('/add-benh-nhan', function(req, res) {
         if(thangsinh < 10 ) thangsinh = '0' + thangsinh;
         var s = ngaysinh + '/' + thangsinh +'/' + namsinh;
 
+
         res.redirect('/benh-nhan');
-        client.query('INSERT INTO benhnhan VALUES($1, $2, $3, $4, $5, $6, $7)',
-            [mabn, hoten, s, gioitinh, diachi, dienthoai, trangthai]
+        client.query('INSERT INTO benhnhan VALUES($1, $2, $3, $4, $5, $6, $7, $8)',
+            [mabn, hoten, s, gioitinh, diachi, dienthoai, trangthai, req.body.username]
+        );
+        client.query('INSERT INTO users VALUES($1, $2, $3, $4, $5)',
+            ['benhnhan'+mabn, '12', 'benhnhan', 'by admin', 'benhnhan'+mabn+'@gmail.com']
         );
     }
     else 
@@ -481,7 +521,7 @@ router.post('/add-benh-nhan', function(req, res) {
             title: "TRY Login",
             logined: false,
             username: null,
-            type: 'khack'
+            type: 'khach'
         });
 });
 router.post('/edit-benh-nhan', function(req, res) {
@@ -512,7 +552,7 @@ router.post('/edit-benh-nhan', function(req, res) {
             title: "TRY Login",
             logined: false,
             username: null,
-            type: 'khack'
+            type: 'khach'
         });
 });
 router.post('/delete-benh-nhan', function(req, res) {
@@ -530,7 +570,7 @@ router.post('/delete-benh-nhan', function(req, res) {
             title: "TRY Login",
             logined: false,
             username: null,
-            type: 'khack'
+            type: 'khach'
         });
 });
 
@@ -558,7 +598,7 @@ router.get('/don-thuoc',  function(req, res) {
             title: "Login",
             logined: false,
             username: null,
-            type: 'khack'
+            type: 'khach'
         });
 });
 
@@ -586,7 +626,7 @@ router.get('/hoa-don',  function(req, res) {
             title: "Login",
             logined: false,
             username: null,
-            type: 'khack'
+            type: 'khach'
         });
 });
 
@@ -615,7 +655,7 @@ router.get('/khoa',  function(req, res) {
             title: "Login",
             logined: false,
             username: null,
-            type: 'khack'
+            type: 'khach'
         });
 });
 router.post('/add-khoa', function(req, res) {
@@ -630,7 +670,7 @@ router.post('/add-khoa', function(req, res) {
             title: "TRY Login",
             logined: false,
             username: null,
-            type: 'khack'
+            type: 'khach'
         });
 });
 router.post('/edit-khoa', function(req, res) {
@@ -645,7 +685,7 @@ router.post('/edit-khoa', function(req, res) {
             title: "TRY Login",
             logined: false,
             username: null,
-            type: 'khack'
+            type: 'khach'
         });
 });
 router.post('/delete-khoa', function(req, res) {
@@ -662,7 +702,7 @@ router.post('/delete-khoa', function(req, res) {
             title: "TRY Login",
             logined: false,
             username: null,
-            type: 'khack'
+            type: 'khach'
         });
 });
 
@@ -690,7 +730,7 @@ router.get('/kham-benh',  function(req, res) {
             title: "Login",
             logined: false,
             username: null,
-            type: 'khack'
+            type: 'khach'
         }); 
 });
 
@@ -719,7 +759,7 @@ router.get('/phong',  function(req, res) {
             title: "Login",
             logined: false,
             username: null,
-            type: 'khack'
+            type: 'khach'
         });
 });
 router.post('/add-phong', function(req, res) {
@@ -741,7 +781,7 @@ router.post('/add-phong', function(req, res) {
             title: "TRY Login",
             logined: false,
             username: null,
-            type: 'khack'
+            type: 'khach'
         });
 });
 router.post('/edit-phong', function(req, res) {
@@ -762,7 +802,7 @@ router.post('/edit-phong', function(req, res) {
             title: "TRY Login",
             logined: false,
             username: null,
-            type: 'khack'
+            type: 'khach'
         });
 });
 router.post('/delete-phong', function(req, res) {
@@ -780,7 +820,7 @@ router.post('/delete-phong', function(req, res) {
             title: "TRY Login",
             logined: false,
             username: null,
-            type: 'khack'
+            type: 'khach'
         });
 });
 
@@ -809,7 +849,7 @@ router.get('/thuoc',  function(req, res) {
             title: "Login",
             logined: false,
             username: null,
-            type: 'khack'
+            type: 'khach'
         });
 });
 router.post('/add-thuoc', function(req, res) {
@@ -830,7 +870,7 @@ router.post('/add-thuoc', function(req, res) {
             title: "TRY Login",
             logined: false,
             username: null,
-            type: 'khack'
+            type: 'khach'
         });
 });
 router.post('/edit-thuoc', function(req, res) {
@@ -851,7 +891,7 @@ router.post('/edit-thuoc', function(req, res) {
             title: "TRY Login",
             logined: false,
             username: null,
-            type: 'khack'
+            type: 'khach'
         });
 });
 router.post('/delete-thuoc', function(req, res) {
@@ -869,7 +909,7 @@ router.post('/delete-thuoc', function(req, res) {
             title: "TRY Login",
             logined: false,
             username: null,
-            type: 'khack'
+            type: 'khach'
         });
 });
 ///////////////////////////////////////////////////////////////////////////// HOI DAP
@@ -897,7 +937,7 @@ router.get('/hoi-dap', function(req, res) {
             title: "TRY Login",
             logined: false,
             username: null,
-            type: 'khack'
+            type: 'khach'
         });
 });
 router.post('/add-hoi-dap', function(req, res) {
@@ -919,7 +959,7 @@ router.post('/add-hoi-dap', function(req, res) {
             title: "TRY Login",
             logined: false,
             username: null,
-            type: 'khack'
+            type: 'khach'
         });
 });
 
@@ -942,7 +982,7 @@ router.post('/binh-luan-moi', function(req, res) {
             title: "TRY Login",
             logined: false,
             username: null,
-            type: 'khack'
+            type: 'khach'
         });
 });
 

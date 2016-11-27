@@ -23,6 +23,7 @@
 		          <option value="diachi">		Địa Chỉ		</option>
 		          <option value="dienthoai">	Điện Thoại 	</option>
 		          <option value="trangthai">	Trạng Thái 	</option>
+		          <option value="username">		Username 	</option>
 		        </select>
 			</div>
 		</div>
@@ -36,6 +37,7 @@
 				<th scope="col" >		Địa Chỉ		</th>
 				<th scope="col" >		Điện Thoại	</th>
 				<th scope="col" >		Trạng Thái  </th>
+				<th scope="col" >		Tài Khoản  </th>
 				<th ng-show=<%-type=='boss'%> scope="col" title="quantri">	Quản trị	</th>
 			</tr>
 		  <tr ng-repeat="x in data | orderBy: sort | filter: search track by $index">
@@ -46,11 +48,12 @@
 		    <td>{{ x.diachi }}</td>
 		    <td>{{ x.dienthoai }}</td>
 		    <td><span ng-show="x.trangthai">Khám bệnh</span><span ng-hide="x.trangthai">Khỏe mạnh</span></td>
-		    <td ng-show=<%-type=='boss'%> >
-		    	<button ng-click="setEdit(x.mabn)" class="editButton" data-target='#benhnhanEditFormModal' data-toggle="modal" >
+			<td>{{ x.username }}</td>
+		    <td ng-show=<%-type=='boss'%> class="row" >
+		    	<button class=" editButton" ng-click="setEdit(x.mabn)" data-target='#benhnhanEditFormModal' data-toggle="modal" >
 		    		Sửa
 		    	</button>
-		    	<button ng-click="setEdit(x.mabn)" class="deleteButton" data-target='#benhnhanDeleteFormModal' data-toggle="modal" >
+		    	<button class=" deleteButton" ng-click="setEdit(x.mabn)" data-target='#benhnhanDeleteFormModal' data-toggle="modal" >
 		    		Xóa
 		    	</button>
 		    </td>
@@ -67,7 +70,7 @@
 		        <h4>Thêm mới</h4>
 		      </div>
 		      <div class="modal-body">
-		        Mã Bác Sĩ: {{mabnAdd}} <input type="hidden" value={{mabnAdd}} name="mabn"><br><br>
+		        Mã Bệnh Nhân: {{mabnAdd}} <input type="hidden" value={{mabnAdd}} name="mabn"><br><br>
 		        Họ Tên:     <input type="text" name="hoten"><br><br>
 		        Ngày Sinh:  <input type="number" name="ngaysinh" max='31' min='1'  placeholder="Ngày">
 		        			<input type="number" name="thangsinh" max='12' min='1' placeholder="Tháng">
@@ -78,6 +81,7 @@
 		        Điện Thoại: <input type="number" min='010000000' name="dienthoai"><br><br>
 		        Trạng thái: <input type="radio"  value="1" ng-checked='trangthaiEdit' name="trangthai" />Khám bệnh
 						    <input type="radio"  value="0" ng-checked='!trangthaiEdit' name="trangthai" />Khỏe mạnh<br><br>
+				Tài khoản: {{usernameAdd}}  <input type="hidden" value={{usernameAdd}} name="username"><br><br>
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
@@ -96,7 +100,7 @@
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>Chỉnh sửa</h4>
 		      </div>
 		      <div class="modal-body">
-		        Mã Bác Sĩ: {{mabnEdit}} <input type="hidden" value={{mabnEdit}} name="mabn"><br><br>
+		        Mã Bệnh Nhân: {{mabnEdit}} <input type="hidden" value={{mabnEdit}} name="mabn"><br><br>
 		        Họ Tên:     <input type="text"   value={{hotenEdit}} name="hoten"><br><br>
 		        Ngày Sinh:  <input type="number" value={{ngaysinhEdit}} name="ngaysinh" max='31' min='1' class='ngaysinh'  placeholder="Ngày">
 		        			<input type="number" value={{thangsinhEdit}} name="thangsinh" max='12' min='1' class='thangsinh' placeholder="Tháng">
@@ -107,7 +111,7 @@
 		        Điện Thoại: <input type="number" value={{dienthoaiEdit}} min='010000000' name="dienthoai"><br><br>
 		        Trạng thái: <input type="radio"  value="1" ng-checked='trangthaiEdit' name="trangthai" />Khám bệnh
 						    <input type="radio"  value="0" ng-checked='!trangthaiEdit' name="trangthai" />Khỏe mạnh<br><br>
-
+				Tài khoản: {{usernameEdit}}  <input type="hidden" value={{usernameEdit}} name="username"><br><br>
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
@@ -126,7 +130,7 @@
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>Xóa</h4>
 		      </div>
 		      <div class="modal-body">
-		        Mã Bác Sĩ: {{mabnEdit}} <input type="hidden" value={{mabnEdit}} name="mabn"><br><br>
+		        Mã Bệnh Nhân: {{mabnEdit}} <input type="hidden" value={{mabnEdit}} name="mabn"><br><br>
 		        Họ Tên:     {{hotenEdit}}<br><br>
 		        Ngày Sinh:  {{ngaysinhEdit}}/{{thangsinhEdit}}/{{namsinhEdit}} <br><br>
 		        Giới tính:  <span ng-show = 'nam'>Nam</span>
@@ -134,8 +138,8 @@
 		        Địa chỉ:    {{diachiEdit}} <br><br>
 		        Điện Thoại: {{dienthoaiEdit}}<br><br>
 		        Trạng thái: <span ng-show = 'trangthaiEdit'>Khám bệnh</span>
-		        			<span ng-hide = 'trangthaiEdit'>Khỏe mạnh</span>
-		        
+		        			<span ng-hide = 'trangthaiEdit'>Khỏe mạnh</span><br><br>
+				Tài khoản: {{usernameEdit}}  <input type="hidden" value={{usernameEdit}} name="username"><br><br>
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
@@ -171,6 +175,7 @@
 					$scope.diachiEdit    = data[i].diachi;
 					$scope.dienthoaiEdit = data[i].dienthoai;
 					$scope.trangthaiEdit = data[i].trangthai;
+					$scope.usernameEdit = data[i].username;
 		 		}
 		 	}
 		 }
@@ -186,6 +191,8 @@
 		 	if(test == 0) {
 		 		$scope.mabnAdd = data[i].mabn+1;
 		 	}
+		 	var dm = $scope.mabnAdd ;
+		 	$scope.usernameAdd = 'benhnhan' + dm.toString();
 		 };
 
 	}]);

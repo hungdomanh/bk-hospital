@@ -1,0 +1,138 @@
+<% include ../layout %>
+
+<div class="content container " ng-controller="benhNhanDangKhamCtrl">
+	<h3 class="text-center"><%-username%></h3>
+them don thuoc 
+<br>
+them 
+
+
+
+
+
+	<div class="row">
+		<div class="col-xs-3"></div>
+		<div class="col-xs-6">
+			<div class='dangKiKhamBenhForm' method="post" ng-repeat="x in benhnhandangkham | orderBy: sort | filter: search track by $index">
+				<b>{{x.madkkb}}. {{x.hoten}}</b> 
+				<input type="hidden" value={{x.madkkb}} name="madkkb">
+				<input type="hidden" value={{x.mabn}} name="mabn">
+				<span class="text">
+					Phòng: 
+					{{x.map}}
+					<button ng-click="setAdd($index)" data-target='#khambenhAddFormModal' data-toggle="modal" class="btn btn-success">Khám Bệnh</button>
+					
+				</span>
+				<br>
+				<hr>
+				<p><b>Triệu chứng:</b> {{x.mieuta}}</p> <br>
+			</div>
+		</div>
+		<div class="col-xs-3"></div>
+	</div>
+	
+	<!-- Add Form Modal -->
+	<div class="modal fade" id="khambenhAddFormModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	    <form action="/kham-benh" method="post">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h3 class='text-info text-center'>Khám bệnh</h3>
+		      </div>
+		      <div class="modal-body">
+					<input type ="hidden" value={{makbAdd}} name="makb">
+					<input type ="hidden" value={{mabnAdd}} name="mabn">
+					<input type ="hidden" value={{mabs}} name="mabs">
+					<input type ="hidden" value={{mapAdd}} name="map">
+					<input type ="hidden" value={{mabAdd}} name="mab">
+					<input type ="hidden" value={{madtAdd}} name="madt">
+					<input type ="hidden" value={{ngaykham}} name="ngaykham">
+					<input type ="hidden" value={{noidung}} name="noidung">
+					<input type ="hidden" value={{gia}} name="gia">
+				ID khám bệnh: {{makbAdd}} <br>
+				Họ tên: {{hotenAdd}} <br>
+				Phòng:  {{phongAdd}} <br>
+				Nội dung khám: <br>
+				<textarea name="noidung" ng-model="noidung" cols="49" rows="5"></textarea> <br>
+				Bệnh: 
+					<input type="text" ng-model='filterBenh'>
+					<select name="benh" id="">
+						<option ng-repeat="x in benh | orderBy: x.benh | filter: filterBenh track by $index" value="{{x.mab}}">
+							{{x.benh}}
+
+						</option>
+					</select>
+				 <br>
+				Đơn thuốc: <br>
+					<div ng-repeat="s in soDonThuoc">Đơn {{}: Thuốc: Số Lượng: Giá</div>
+				<hr>
+				Tổng chi phí: <br><hr>
+				<small class="text-left">Ngày khám: {{ngaykham | date: medium}}</small>
+
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+		        <button type="submit" class="btn btn-primary" value="Save">Lưu</button>
+		      </div>
+	     </form>
+	    </div>
+	  </div>
+	</div>
+
+
+
+
+
+
+
+
+</div> <!-- content -->
+
+
+<script>
+app.controller('benhNhanDangKhamCtrl', ['$scope', '$http', function($scope, $http){
+
+	// var data = JSON.parse(s);
+	// $scope.data = data;
+	var mabs = '<%-mabs%>';
+	$scope.mabs = mabs;
+	$scope.getMax = false;
+	$scope.ngaykham = new Date();
+	$http.get('/table/benhnhandangkham/'+mabs).success(function (res) {
+		$scope.benhnhandangkham = res;
+		benhnhandangkham = $scope.benhnhandangkham;
+
+
+
+    });
+
+	$http.get('/table/maxmakhambenh').success(function (res) {
+		$scope.makbAdd = parseInt(res) + 1;
+		$scope.getMax = true;
+	});
+
+	$scope.setAdd = function(index){
+		$scope.mabnAdd = benhnhandangkham[index].mabn;
+		$scope.hotenAdd = benhnhandangkham[index].hoten;
+		$scope.phongAdd = benhnhandangkham[index].phong;
+		$scope.mapAdd = benhnhandangkham[index].map;
+		$scope.mabAdd = benhnhandangkham[index].mab;
+
+	}
+
+	$http.get('/table/show/thuoc').success(function(res){
+		$scope.thuoc = res;
+		
+	});
+
+	$http.get('/table/show/benh').success(function(res){
+		$scope.benh = res;
+		
+	});
+
+
+   
+}])
+
+</script>

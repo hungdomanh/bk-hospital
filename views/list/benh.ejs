@@ -33,25 +33,25 @@
 				<th scope ="col" title="mat">Mã Thuốc</th>				
 				<th scope ="col" title="thuoc">Tên Thuốc</th>
 				<th scope ="col" title="mak">Mã Khoa</th>
-				<!-- <th scope ="col" title="khoa">Khoa Điều Trị</th> -->
+				<th scope ="col" title="khoa">Khoa Điều Trị</th>
 				<th ng-show=<%-type=='boss'%> scope ="col" title="quantri">Quản Trị</th>
 		     </tr>
-		  <tr ng-repeat="x in benh | orderBy: sort | filter: search track by $index">
-		    <td>{{ x.mab}}</td>
-		    <td>{{ x.benh}}</td>
-		    <td>{{ x.mat }}</td>
-		    <td>{{ x.thuoc }}</td>
-		    <td>{{ x.mak }}</td>
-		    <!-- <td>{{ x.khoa }}</td> -->
-		    <td ng-show=<%-type=='boss'%> >
-		    	<button ng-click="setEdit(x.mab)" class="editButton" data-target='#benhEditFormModal' data-toggle="modal" >
-		    		Sửa
-		    	</button>
-		    	<button ng-click="setEdit(x.mab)" class="deleteButton" data-target='#benhDeleteFormModal' data-toggle="modal" >
-		    		Xóa
-		    	</button>
-		    </td>
-		  </tr>
+			<tr ng-repeat="x in benh | orderBy: sort | filter: search track by $index">
+				<td>{{ x.mab}}</td>
+				<td>{{ x.benh}}</td>
+				<td>{{ x.mat }}</td>
+				<td>{{ x.thuoc }}</td>
+				<td>{{ x.mak }}</td>
+				<td>{{ x.khoa }}</td>
+				<td ng-show=<%-type=='boss'%> >
+					<button ng-click="setEdit(x.mab)" class="editButton" data-target='#benhEditFormModal' data-toggle="modal" >
+						Sửa
+					</button>
+					<button ng-click="setEdit(x.mab)" class="deleteButton" data-target='#benhDeleteFormModal' data-toggle="modal" >
+						Xóa
+					</button>
+				</td>
+			</tr>
 		</table>
 
 	<!-- Add Form Modal -->
