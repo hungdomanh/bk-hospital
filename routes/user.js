@@ -89,7 +89,7 @@ router.post('/update-khach', function (req, res) {
     if(thangsinh < 10 ) thangsinh = '0' + thangsinh;
     var s = ngaysinh + '/' + thangsinh +'/' + namsinh;
 
-    res.redirect('/');
+
     client.query('INSERT INTO benhnhan values($1, $2, $3, $4, $5, $6, $7, $8) ',
 	[req.body.mabn, req.body.hoten, s, req.body.gioitinh, 
 	req.body.diachi, req.body.dienthoai, '1', req.session.username]);  
@@ -97,8 +97,8 @@ router.post('/update-khach', function (req, res) {
     client.query('UPDATE users set type=$1 where id=$2',
             ['benhnhan', req.session.username]
         );
-
     req.session.type = 'benhnhan';
+	res.redirect('/user/dang-ki-kham-benh');
 });
 
 /////////////////////////////////////////////////// BENH NHAN
@@ -110,7 +110,6 @@ router.post('/update-benh-nhan', function (req, res) {
     if(thangsinh < 10 ) thangsinh = '0' + thangsinh;
     var s = ngaysinh + '/' + thangsinh +'/' + namsinh;
 
-    res.redirect('/');
     client.query('UPDATE benhnhan SET hoten = $2, ngaysinh = $3, gioitinh = $4, diachi = $5, dienthoai = $6 WHERE mabn = $1',
             [req.body.mabn, req.body.hoten, s, req.body.gioitinh, req.body.diachi, '0'+ req.body.dienthoai]
         );  
@@ -120,6 +119,7 @@ router.post('/update-benh-nhan', function (req, res) {
         );
 
     req.session.type = 'benhnhan';
+    res.redirect('/user/dang-ki-kham-benh');
 });
 //////// DANG KI KHAM BENH
 router.get('/dang-ki-kham-benh', function(req, res, next) {
