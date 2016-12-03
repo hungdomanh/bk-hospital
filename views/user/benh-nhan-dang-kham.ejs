@@ -2,40 +2,92 @@
 
 <div class="content container " ng-controller="benhNhanDangKhamCtrl">
 	<h3 class="text-center"><%-username%></h3>
-them don thuoc 
-<br>
-them 
-
-
-
-
-
-	<div class="row">
+		<div class='row'>
+		<div class="col-xs-4 text-center">
+			<a href="/user/benh-nhan-dang-cho"><h3 class='text-center text-info'>Chưa khám bệnh</h3></a>
+		</div>
+		<div class="col-xs-4 text-center">
+			<h2 class='text-center text-success'>Đang khám bệnh</h2>
+		</div>
+		<div class="col-xs-4 text-center">
+			<a href="/user/benh-nhan-da-kham"><h3 class='text-center text-info'>Đã khám bệnh</h3></a>
+		</div>
+	</div>
+	<!-- BAC SI -->
+	<div class="row" ng-show="type=='bacsi'">
 		<div class="col-xs-3"></div>
 		<div class="col-xs-6">
-			<div class='dangKiKhamBenhForm' method="post" ng-repeat="x in benhnhandangkham | orderBy: sort | filter: search track by $index">
-				<b>{{x.madkkb}}. {{x.hoten}}</b> 
-				<input type="hidden" value={{x.madkkb}} name="madkkb">
+			<div class='dangKiKhamBenhForm' ng-repeat="x in benhnhandangkham | orderBy: sort | filter: search track by $index">
+				<b>{{x.makb}}. {{x.hoten}}</b> 
+				<input type="hidden" value={{x.makb}} name="makb">
 				<input type="hidden" value={{x.mabn}} name="mabn">
 				<span class="text">
 					Phòng: 
-					{{x.map}}
+					{{x.phong}}
 					<button ng-click="setAdd($index)" data-target='#khambenhAddFormModal' data-toggle="modal" class="btn btn-success">Khám Bệnh</button>
 					
 				</span>
 				<br>
 				<hr>
-				<p><b>Triệu chứng:</b> {{x.mieuta}}</p> <br>
+				<p><b>Triệu chứng:</b> {{x.trieuchung}}</p> <br>
+				<hr>	
+				<div class="row">
+					<div class="col-xs-4">
+						<div>Ngày đăng kí: {{x.ngaydangki | date: "dd.MM.y"}}</div>
+					</div>
+					<div class="col-xs-4">
+						
+					</div>
+					<div class="col-xs-4">
+						<div class='text-info'>Ngày nhận khám: {{x.ngaynhankham | date: "dd.MM.y"}}</div>
+					</div>
+				</div>
+				<br>
+			</div>
+		</div>
+		<div class="col-xs-3"></div>
+	</div>
+<!-- ADMIN -->
+	<div class="row" ng-show="type=='boss'">
+		<div class="col-xs-3"></div>
+		<div class="col-xs-6">
+			<div class='dangKiKhamBenhForm' ng-repeat="x in benhnhandangkham | orderBy: sort | filter: search track by $index">
+				<div  class='text-center'><b>{{x.makb}}. Phòng: {{x.phong}}</b></div><hr>
+				<div class="row">
+					<div class="col-xs-6"><b>Bệnh nhân: </b>{{x.benhnhan}}</div>
+					<div class="col-xs-6"><b>Bác sĩ: </b>{{x.bacsi}}</div>
+				</div>
+				<span class="text">
+					
+					
+					
+				</span>
+				<br>
+				<hr>
+				<p><b>Triệu chứng:</b> {{x.trieuchung}}</p> <br>
+				<hr>	
+				<div class="row">
+					<div class="col-xs-5">
+						<div>Ngày đăng kí: {{x.ngaydangki | date: "dd.MM.y"}}</div>
+					</div>
+					<div class="col-xs-2">
+						
+					</div>
+					<div class="col-xs-5">
+						<div class='text-info'>Ngày nhận khám: {{x.ngaynhankham | date: "dd.MM.y"}}</div>
+					</div>
+				</div>
 			</div>
 		</div>
 		<div class="col-xs-3"></div>
 	</div>
 	
+
 	<!-- Add Form Modal -->
 	<div class="modal fade" id="khambenhAddFormModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
-	    <form action="/kham-benh" method="post">
+	    <form action="/user/kham-benh" method="post">
 		      <div class="modal-header">
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 		        <h3 class='text-info text-center'>Khám bệnh</h3>
@@ -45,35 +97,136 @@ them
 					<input type ="hidden" value={{mabnAdd}} name="mabn">
 					<input type ="hidden" value={{mabs}} name="mabs">
 					<input type ="hidden" value={{mapAdd}} name="map">
-					<input type ="hidden" value={{mabAdd}} name="mab">
-					<input type ="hidden" value={{madtAdd}} name="madt">
 					<input type ="hidden" value={{ngaykham}} name="ngaykham">
-					<input type ="hidden" value={{noidung}} name="noidung">
-					<input type ="hidden" value={{gia}} name="gia">
 				ID khám bệnh: {{makbAdd}} <br>
 				Họ tên: {{hotenAdd}} <br>
-				Phòng:  {{phongAdd}} <br>
+				Phòng:  {{phongAdd}} <br><br>
 				Nội dung khám: <br>
-				<textarea name="noidung" ng-model="noidung" cols="49" rows="5"></textarea> <br>
+				<textarea ng-required='true' name="noidungkham" ng-model="noidungkham" cols="49" rows="5"></textarea> <br>
 				Bệnh: 
-					<input type="text" ng-model='filterBenh'>
-					<select name="benh" id="">
-						<option ng-repeat="x in benh | orderBy: x.benh | filter: filterBenh track by $index" value="{{x.mab}}">
+					<select ng-required='true' name="mab" id="" ng-model='filterBenh'>
+						<option ng-repeat="x in benhThuoc | orderBy: benh | filter: filterBenh track by $index" value="{{x.mab}}">
 							{{x.benh}}
-
 						</option>
 					</select>
+					<input type="text" placeholder="Tìm bệnh hoặc mã bệnh" ng-model='filterBenh'>
 				 <br>
-				Đơn thuốc: <br>
-					<div ng-repeat="s in soDonThuoc">Đơn {{}: Thuốc: Số Lượng: Giá</div>
+
+				Đơn thuốc: <span ng-show="!filterBenh">Ghi bệnh</span> <br>
+					<ol ng-show="filterBenh">
+						<li>Đơn 1:
+							<ul>
+								<li>Thuốc: 
+									<select ng-model='donThuoc[0].mat' name='mat1'>
+										<option  ng-repeat="x in benhThuoc | orderBy: 'thuoc' track by $index" value="{{x.mat}}">
+											{{x.thuoc}}
+										</option>
+									</select>
+								</li>
+								<li>Số lượng: 
+									<input name='soluong1' ng-required='true' ng-show='donThuoc[0].mat' type="number" min='1' ng-model='donThuoc[0].soluong'/> 
+									{{matThuoc[donThuoc[0].mat].donvi}}
+
+								</li>
+								<li>Giá: {{matThuoc[donThuoc[0].mat].gia * donThuoc[0].soluong}} VNĐ</li>
+							</ul>
+						</li>
+	
+						<span ng-show="(!don2 && donThuoc[0].mat)">Thêm thuốc<button type="button" ng-click="don2=true" class="btn-link btn glyphicon glyphicon-triangle-bottom"></button></span>
+						<li ng-show="don2">Đơn 2:
+							<ul>
+								<li>Thuốc: 
+									<select ng-model='donThuoc[1].mat' name='mat2'>
+										<option ng-repeat="x in benhThuoc | orderBy: 'thuoc' track by $index" value="{{x.mat}}">
+											{{x.thuoc}}
+										</option>
+									</select>
+								</li>
+								<li>Số lượng: 
+									<input name='soluong2' value='1' ng-required="don2" ng-show='donThuoc[1].mat' type="number" min='1' ng-model='donThuoc[1].soluong'/>
+									{{matThuoc[donThuoc[1].mat].donvi}}
+								</li>
+								<li>Giá: {{matThuoc[donThuoc[1].mat].gia * donThuoc[1].soluong}} VNĐ</li>
+							</ul>
+						</li>
+
+						<span ng-show='(don2 && !don3 && donThuoc[1].mat)'>Thêm thuốc<button type="button" ng-click="don3=true" class="btn-link btn glyphicon glyphicon-triangle-bottom"></button></span>
+						<li ng-show="(don3 && don2)">Đơn 3:
+							<ul>
+								<li>Thuốc: 
+									<select ng-model='donThuoc[2].mat' name='mat3'>
+										<option ng-repeat="x in benhThuoc | orderBy: 'thuoc' track by $index" value="{{x.mat}}">
+											{{x.thuoc}}
+										</option>
+									</select>
+								</li>
+								<li>Số lượng: 
+									<input name='soluong3' ng-required="don3" ng-show='donThuoc[2].mat' type="number" min='1' ng-model='donThuoc[2].soluong'/> {{matThuoc[donThuoc[2].mat].donvi}}</li>
+								<li>Giá: {{matThuoc[donThuoc[2].mat].gia * donThuoc[2].soluong}} VNĐ</li>
+							</ul>
+						</li>	
+						<span ng-show='(don3 && don2 && !don4 && donThuoc[2].mat)'>Thêm thuốc<button type="button" ng-click="don4=true" class="btn-link btn glyphicon glyphicon-triangle-bottom"></button></span>
+						<li ng-show="(don4 && don3 && don2)">Đơn 4:
+							<ul>
+								<li>Thuốc: 
+									<select ng-model='donThuoc[3].mat' name='mat4'>
+										<option ng-repeat="x in benhThuoc | orderBy: 'thuoc' track by $index" value="{{x.mat}}">
+											{{x.thuoc}}
+										</option>
+									</select>
+								</li>
+								<li>Số lượng: 
+									<input name='soluong4' type="number" ng-show='donThuoc[3].mat' ng-required="don4" min='1' ng-model='donThuoc[3].soluong'/> {{matThuoc[donThuoc[3].mat].donvi}}</li>
+								<li>Giá: {{matThuoc[donThuoc[3].mat].gia * donThuoc[3].soluong}} VNĐ</li>
+							</ul>
+						</li>	
+
+						<span ng-show='(don4 && don3 && don2 && !don5 && donThuoc[3].mat)'>Thêm thuốc<button type="button" ng-click="don5=true" class="btn-link btn glyphicon glyphicon-triangle-bottom"></button></span>
+						<li ng-show="(don5 && don4 && don3 && don2)">Đơn 5:
+							<ul>
+								<li>Thuốc: 
+									<select ng-model='donThuoc[4].mat' name='mat5'>
+										<option ng-repeat="x in benhThuoc | orderBy: 'thuoc' track by $index" value="{{x.mat}}">
+											{{x.thuoc}}
+										</option>
+									</select>
+								</li>
+								<li>Số lượng: 
+									<input name='soluong5' type="number" ng-show='donThuoc[4].mat' ng-required="don5" min='1' ng-model='donThuoc[4].soluong'/> {{matThuoc[donThuoc[4].mat].donvi}}</li>
+								<li>Giá: {{matThuoc[donThuoc[4].mat].gia * donThuoc[4].soluong}} VNĐ</li>
+							</ul>
+						</li>		
+					</ol>
 				<hr>
-				Tổng chi phí: <br><hr>
+				Tiền thuốc: 
+				<span ng-show="!don2">
+					{{matThuoc[donThuoc[0].mat].gia * donThuoc[0].soluong}}
+					<input type ="hidden" ng-value='matThuoc[donThuoc[0].mat].gia * donThuoc[0].soluong' name="gia1">
+				</span> 
+				<span ng-show="(don2 && !don3)">
+					{{matThuoc[donThuoc[0].mat].gia * donThuoc[0].soluong + matThuoc[donThuoc[1].mat].gia * donThuoc[1].soluong}}
+					<input type ="hidden" ng-value="matThuoc[donThuoc[0].mat].gia * donThuoc[0].soluong + matThuoc[donThuoc[1].mat].gia * donThuoc[1].soluong" name="gia2">
+				</span> 
+				<span ng-show="(don3 && don2 && !don4)">
+					{{matThuoc[donThuoc[0].mat].gia * donThuoc[0].soluong + matThuoc[donThuoc[1].mat].gia * donThuoc[1].soluong + matThuoc[donThuoc[2].mat].gia * donThuoc[2].soluong}}
+					<input type ="hidden" ng-value="matThuoc[donThuoc[0].mat].gia * donThuoc[0].soluong + matThuoc[donThuoc[1].mat].gia * donThuoc[1].soluong + matThuoc[donThuoc[2].mat].gia * donThuoc[2].soluong" name="gia3">
+				</span> 
+				<span ng-show="(don4 && don3 && don2 && !don5)">
+					{{matThuoc[donThuoc[0].mat].gia * donThuoc[0].soluong + matThuoc[donThuoc[1].mat].gia * donThuoc[1].soluong + matThuoc[donThuoc[2].mat].gia * donThuoc[2].soluong + matThuoc[donThuoc[3].mat].gia * donThuoc[3].soluong}}
+					<input type ="hidden" ng-value="matThuoc[donThuoc[0].mat].gia * donThuoc[0].soluong + matThuoc[donThuoc[1].mat].gia * donThuoc[1].soluong + matThuoc[donThuoc[2].mat].gia * donThuoc[2].soluong + matThuoc[donThuoc[3].mat].gia * donThuoc[3].soluong" name="gia4">
+				</span>
+				<span ng-show="(don4 && don3 && don2 && don5)">
+					{{matThuoc[donThuoc[0].mat].gia * donThuoc[0].soluong + matThuoc[donThuoc[1].mat].gia * donThuoc[1].soluong + matThuoc[donThuoc[2].mat].gia * donThuoc[2].soluong + matThuoc[donThuoc[3].mat].gia * donThuoc[3].soluong + matThuoc[donThuoc[4].mat].gia * donThuoc[4].soluong}}
+					<input type ="hidden" ng-value="matThuoc[donThuoc[0].mat].gia * donThuoc[0].soluong + matThuoc[donThuoc[1].mat].gia * donThuoc[1].soluong + matThuoc[donThuoc[2].mat].gia * donThuoc[2].soluong + matThuoc[donThuoc[3].mat].gia * donThuoc[3].soluong + matThuoc[donThuoc[4].mat].gia * donThuoc[4].soluong" name="gia5">
+				</span> 
+				VNĐ
+				<br><hr>
 				<small class="text-left">Ngày khám: {{ngaykham | date: medium}}</small>
 
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
-		        <button type="submit" class="btn btn-primary" value="Save">Lưu</button>
+		        <button type="submit" class="btn btn-primary" value="Save">Xong</button>
 		      </div>
 	     </form>
 	    </div>
@@ -84,53 +237,69 @@ them
 
 
 
-
-
-
 </div> <!-- content -->
 
 
 <script>
-app.controller('benhNhanDangKhamCtrl', ['$scope', '$http', function($scope, $http){
+app.controller('benhNhanDangKhamCtrl', ['$scope', '$http','$timeout', function($scope, $http, $timeout){
+	var username = '<%-username%>';
+	var type = '<%-type%>';
+	$scope.type = type;
+	var benhnhandangkham = [];
 
-	// var data = JSON.parse(s);
-	// $scope.data = data;
-	var mabs = '<%-mabs%>';
-	$scope.mabs = mabs;
-	$scope.getMax = false;
+	if(type == 'bacsi') {
+		var mabs = '<%-mabs%>';
+		$scope.mabs = mabs;
+		$http.get('/table/benhnhandangkham/'+mabs).success(function (res) {
+			$scope.benhnhandangkham = res;
+			benhnhandangkham = $scope.benhnhandangkham;
+			console.log(benhnhandangkham);
+	    });
+	} else if(type == 'boss') {
+		var mabs ='ok';
+		$scope.mabs = mabs;
+		$http.get('/table/benhnhandangkham-admin').success(function (res) {
+			$scope.benhnhandangkham = res;
+			benhnhandangkham = $scope.benhnhandangkham;
+	    });
+	}
+	
 	$scope.ngaykham = new Date();
-	$http.get('/table/benhnhandangkham/'+mabs).success(function (res) {
-		$scope.benhnhandangkham = res;
-		benhnhandangkham = $scope.benhnhandangkham;
+	$scope.don2 = false;
+	$scope.don3 = false;
+	$scope.don4 = false;
+	$scope.don5 = false;
 
-
-
-    });
-
-	$http.get('/table/maxmakhambenh').success(function (res) {
-		$scope.makbAdd = parseInt(res) + 1;
-		$scope.getMax = true;
-	});
+	
 
 	$scope.setAdd = function(index){
-		$scope.mabnAdd = benhnhandangkham[index].mabn;
+		$scope.mabnAdd  = benhnhandangkham[index].mabn;
 		$scope.hotenAdd = benhnhandangkham[index].hoten;
 		$scope.phongAdd = benhnhandangkham[index].phong;
-		$scope.mapAdd = benhnhandangkham[index].map;
-		$scope.mabAdd = benhnhandangkham[index].mab;
-
+		$scope.mapAdd   = benhnhandangkham[index].map;
+		$scope.makbAdd= benhnhandangkham[index].makb;
 	}
 
 	$http.get('/table/show/thuoc').success(function(res){
 		$scope.thuoc = res;
-		
+		$scope.matThuoc = [];
+
+		for (var i=0; i < $scope.thuoc.length; i++) {
+			$scope.matThuoc[$scope.thuoc[i].mat] = {};
+			$scope.matThuoc[$scope.thuoc[i].mat].thuoc = $scope.thuoc[i].thuoc;
+			$scope.matThuoc[$scope.thuoc[i].mat].donvi = $scope.thuoc[i].donvi;
+			$scope.matThuoc[$scope.thuoc[i].mat].gia = $scope.thuoc[i].gia;
+		}
 	});
 
-	$http.get('/table/show/benh').success(function(res){
-		$scope.benh = res;
-		
+	$http.get('/table/benh-thuoc').success(function(res){
+		$scope.benhThuoc = res;
+		$scope.donThuoc = [];
+		$scope.soluong1 = 1;
 	});
 
+
+	
 
    
 }])

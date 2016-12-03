@@ -9,33 +9,48 @@
 		<div  class="col-xs-2 add">
 			
 		</div>
-		<div  class="col-xs-5 sort " ng-init="sort='madkkb'">
+		<div  class="col-xs-5 sort " ng-init="sort='makb'">
 			Sắp xếp: 
 			<select ng-model="sort">
-				<option value ="madkkb">Mã Đăng Kí</option>
+				<option value ="makb">Mã Đăng Kí</option>
 				<option value ="hoten">Họ Tên</option>
-				<option value ="mieuta">Miêu Tả</option>
+				<option value ="trieuchung">Triệu chứng</option>
 	        </select>
+		</div>
+	</div>
+	<div class='row'>
+		<div class="col-xs-4 text-center">
+			<h2 class='text-center text-success'>Chưa khám bệnh</h2>
+		</div>
+		<div class="col-xs-4 text-center">
+			<a href="/user/benh-nhan-dang-kham"><h3 class='text-center text-info'>Đang khám bệnh</h3></a>
+		</div>
+		<div class="col-xs-4 text-center">
+			<a href="/user/benh-nhan-da-kham"><h3 class='text-center text-info'>Đã khám bệnh</h3></a>
 		</div>
 	</div>
 	<div class="row">
 		<div class="col-xs-3"></div>
 		<div class="col-xs-6">
 			<form class='dangKiKhamBenhForm' action="/user/nhan-dang-ki-kham-benh/" method="post" ng-repeat="x in dangkikhambenh | orderBy: sort | filter: search track by $index">
-				<b>{{x.madkkb}}. {{x.hoten}}</b> 
-				<input type="hidden" value={{x.madkkb}} name="madkkb">
+				<b>{{x.makb}}. Bệnh nhân:</b> {{x.hoten}}({{x.mabn}}) 
+				<input type="hidden" value={{x.makb}} name="makb">
 				<input type="hidden" value={{x.mabn}} name="mabn">
-				<span class="text">
+				<input type="hidden" value={{mabs}} name="mabs">
+				<input type="hidden" value={{trangthai}} name="trangthai">
+				<span class="text" ng-show="type=='bacsi'">
 					Phòng: 
 					<select name="map" id="">
-						<option ng-repeat="p in phong" value="{{p.map}}">{{p.phong}}</option>
+						<option ng-repeat="p in phong | orderBy: 'map' track by $index" value="{{p.map}}">{{p.phong}}</option>
 					</select>
 					<button class="btn btn-success">Nhận khám</button>
 
 				</span>
 				<br>
 				<hr>
-				<p><b>Triệu chứng:</b> {{x.mieuta}}</p> <br>
+				<p><b>Triệu chứng:</b> {{x.trieuchung}}</p> <br>
+				<hr>
+				Ngày đăng kí: {{x.ngaydangki | date: 'dd.MM.yy'}}
 			</form>
 		</div>
 		<div class="col-xs-3"></div>
@@ -45,7 +60,10 @@
 
 <script>
 app.controller('benhNhanDangChoCtrl', ['$scope', '$http', function($scope, $http){
-	
+	var username = '<%-username%>';
+	var type = '<%-type%>';
+	$scope.type = type;
+
 	$http.get('/table/dangkikhambenh').success(function (res) {
         $scope.dangkikhambenh = res;
     });
@@ -53,6 +71,13 @@ app.controller('benhNhanDangChoCtrl', ['$scope', '$http', function($scope, $http
     $http.get('/table/phong').success(function (res) {
         $scope.phong = res;
     });
+    
+	if(type == 'bacsi')
+	    $http.get('/table/nhandangkikhambenh/'+username).success(function (res) {
+			$scope.bacSi = res;
+			$scope.mabs = $scope.bacSi[0].mabs;
+			$scope.trangthai = $scope.bacSi[0].trangthai;
+		});
 
 }])
 

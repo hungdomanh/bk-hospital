@@ -1,0 +1,242 @@
+<% include ../layout.ejs %>
+<%-data%>
+<div ng-controller="hoSoBenhAnCtrl" class="content">
+<h1 class="text-center text-info">Hồ Sơ</h1><br>
+<div class='row'>
+	<div class="col-xs-1"></div>
+	<div class="col-xs-3">
+		<form action="/user/update-benh-nhan" method="post" class="formThongTinBenhNhan">
+	      <div class="modal-header">
+	        	<h3 class="text-center">ID: {{data.mabn}} <input type="hidden" value={{data.mabn}} name="mabn"><br></h3>
+	      </div>
+	      <div class="modal-body">
+	        Họ Tên: <input  size="20" type="text"   value={{data.hoten}} name="hoten"><br><br>
+	        Ngày Sinh:  <input type="number" value={{ngaysinh}} name="ngaysinh" max='31' min='1' class='ngaysinh'  placeholder="Ngày">
+	        			<input type="number" value={{thangsinh}} name="thangsinh" max='12' min='1' class='thangsinh' placeholder="Tháng">
+	        			<input type="number" value={{namsinh}} name="namsinh" max='2017' min='1900' class='namsinh' placeholder="Năm"><br><br>
+	        Giới tính:  <input type="radio"  value="Nam" ng-checked='nam' name="gioitinh" />Nam
+					    <input type="radio"  value="Nữ"  ng-checked='!nam'  name="gioitinh" />Nữ<br><br>
+	        Địa chỉ:    <input type="text"   value={{data.diachi}} name="diachi"><br><br>
+	        Điện Thoại: <input class='phone' type="number" value={{data.dienthoai}} min='010000000' name="dienthoai"><br><br>
+	        Trạng thái: <span value="1" ng-show='trangthai' name="trangthai" >Khám bệnh </span>
+					    <span value="0" ng-show='!trangthai' name="trangthai" >Khỏe mạnh</span><br><br>
+			Tài khoản: {{data.username}}  <input type="hidden" value={{data.username}} name="username"><br>
+	      </div>
+	      <div class=" text-right">
+	        <button type="submit" class="btn btn-primary" value="Save">Cập nhật</button>
+	      </div>
+     </form>
+     <div  class='text-center'><a href="/user/dang-ki-kham-benh"><button type="button" class="buttonDKKB"><h4>Đăng kí khám bệnh</h4></button></a></div>
+
+	</div>
+<!-- Chưa đăng kí khám bệnh -->
+	<div class="col-xs-6 hoSo" ng-show='!khambenh'><br><br>
+		<h2 class="text-center text-danger">Bạn chưa khám bệnh bao giờ! <br> <br>
+			Vì sức khỏe của cá nhân và cộng đồng <br><br><br>
+			<a href="/user/dang-ki-kham-benh"><button type="button" class="buttonDKKB"><h2>Đăng kí khám bệnh</h2></button></a>
+		</h2>
+	
+	</div>
+<!-- Đã đăng kí khám bệnh -->
+	<div class="col-xs-6 hoSo" ng-show='khambenh'>
+		<h3 class="text-center text-success">Khám bệnh</h3>
+
+		<!-- dang cho kham benh -->
+		<div ng-show="x.trangthai==0 && (loc == 'chokham' || loc=='tatca')" class='chuaKhamForm' ng-repeat="x in hoso | orderBy: sort | filter: search track by $index">
+			<h4 class='text-primary text-center'>Đang chờ khám bệnh ({{chokham}})</h4>
+			<b>{{x.makb}}. Bệnh nhân:</b> {{x.benhnhan}}({{x.mabn}}) <hr>
+			<b>Triệu chứng:</b>
+			<p>- {{x.trieuchung}}</p><br><hr>
+			<div>Ngày đăng kí: {{x.ngaydangki | date: "dd.MM.y"}}</div>			
+		</div>
+		<!-- dang kham benh  -->
+		<div ng-show="x.trangthai==1 && (loc == 'dangkham' || loc=='tatca')" class='dangKhamForm' ng-repeat="x in hoso | orderBy: sort | filter: search track by $index">
+			<h4 class='text-warning text-center'>Đang khám bệnh ({{dangkham}})</h4>
+			<div class="row">
+				<div class="col-xs-6"><b>{{x.makb}}. Bệnh nhân:</b> {{x.benhnhan}}({{x.mabn}})</div>
+				<div class="col-xs-6"><b>Bác sĩ:</b> {{x.bacsi}}({{x.mabs}})</div>
+			</div> 
+			<hr>
+			<b>Phòng:</b> {{x.phong}} <br><br>
+			<b>Triệu chứng:</b>
+			<p>- {{x.trieuchung}}</p>
+			<br><hr>
+			<div class="row">
+				<div class="col-xs-4">
+					<div>Ngày đăng kí: {{x.ngaydangki | date: "dd.MM.y"}}</div>
+				</div>
+				<div class="col-xs-4">
+					
+				</div>
+				<div class="col-xs-4">
+					<div class='text-info'>Ngày vào khám: {{x.ngaynhankham | date: "dd.MM.y"}}</div>
+				</div>
+			</div>
+		</div>
+		<!-- chua xuat vien -->
+		<div ng-show="x.trangthai==2 && (loc == 'chuaxuatvien' || loc=='tatca')" class='chuaXuatVienForm' ng-repeat="x in hoso | orderBy: sort | filter: search track by $index">
+			<h4 class='text-muted text-center'>Chưa xuất viện ({{chuaxuatvien}})</h4>
+			<div class="row">
+				<div class="col-xs-6"><b>{{x.makb}}. Bệnh nhân:</b> {{x.benhnhan}}({{x.mabn}})</div>
+				<div class="col-xs-6"><b>Bác sĩ:</b> {{x.bacsi}}({{x.mabs}})</div>
+			</div> 
+			<hr>
+			<div class="row">
+				<div class="col-xs-6">
+					<b>Phòng:</b> {{x.phong}} <br><br>
+					<b>Triệu chứng:</b>
+					<p>- {{x.trieuchung}}</p>
+				</div>
+				<div class="col-xs-6">
+					<b>Bệnh:</b> {{x.benh}}<br><br>
+					<b>Nội dung khám:</b>
+					<p>- {{x.noidungkham}}</p>
+				</div>
+			</div><br><hr>
+			<b>Tiền thuốc:</b> {{x.tienthuoc}} VNĐ
+			<div ng-init="showDonThuoc[$index]=false">
+				<button ng-show='!showDonThuoc[$index]' class='btn btn-link' ng-click="ShowDonThuoc($index)">Xem đơn thuốc</button>
+				<button ng-show='showDonThuoc[$index]' class='btn btn-link' ng-click="ShowDonThuoc($index)">Ẩn đơn thuốc</button>
+				<div ng-show='showDonThuoc[$index]'>
+					<ul ng-repeat="t in donthuoc[$index] ">
+						<li>Thuốc: {{t.thuoc}}</li>
+						<li>Số lượng: {{t.soluong}}</li>
+						<li>Giá: {{t.gia}}</li>
+					</ul>
+				</div>
+			</div>
+			<hr>
+			<div class="row">
+				<div class="col-xs-4">
+					<div>Ngày đăng kí: {{x.ngaydangki | date: "dd.MM.y"}}</div>
+				</div>
+				<div class="col-xs-4">
+					
+				</div>
+				<div class="col-xs-4">
+					<div class='text-info'>Ngày khám: {{x.ngaykham | date: "dd.MM.y"}}</div>
+				</div>
+			</div>
+		</div>
+		<!-- da xuat vien  -->
+		<div ng-show="x.trangthai==3 && (loc == 'daxuatvien' || loc=='tatca')" class='daXuatVienForm' ng-repeat="x in hoso | orderBy: sort | filter: search track by $index">
+			<h4 class=' text-center'>Đã xuất viện ({{daxuatvien}})</h4>
+			<div class="row">
+				<div class="col-xs-6"><b>{{x.makb}}. Bệnh nhân:</b> {{x.benhnhan}}({{x.mabn}})</div>
+				<div class="col-xs-6"><b>Bác sĩ:</b> {{x.bacsi}}({{x.mabs}})</div>
+			</div> 
+			<hr>
+			<div class="row">
+				<div class="col-xs-6">
+					<b>Phòng:</b> {{x.phong}} <br><br>
+					<b>Triệu chứng:</b>
+					<p>- {{x.trieuchung}}</p>
+				</div>
+				<div class="col-xs-6">
+					<b>Bệnh:</b> {{x.benh}}<br><br>
+					<b>Nội dung khám:</b>
+					<p>- {{x.noidungkham}}</p>
+				</div>
+			</div><br><hr>
+			<b>Tiền thuốc:</b> {{x.tienthuoc}} VNĐ
+			<div ng-init="showDonThuoc[$index]=false">
+				<button ng-show='!showDonThuoc[$index]' class='btn btn-link' ng-click="ShowDonThuoc($index)">Xem đơn thuốc</button>
+				<button ng-show='showDonThuoc[$index]' class='btn btn-link' ng-click="ShowDonThuoc($index)">Ẩn đơn thuốc</button>
+				<div ng-show='showDonThuoc[$index]'>
+					<ul ng-repeat="t in donthuoc[$index] ">
+						<li>Thuốc: {{t.thuoc}}</li>
+						<li>Số lượng: {{t.soluong}}</li>
+						<li>Giá: {{t.gia}}</li>
+					</ul>
+				</div>
+			</div>
+			<b>Tiền phòng:</b> {{x.tienphong}} VNĐ<hr>
+			<b>Tổng chi phí:</b> {{x.tongchiphi}} VNĐ
+			<hr>
+			<div class="row">
+				<div class="col-xs-4">
+					<div>Ngày vào: {{x.ngaydangki | date: "dd.MM.y"}}</div>
+				</div>
+				<div class="col-xs-4">
+					
+				</div>
+				<div class="col-xs-4">
+					<div class='text-info'>Ngày ra: {{x.ngayravien | date: "dd.MM.y"}}</div>
+				</div>
+			</div>
+		</div>
+		
+	</div>  <!-- col-xs-6 -->
+
+<div class="col-xs-2">
+	<select ng-init="loc='tatca'" class='text-center' ng-model="loc">
+		<option value="tatca">------Tất cả------</option>
+		<option value ="chokham">Chờ khám</option>
+		<option value ="dangkham">Đang khám</option>
+		<option value ="chuaxuatvien">Chưa xuất viện</option>
+		<option value ="daxuatvien">Đã xuất viện</option>
+    </select>
+</div>
+
+
+
+
+</div>	<!-- row -->
+</div>  <!-- content -->
+
+<script>
+app.controller('hoSoBenhAnCtrl', ['$scope','$http', function($scope, $http){
+	var s = '<%-data%>';
+	var data = JSON.parse(s);
+	data = data[0];
+	$scope.data = data;
+
+	var s = data.ngaysinh;
+	$scope.ngaysinh = parseInt(s.slice(0, 2), 10);
+	$scope.thangsinh = parseInt(s.slice(3, 5), 10);
+	$scope.namsinh = parseInt(s.slice(6, 10), 10); 	
+
+	if(data.gioitinh == 'Nam')   $scope.nam = true;
+	else $scope.nam = false;
+
+	if(data.trangthai == 1)   $scope.trangthai = true;
+	else $scope.trangthai = false;
+
+	$scope.khambenh = true;
+	$http.get('/table/ho-so/'+data.mabn).success(function(res){
+		$scope.hoso = {};
+		$scope.hoso = res;
+
+		if($scope.hoso.length) {
+			$scope.chokham=0; $scope.dangkham=0; $scope.chuaxuatvien=0; $scope.daxuatvien=0;
+			for(var i=0; i<$scope.hoso.length; i++) {
+				if($scope.hoso[i].trangthai==0)	$scope.chokham++;
+				if($scope.hoso[i].trangthai==1)	$scope.dangkham++;
+				if($scope.hoso[i].trangthai==2)	$scope.chuaxuatvien++;
+				if($scope.hoso[i].trangthai==3)	$scope.daxuatvien++;
+			}
+			$scope.donthuoc = [];
+			$scope.showDonThuoc = [];
+			$scope.ShowDonThuoc = function(index) {
+				$http.get('/table/don-thuoc-benh-nhan-da-kham/'+$scope.hoso[index].makb).success(function(res){
+					$scope.donthuoc[index] = {};
+					$scope.donthuoc[index] = res;
+				});
+				$scope.showDonThuoc[index] = !$scope.showDonThuoc[index];
+			}
+		}
+		else {
+			$scope.khambenh = false;
+		}
+	});
+
+	
+
+
+
+
+
+
+}]);
+
+</script>

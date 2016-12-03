@@ -47,15 +47,15 @@
 		    <td>{{ x.gioitinh }}</td>
 		    <td>{{ x.diachi }}</td>
 		    <td>{{ x.dienthoai }}</td>
-		    <td><span ng-show="x.trangthai">Khám bệnh</span><span ng-hide="x.trangthai">Khỏe mạnh</span></td>
+		    <td><span ng-show="x.trangthai" class='text-danger'>Khám bệnh</span><span class='text-info' ng-hide="x.trangthai">Khỏe mạnh</span></td>
 			<td>{{ x.username }}</td>
 		    <td ng-show=<%-type=='boss'%> class="row" >
-		    	<button class=" editButton" ng-click="setEdit(x.mabn)" data-target='#benhnhanEditFormModal' data-toggle="modal" >
+		    	<span><button class="editButton" ng-click="setEdit(x.mabn)" data-target='#benhnhanEditFormModal' data-toggle="modal" >
 		    		Sửa
-		    	</button>
-		    	<button class=" deleteButton" ng-click="setEdit(x.mabn)" data-target='#benhnhanDeleteFormModal' data-toggle="modal" >
+		    	</button></span>
+		    	<span><button class="deleteButton" ng-click="setEdit(x.mabn)" data-target='#benhnhanDeleteFormModal' data-toggle="modal" >
 		    		Xóa
-		    	</button>
+		    	</button></span>
 		    </td>
 		  </tr>
 		</table>

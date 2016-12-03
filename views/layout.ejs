@@ -5,6 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   
+  <link rel="icon" href="https://vieclam24h.vn/upload/userpics/1293608510_NTD_logoBKCchuancopy.png">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="/stylesheets/style.css" />
 
@@ -18,7 +19,7 @@
 
 <body ng-app="layout" ng-controller="layoutCtrl">
 <!-- khach chua dang nhap -->
-<nav ng-hide=<%-logined%> class="navbar navbar-fixed-top navbar-default">
+<nav ng-hide="<%-logined%>" class="navbar navbar-fixed-top navbar-default">
   <div class="container-fluid khackHeader">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -62,7 +63,7 @@
   </div>
 </nav>
 <!-- Khach -->
-<nav ng-show=<%-type=='khach' && logined%> class="navbar navbar-fixed-top navbar-default">
+<nav ng-show="<%-type=='khach' && logined%>" class="navbar navbar-fixed-top navbar-default">
   <div class="container-fluid khackHeader">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -106,7 +107,7 @@
   </div>
 </nav>
 <!-- Benh nhan -->
-<nav ng-show=<%-type=='benhnhan'%> class="navbar navbar-fixed-top navbar-default">
+<nav ng-show="<%-type=='benhnhan'%>" class="navbar navbar-fixed-top navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -134,9 +135,6 @@
             <li><a href="/thong-ke/khoa-dieu-tri">Khoa điều trị</a></li>
           </ul>
         </li>
-        <li>
-          <a href="/user/ho-so-benh-an">Hồ sơ bệnh án <span class="glyphicon glyphicon-question-sign"></span></a>
-        </li>
         
         <li >
           <a href="/hoi-dap"> Hỏi đáp <span class="glyphicon glyphicon-question-sign"></span></a>
@@ -146,14 +144,14 @@
         <li>
           <a href="/user/dang-ki-kham-benh"><span class="glyphicon glyphicon-star-empty"></span>Đăng kí khám bệnh<span class="glyphicon glyphicon-star-empty"></span></a>
         </li>
-        <li><a href="/user"><span class="glyphicon glyphicon-user"></span> Cá Nhân</a></li>
+        <li><a href="/user/ho-so"><span class="glyphicon glyphicon-user"></span> Hồ sơ cá nhân</a></li>
         <li><a href="/logout">Thoát <span class="glyphicon glyphicon-log-out"></span></a></li>
       </ul>
     </div>
   </div>
 </nav>
 <!-- Bac si -->
-<nav ng-show=<%-type=='bacsi'%> class="navbar navbar-fixed-top navbar-default  ">
+<nav ng-show="<%-type=='bacsi'%>" class="navbar navbar-fixed-top navbar-default  ">
   <div class="container-fluid">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -249,13 +247,8 @@
         <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" href="/">Thống kê<span class="caret"></span></a>
           <ul class="dropdown-menu" display="none">
-            <li><a href="/thong-ke/bac-si-tung-khoa">Bác sĩ từng khoa</a></li>
-            <li><a href="/thong-ke/benh-thuong-gap">Bệnh thường gặp</a></li>
-            <li><a href="/thong-ke/benh-nhan-dang-kham">Bệnh nhân đang khám</a></li>
-            <li><a href="/thong-ke/benh-nhan-da-kham">Bệnh nhân đã khám</a></li>
-            <li><a href="/thong-ke/chi-phi-kham-trung-binh">Chi phí khám chữa bệnh trung bình 1 lần</a></li>
-            <li><a href="/thong-ke/benh-an">Số lượng bệnh án</a></li>
-            <li><a href="/thong-ke/tien-thu-duoc">Tiền thu được</a></li>
+            <li><a href="/user/benh-nhan-da-kham">Khám Bệnh</a></li>
+            <li><a href="/thong-ke/chi-phi">Chi Phí</a></li>
           </ul>
         </li>
         <li >
@@ -263,8 +256,9 @@
         </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li ng-show=<%-logined%> ><a href="/user/"><span class="glyphicon glyphicon-user"></span> Admin</a></li>
-        <li ng-show=<%-logined%> ><a href="/logout">Thoát <span class="glyphicon glyphicon-log-out"></span></a></li>
+        <li><a href="/user/benh-nhan-da-kham"><span class="glyphicon glyphicon-file"></span> Cấp hóa đơn & bệnh án</a></li>
+        <li><a href="/user"><span class="glyphicon glyphicon-user"></span> Admin</a></li>
+        <li><a href="/logout">Thoát <span class="glyphicon glyphicon-log-out"></span></a></li>
       </ul>
     </div>
   </div>

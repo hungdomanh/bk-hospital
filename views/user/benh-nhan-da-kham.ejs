@@ -1,0 +1,276 @@
+<% include ../layout %>
+
+<div class="content container " ng-controller="benhNhanDaKhamCtrl">
+	<div class="row search-add-sort">
+		<div  class="col-xs-5 search">
+			Tìm Kiếm: <input type="text" ng-model='search'> {{data.length}} người đã khám bệnh.
+		</div>
+		<div  class="col-xs-2">
+			<select ng-init="loc='tatca'" class='text-center' ng-model="loc">
+				<option value="tatca">------Tất cả------</option>
+				<option value ="chuaxuatvien">Chưa xuất viện</option>
+				<option value ="daxuatvien">Đã xuất viện</option>
+	        </select>
+		</div>
+		<div  class="col-xs-5 sort " ng-init="sort='makb'">
+			Sắp xếp: 
+			<select ng-model="sort">
+				<option value ="makb">Mã khám bệnh</option>
+				<option value ="benhnhan">Bệnh nhân</option>
+				<option value ="bacsi">Bác sĩ</option>
+				<option value ="benh">Bệnh</option>
+				<option value ="phong">Phòng</option>
+				<option value ="ngaykham">Ngày khám</option>
+				<option value ="noidungkham">Nội dung</option>
+				<option value ="tienthuoc">Tiền thuốc</option>
+				<option value ="tienphong">Tiền phòng</option>
+				<option value ="trangthai">Trạng thái</option>
+	        </select>
+		</div>
+	</div>
+	<div class='row'>
+		<div class="col-xs-4 text-center">
+			<a href="/user/benh-nhan-dang-cho"><h3 class='text-center text-info'>Chưa khám bệnh</h3></a>
+		</div>
+		<div class="col-xs-4 text-center">
+			<a href="/user/benh-nhan-dang-kham"><h3 class='text-center text-info'>Đang khám bệnh</h3></a>
+		</div>
+		<div class="col-xs-4 text-center"><h2 class='text-center text-success'>Đã khám bệnh</h2></div>
+	</div>
+	
+	<!-- chua xuat vien -->
+	<div ng-show="loc == 'chuaxuatvien' || loc=='tatca'" class="row">
+		<div class="col-xs-3"></div>
+		<div class="col-xs-6">
+			<div ng-show="x.trangthai==2" class='benhNhanDaKhamForm' ng-repeat="x in data | orderBy: sort | filter: search track by $index">
+				<b>{{x.makb}}</b>. 
+				<span>Bệnh nhân: {{x.benhnhan}}</span>. 
+				<hr>
+				<div class="row">
+					<div class="col-xs-6">
+						<b>Phòng:</b> {{x.phong}} <br><br>
+						<b>Triệu chứng:</b>
+						<p>- {{x.trieuchung}}</p>
+					</div>
+					<div class="col-xs-6">
+						<b>Bệnh:</b> {{x.benh}}<br><br>
+						<b>Nội dung khám:</b>
+						<p>- {{x.noidungkham}}</p>
+					</div>
+				</div><br><hr>
+				Tiền thuốc: {{x.tienthuoc}} VNĐ
+				<div ng-init="showDonThuoc[$index]=false">
+					<button ng-show='!showDonThuoc[$index]' class='btn btn-link' ng-click="ShowDonThuoc($index)">Xem đơn thuốc</button>
+					<button ng-show='showDonThuoc[$index]' class='btn btn-link' ng-click="ShowDonThuoc($index)">Ẩn đơn thuốc</button>
+					<div ng-show='showDonThuoc[$index]'>
+						<ul ng-repeat="t in donthuoc[$index] ">
+							<li>Thuốc: {{t.thuoc}}</li>
+							<li>Số lượng: {{t.soluong}}</li>
+							<li>Giá: {{t.gia}}</li>
+						</ul>
+					</div>
+				</div><hr>
+				<div class="row">
+					<div class="col-xs-4">
+						<div>Ngày vào: {{x.ngaydangki | date: "dd.MM.y"}}</div>
+					</div>
+					<div class="col-xs-4">
+						
+					</div>
+					<div class="col-xs-4">
+						<div class='text-danger'>Chưa xuất viện
+							<div ng-show=<%-type=='boss'%>>
+								<button ng-click='setHoaDon($index); ShowDonThuoc($index)' data-target='#hoaDonAddFormModal' data-toggle="modal" class='btn btn-info'>Cấp hóa đơn</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-3"></div>
+	</div>
+	<!-- da xuat vien -->
+	<div ng-show="loc == 'daxuatvien' || loc=='tatca'" class="row">
+		<div class="col-xs-3"></div>
+		<div class="col-xs-6">
+			<div ng-show="x.trangthai==3" class='benhNhanDaKhamForm' ng-repeat="x in data | orderBy: sort | filter: search track by $index">
+				<div class="row">
+					<div class="col-xs-6"><b>{{x.makb}}. Bệnh nhân:</b> {{x.benhnhan}}({{x.mabn}})</div>
+					<div class="col-xs-6"><b>Bác sĩ:</b> {{x.bacsi}}({{x.mabs}})</div>
+				</div> 
+				<hr>
+				<div class="row">
+					<div class="col-xs-6">
+						<b>Phòng:</b> {{x.phong}} <br><br>
+						<b>Triệu chứng:</b>
+						<p>- {{x.trieuchung}}</p>
+					</div>
+					<div class="col-xs-6">
+						<b>Bệnh:</b> {{x.benh}}<br><br>
+						<b>Nội dung khám:</b>
+						<p>- {{x.noidungkham}}</p>
+					</div>
+				</div><br><hr>
+				Tiền thuốc: {{x.tienthuoc}} VNĐ
+				<div ng-init="showDonThuoc[$index]=false">
+					<button ng-show='!showDonThuoc[$index]' class='btn btn-link' ng-click="ShowDonThuoc($index)">Xem đơn thuốc</button>
+					<button ng-show='showDonThuoc[$index]' class='btn btn-link' ng-click="ShowDonThuoc($index)">Ẩn đơn thuốc</button>
+					<div ng-show='showDonThuoc[$index]'>
+						<ul ng-repeat="t in donthuoc[$index] ">
+							<li>Thuốc: {{t.thuoc}}</li>
+							<li>Số lượng: {{t.soluong}}</li>
+							<li>Giá: {{t.gia}}</li>
+						</ul>
+					</div>
+				</div>
+				Tiền phòng: {{x.tienphong}} VNĐ<hr>
+				<b>Tổng chi phí:</b> {{x.tongchiphi}} VNĐ
+				<hr>
+				<div class="row">
+					<div class="col-xs-4">
+						<div>Ngày vào: {{x.ngaydangki | date: "dd.MM.y"}}</div>
+					</div>
+					<div class="col-xs-4">
+						
+					</div>
+					<div class="col-xs-4">
+						<div ng-show="x.trangthai == 3" class='text-info'>Ngày ra: {{x.ngayravien | date: "dd.MM.y"}}</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-3"></div>
+	</div>
+
+
+	<!-- Add Form Modal -->
+	<div class="modal fade" id="hoaDonAddFormModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	    <form action="/in-hoa-don" method="post">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h3 class='text-info text-center'>Hóa Đơn Xuất Viện</h3>
+			</div>
+			<div class="modal-body">
+				<input type="hidden" name="mabn" value={{mabn}}>
+				<input type="hidden" name="mabs" value={{mabs}}>
+				<input type="hidden" name="map" value={{map}}>
+				<input type="hidden" name="mab" value={{mab}}>
+				<input type="hidden" name="makb" value={{makb}}>
+
+				<input type="hidden" name="benhnhan" value={{benhnhan}}>
+				<input type="hidden" name="benh" value={{benh}}>
+				<input type="hidden" name="tienthuoc" value={{tienthuoc}}>
+				<input type="hidden" name="phong" value={{phong}}>
+				<input type="hidden" name="ngaykham" value={{ngaykham}}>
+				<input type="hidden" name="ngayravien" value={{ngayravien}}>
+				<input type="hidden" name="tienphong" value={{tienphong}}>
+				<input type="hidden" name="tongchiphi" value={{tongChiPhi}}>
+
+				<table class='hoaDon'>
+					<tr>
+						<td><b>Họ tên</b></td>
+						<td class='contentHoaDon'>{{benhnhan}}</td>
+					</tr>
+					<tr>
+						<td><b>Bệnh</b></td>
+						<td class='contentHoaDon'>{{benh}}</td>
+					</tr>
+					<tr>
+						<td><b>Phòng</b></td>
+						<td class='contentHoaDon'>{{phong}}</td>
+					</tr>
+					<tr>
+						<td><b>Ngày vào</b></td>
+						<td class='contentHoaDon'>{{ngaydangki | date: 'dd.MM.yy'}}</td>
+					</tr>
+					<tr>
+						<td><b>Ngày ra</b></td>
+						<td class='contentHoaDon'>{{ngayravien | date: 'dd.MM.yy'}}</td>
+					</tr>
+					<tr>
+						<td><b>Tiền thuốc</b></td>
+						<td class='contentHoaDon'>{{tienthuoc}} VNĐ</td>
+					</tr>`
+					<tr>
+						<td><b>Tiền phòng</b></td>
+						<td class='contentHoaDon'>{{tienphong}} VNĐ</td>
+					</tr>
+					<tr>
+						<td><b>Chi phí</b></td>
+						<td class='contentHoaDon'>{{tongChiPhi}} VNĐ</td>
+					</tr>
+				</table>
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+				<button type="submit" class="btn btn-primary" value="Save">Xong</button>
+			</div>
+	     </form>
+	    </div>
+	  </div>
+	</div>
+
+
+
+
+</div> <!-- content -->
+
+
+<script>
+app.controller('benhNhanDaKhamCtrl', ['$scope', '$http', function($scope, $http){
+	var username = '<%-username%>';
+var data = []
+
+	var date = new Date();
+
+	$http.get('/table/benh-nhan-da-kham').success(function(res){
+		$scope.data = [];
+		$scope.data = res;
+		data = $scope.data;
+		console.log(res);
+	});
+
+	$scope.donthuoc = [];
+	$scope.showDonThuoc = [];
+	$scope.ShowDonThuoc = function(index) {
+		$http.get('/table/don-thuoc-benh-nhan-da-kham/'+data[index].makb).success(function(res){
+			$scope.donthuoc[index] = {};
+			$scope.donthuoc[index] = res;
+		});
+		$scope.showDonThuoc[index] = !$scope.showDonThuoc[index];
+	}
+
+	$scope.setHoaDon = function(index) {
+		$scope.mabn = data[index].mabn;
+		$scope.benhnhan = data[index].benhnhan;
+		$scope.mab = data[index].mab;
+		$scope.makb = data[index].makb;
+		$scope.mabs = data[index].mabs;
+		$scope.benh = data[index].benh;
+		$scope.tienthuoc = data[index].tienthuoc;
+		$scope.map = data[index].map;
+		$scope.phong = data[index].phong;
+		$scope.ngaynhankham = new Date(data[index].ngaynhankham);
+		$scope.ngaykham = new Date(data[index].ngaykham);
+		$scope.ngaydangki = new Date(data[index].ngaydangki);
+		$scope.ngayravien = new Date();
+		$scope.tienphong = data[index].gia1ngaydem * days_between($scope.ngayravien, $scope.ngaynhankham );
+		$scope.tongChiPhi = $scope.tienthuoc + $scope.tienphong;
+	}
+	
+	function days_between(date1, date2) {
+	    var ONE_DAY = 1000 * 60 * 60 * 24;
+	    var date1_ms = date1.getTime();
+	    var date2_ms = date2.getTime();
+	    var difference_ms = Math.abs(date1_ms - date2_ms);
+	    return Math.round(difference_ms/ONE_DAY);
+
+	}
+
+
+}])
+
+</script>

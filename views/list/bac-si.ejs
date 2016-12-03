@@ -40,7 +40,7 @@
 				<th scope="col" title="kinhnghiem">	Kinh Nghiệm	</th>
 				<th scope="col" title="trangthai">	Trạng Thái  </th>
 				<th scope="col" title="username">	Tài Khoản  </th>
-				<th ng-show=<%-type=='boss'%> scope="col" title="quantri">	Quản trị	</th>
+				<th ng-show=<%-type=='boss'%> scope="col" title="quantri">    	Quản trị	</th>
 			</tr>
 		  <tr ng-repeat="x in bacsi | orderBy: sort | filter: search track by $index"  ng-show='x.mabs'>
 		    <td>{{ x.mabs}}</td>
@@ -50,13 +50,12 @@
 		    <td>{{ x.gioitinh }}</td>
 		    <td>{{ x.diachi }}</td>
 		    <td>{{ x.kinhnghiem }}</td>
-		    <td><span ng-show="x.trangthai">Hoạt động</span><span ng-hide="x.trangthai">Trống</span></td>
+		    <td><span ng-show="x.trangthai" class='text-danger'>{{x.trangthai}} bệnh nhân</span><span ng-hide="x.trangthai">Trống</span></td>
 		    <td>{{ x.username }}</td>
-		    <td ng-show=<%-type=='boss'%> class="row" >
+		    <td ng-show=<%-type=='boss'%> >
 		    	<button ng-click="setEdit(x.mabs)" class="editButton" data-target='#bacsiEditFormModal' data-toggle="modal" >
 		    		Sửa
-		    	</button>
-		    	<button ng-click="setEdit(x.mabs)" class="deleteButton" data-target='#bacsiDeleteFormModal' data-toggle="modal" >
+		    	</button><button ng-click="setEdit(x.mabs)" class="deleteButton" data-target='#bacsiDeleteFormModal' data-toggle="modal" >
 		    		Xóa
 		    	</button>
 		    </td>

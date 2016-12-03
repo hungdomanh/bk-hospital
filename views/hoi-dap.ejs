@@ -11,8 +11,10 @@
 		<form class="form-group" action="/add-hoi-dap" method="post">
 			<div class="row">
 				<span class="col-xs-6 text-info"><label for="newQuestion"><h3>Câu hỏi mới:</h3></label></span>
-				<span>Chủ đề(nếu có): <input type ="hidden" value={{mahdAdd}} name="mahd"> {{mahdAdd}}
+				<span>Chủ đề(nếu có): <input type ="hidden" value={{mahdAdd}} name="mahd">
 					<select ng-model="title" name='title' >
+						<!-- <option value="">------Tất cả------</option> -->
+						<option value="">Chủ đề(nếu có)</option>
 						<option ng-repeat="x in khoa  track by $index" value="{{x.khoa}}">{{x.khoa}}</option>
 				 	</select>
 				</span>

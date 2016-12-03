@@ -19,7 +19,6 @@
 					<option value ="benh">Bệnh</option>					
 					<option value ="tienthuoc">Tiền Thuốc</option>
 					<option value ="tienphong">Tiền Phòng</option>
-					<option value ="tienkhambenh">Tiền Khám Bệnh</option>
 					<option value ="tongchiphi">Tổng Chi Phí</option>
 					<option value ="ngaycap">Ngày Cấp</option>
 		        </select>
@@ -33,7 +32,6 @@
 				<th scope ="col" >Bệnh</th>				
 				<th scope ="col" >Tiền Thuốc</th>
 				<th scope ="col" >Tiền Phòng</th>
-				<th scope ="col" >Tiền Khám Bệnh</th>
 				<th scope ="col" >Tổng Chi Phí</th>
 				<th scope ="col" >Ngày Cấp</th>
 		     </tr>
@@ -43,9 +41,8 @@
 		    <td>{{ x.benh}}</td>
 		    <td>{{ x.tienthuoc}}</td>
 		    <td>{{ x.tienphong}}</td>
-		    <td>{{ x.tienkhambenh}}</td>
 		    <td>{{ x.tongchiphi}}</td>
-		    <td>{{ x.ngaycap}}</td>
+		    <td>{{ x.ngaycap | date: "dd.MM.y"}}</td>
 		  </tr>
 		</table>
 

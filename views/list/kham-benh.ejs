@@ -11,7 +11,7 @@
 			<div class='col-xs-2 add'>
 				
 			</div>
-			<div class='col-xs-5 sort' ng-init="sort='mabn'">
+			<div class='col-xs-5 sort' ng-init="sort='makb'">
 				Sắp xếp:
 				<select ng-model="sort">
 					<option value ="makb">Mã Khám Bệnh</option>
@@ -19,25 +19,25 @@
 					<option value ="bacsi">Bác Sĩ</option>
 					<option value ="phong">Phòng</option>	
 					<option value ="benh">Bệnh</option>					
-					<option value ="thuoc">Thuốc</option>
 					<option value ="ngaykham">Ngày Khám</option>
 					<option value ="noidung">Nội Dung</option>
 					<option value ="gia">Chi Phí</option>
+					<option value ="trangthai">Trạng thái</option>
 		        </select>
 			</div>
 		</div>
 
 		<table>
 			<tr class="days">
-				<th scope ="col" >Mã Khám Bệnh </th>
-				<th scope ="col" >Bệnh Nhân</th>
-				<th scope ="col" >Bác Sĩ</th>				
+				<th scope ="col" >Mã khám bệnh </th>
+				<th scope ="col" >Bệnh nhân</th>
+				<th scope ="col" >Bác sĩ</th>				
 				<th scope ="col" >Phòng</th>
 				<th scope ="col" >Bệnh </th>
-				<th scope ="col" >Thuốc</th>
-				<th scope ="col" >Ngày Khám</th>
-				<th scope ="col" >Nội Dung</th>
-				<th scope ="col" >Chi Phí</th>
+				<th scope ="col" >Ngày khám</th>
+				<th scope ="col" >Nội dung</th>
+				<th scope ="col" >Chi phí VNĐ</th>
+				<th scope ="col" >Trạng thái</th>				
 		     </tr>
 		  <tr ng-repeat="x in khambenh | orderBy: sort | filter: search track by $index">
 		    <td>{{ x.makb}}</td>
@@ -45,10 +45,13 @@
 		    <td>{{ x.bacsi}}</td>
 		    <td>{{ x.phong}}</td>
 		    <td>{{ x.benh}}</td>
-		    <td>{{ x.thuoc}}</td>
-		    <td>{{ x.ngaykham}}</td>
+		    <td>{{ x.ngaykham | date: medium}}</td>
 		    <td>{{ x.noidung}}</td>
-		    <td>{{ x.chiphi}}</td>
+		    <td>{{ x.gia}}</td>
+		    <td>
+		    	<span class='text-danger' ng-show='!x.trangthai'>Chưa xuất viện</span>
+		    	<span class='text-info' ng-show='x.trangthai'>Đã xuất viện</span>
+		    </td>
 		  </tr>
 		</table>
 
@@ -62,6 +65,7 @@
 		var data = JSON.parse(s);
 		$scope.khambenh = data;
 
+		console.log(data);
 	}]);
 
 </script>
