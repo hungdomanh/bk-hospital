@@ -83,7 +83,7 @@ router.get('/don-thuoc-benh-nhan-da-kham/:makb', function(req, res){
 });
 
 router.get('/benh-nhan-da-kham', function(req, res) {
-	client.query('SELECT makb, mabn, benhnhan.hoten as benhnhan, mabs, bacsi.hoten as bacsi, map, phong.phong, phong.gia1ngaydem, mab, benh.benh, ngaydangki, ngaynhankham, ngaykham, ngayravien, tienthuoc, tienphong, tongchiphi, khambenh.trangthai, noidungkham from khambenh left join benhnhan using(mabn) left join bacsi using(mabs) left join phong using(map) left join benh using(mab) where khambenh.trangthai>1 order by makb', function(err, result) {
+	client.query('SELECT makb, mabn, benhnhan.hoten as benhnhan, mabs, bacsi.hoten as bacsi, map, phong.phong, phong.gia1ngaydem, mab, benh.benh, ngaydangki, ngaynhankham, ngaykham, ngayravien, tienthuoc, tienphong, tongchiphi, khambenh.trangthai, trieuchung, noidungkham from khambenh left join benhnhan using(mabn) left join bacsi using(mabs) left join phong using(map) left join benh using(mab) where khambenh.trangthai>1 order by makb', function(err, result) {
 	   if(err) return console.log("Can't SELECT FROM benh-nhan-da-kham");
 	   res.send(result.rows);
 	   console.log(result.rows);
