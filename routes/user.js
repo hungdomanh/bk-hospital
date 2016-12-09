@@ -23,24 +23,34 @@ router.get('/', function(req, res, next) {
 	req.session.lastPage = '/user';
     if(req.session.loggedIn) {
     	var table = req.session.type;
-		client.query('SELECT * FROM ' +table+ ' where username=$1',[req.session.username], function(err, result){
-	        if(err) return console.log("Can't SELECT FROM TABLE");
-	        var str = result.rows;
-	        var t = '';
-	        var data  = JSON.stringify(result.rows);
-	        if(table == 'benhnhan') t = 'benh-nhan';
-	        else if(table == 'bacsi') t = 'bac-si';
-	        else if(table == 'admin') t = 'admin';
-	        if(str) 
-	            res.render('user/'+t,{
-	                data: data,
-			        title: "Thông tin cá nhân",
-			        logined: req.session.loggedIn,
-			        username: req.session.username,
-			        type: req.session.type
-			    });
-	        else res.end("CAN'T GET LINK");
-		})
+        if(req.session.type!='boss')
+    		client.query('SELECT * FROM ' +table+ ' where username=$1',[req.session.username], function(err, result){
+    	        if(err) return console.log("Can't SELECT FROM TABLE");
+    	        var str = result.rows;
+    	        var t = '';
+    	        var data  = JSON.stringify(result.rows);
+    	        if(table == 'benhnhan') t = 'benh-nhan';
+    	        else if(table == 'bacsi') t = 'bac-si';
+    	        else if(table == 'admin') t = 'admin';
+                console.log(t);
+    	        if(str) 
+    	            res.render('user/'+t,{
+    	                data: data,
+    			        title: "Thông tin cá nhân",
+    			        logined: req.session.loggedIn,
+    			        username: req.session.username,
+    			        type: req.session.type
+    			    });
+    	        else res.end("CAN'T GET LINK");
+    		})
+        else 
+            res.render('user/'+t,{
+                data: 'Bạn là admin',
+                title: "Thông tin cá nhân",
+                logined: req.session.loggedIn,
+                username: req.session.username,
+                type: req.session.type
+            });
    }
    else 
    	res.render('login-register/login',{
@@ -50,6 +60,61 @@ router.get('/', function(req, res, next) {
         type: 'khach'
     });
 });
+router.get('/benh-nhan/:mabn', function(req, res, next) {
+    var mabn = req.params.mabn ;
+    req.session.lastPage = '/user/benh-nhan/'+mabn;
+    if(req.session.loggedIn) {
+        client.query('SELECT * FROM benhnhan where mabn=$1',[mabn], function(err, result){
+            if(err) return console.log("Can't SELECT FROM TABLE");
+            var str = result.rows;
+            var data  = JSON.stringify(result.rows);
+            if(str) 
+                res.render('user/thong-tin-tai-khoan',{
+                    data: data,
+                    title: "Thông tin tài khoản",
+                    logined: req.session.loggedIn,
+                    username: req.session.username,
+                    type: req.session.type
+                });
+            else res.end("CAN'T GET LINK");
+        })
+    }
+    else 
+        res.render('login-register/login',{
+            title: "Login",
+            logined: false,
+            username: null,
+            type: 'khach'
+        });
+});
+router.get('/bac-si/:mabs', function(req, res, next) {
+    var mabn = req.params.mabs ;
+    req.session.lastPage = '/user/bac-si/'+mabs;
+    if(req.session.loggedIn) {
+        client.query('SELECT * FROM bacsi where mabs=$1',[mabs], function(err, result){
+            if(err) return console.log("Can't SELECT FROM TABLE");
+            var str = result.rows;
+            var data  = JSON.stringify(result.rows);
+            if(str) 
+                res.render('user/thong-tin-tai-khoan',{
+                    data: data,
+                    title: "Thông tin tài khoản",
+                    logined: req.session.loggedIn,
+                    username: req.session.username,
+                    type: req.session.type
+                });
+            else res.end("CAN'T GET LINK");
+        })
+    }
+    else 
+        res.render('login-register/login',{
+            title: "Login",
+            logined: false,
+            username: null,
+            type: 'khach'
+        });
+});
+
 ////////////////////////////////////////////////// KHACK
 router.get('/cap-nhat-thong-tin', function(req, res, next) {
 	req.session.lastPage = '/';

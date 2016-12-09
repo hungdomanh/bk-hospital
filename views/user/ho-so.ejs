@@ -206,7 +206,7 @@ app.controller('hoSoBenhAnCtrl', ['$scope','$http', function($scope, $http){
 	$http.get('/table/ho-so/'+data.mabn).success(function(res){
 		$scope.hoso = {};
 		$scope.hoso = res;
-
+		console.log(res);
 		if($scope.hoso.length) {
 			$scope.chokham=0; $scope.dangkham=0; $scope.chuaxuatvien=0; $scope.daxuatvien=0;
 			for(var i=0; i<$scope.hoso.length; i++) {

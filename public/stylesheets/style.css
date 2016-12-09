@@ -1,4 +1,4 @@
-
+@import url('http://fonts.googleapis.com/css?family=Amarante');
 a {
   color: #00B7FF;
 }
@@ -43,7 +43,9 @@ a.back-to-top {
 body {
   position: relative;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-  background-color: #C6E3E6;
+  background: #eee url('http://i.imgur.com/eeQeRmk.png');
+  background-color: #F6F6F6;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 .buttonSignUp {
@@ -116,6 +118,10 @@ body {
 
 .dangKiKhamBenhForm .text {
   float: right;
+}
+
+.editButton {
+  
 }
 
 footer {
@@ -277,9 +283,10 @@ input {
     padding: 30px;
 }
 
+
 /*TABLE*/
 table, th , td {
-  font-size: 20px;
+  font-size: 18px;
   border: 1px solid grey;
   border-collapse: collapse;
   padding: 5px;
@@ -293,6 +300,9 @@ table tr:nth-child(even) {
   background-color: #ffffff;
 }
 
+table tr .titleTable {
+  background-color: #C1E1A6;
+}
 .textSignUp {
   color: white;
 }

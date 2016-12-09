@@ -100,9 +100,11 @@ router.get('/phong', function(req, res){
 // ho so 
 router.get('/ho-so/:mabn', function(req, res){
 	var mabn = req.params.mabn;
-	client.query('SELECT makb, mabn, benhnhan.hoten as benhnhan, mabs, bacsi.hoten as bacsi, map, phong.phong, phong.gia1ngaydem, mab, benh.benh, ngaydangki, ngaynhankham, ngaykham, ngayravien, tienthuoc, tienphong, tongchiphi, khambenh.trangthai, noidungkham, trieuchung from khambenh left join benhnhan using(mabn) left join bacsi using(mabs) left join phong using(map) left join benh using(mab) where mabn = $1 and benhnhan.trangthai=1 order by makb',[mabn], function(err, result) {
+	console.log(mabn);
+	client.query('SELECT makb, mabn, benhnhan.hoten as benhnhan, mabs, bacsi.hoten as bacsi, map, phong.phong, phong.gia1ngaydem, mab, benh.benh, ngaydangki, ngaynhankham, ngaykham, ngayravien, tienthuoc, tienphong, tongchiphi, khambenh.trangthai, noidungkham, trieuchung from khambenh left join benhnhan using(mabn) left join bacsi using(mabs) left join phong using(map) left join benh using(mab) where mabn = $1 order by makb',[mabn], function(err, result) {
 	   if(err) return console.log("Can't SELECT FROM ho so");
 	   res.send(result.rows);
+	   console.log(result.rows);
 	});
 });
 

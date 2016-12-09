@@ -38,7 +38,7 @@
 				<th scope="col" >		Điện Thoại	</th>
 				<th scope="col" >		Trạng Thái  </th>
 				<th scope="col" >		Tài Khoản  </th>
-				<th ng-show=<%-type=='boss'%> scope="col" title="quantri">	Quản trị	</th>
+				<th ng-show=<%-type=='boss'%> scope="col" title="quantri"><div class="text-center">Quản trị</div></th>
 			</tr>
 		  <tr ng-repeat="x in data | orderBy: sort | filter: search track by $index">
 		    <td>{{ x.mabn}}</td>

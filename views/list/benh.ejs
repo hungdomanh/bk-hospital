@@ -18,7 +18,7 @@
 				<select ng-model="sort">
 					<option value ="mab">Mã Bệnh</option>
 					<option value ="mat">Mã Thuốc</option>
-					<option value ="mak">Mã Khoa</option>					
+					<!-- <option value ="mak">Mã Khoa</option>					 -->
 					<option value ="benh">Tên Bệnh</option>
 					<option value ="thuoc">Tên Thuốc</option>
 					<!-- <option value ="khoa">Khoa Điều Trị</option> -->
@@ -32,8 +32,8 @@
 				<th scope ="col" title="benh">Tên Bệnh</th>
 				<th scope ="col" title="mat">Mã Thuốc</th>				
 				<th scope ="col" title="thuoc">Tên Thuốc</th>
-				<th scope ="col" title="mak">Mã Khoa</th>
-				<th scope ="col" title="khoa">Khoa Điều Trị</th>
+				<!-- <th scope ="col" title="mak">Mã Khoa</th> -->
+				<!-- <th scope ="col" title="khoa">Khoa Điều Trị</th> -->
 				<th ng-show=<%-type=='boss'%> scope ="col" title="quantri">Quản Trị</th>
 		     </tr>
 			<tr ng-repeat="x in benh | orderBy: sort | filter: search track by $index">
@@ -41,8 +41,8 @@
 				<td>{{ x.benh}}</td>
 				<td>{{ x.mat }}</td>
 				<td>{{ x.thuoc }}</td>
-				<td>{{ x.mak }}</td>
-				<td>{{ x.khoa }}</td>
+				<!-- <td>{{ x.mak }}</td> -->
+				<!-- <td>{{ x.khoa }}</td> -->
 				<td ng-show=<%-type=='boss'%> >
 					<button ng-click="setEdit(x.mab)" class="editButton" data-target='#benhEditFormModal' data-toggle="modal" >
 						Sửa
@@ -67,8 +67,8 @@
 			        Bệnh:     <input type="text" name="benh"><br><br>
 					Mã Thuốc:   <input type="number" name="mat" ng-model="matAdd"><br><br>
 					Thuốc: {{thuoc[matAdd]}}<br><br>
-					Mã Khoa:    <input type="number" name="mak" ng-model="makAdd"><br><br>
-			        Khoa: {{khoa[makAdd]}} <br><br>
+					<!-- Mã Khoa:    <input type="number" name="mak" ng-model="makAdd"><br><br> -->
+			        <!-- Khoa: {{khoa[makAdd]}} <br><br> -->
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
@@ -91,8 +91,8 @@
 				Bệnh:               <input type ="text" value={{benhEdit}} name="benh"><br><br>
 				Mã Thuốc:           <input type ="number" name="mat" ng-model="matEdit"><br><br>
 				Thuốc: {{thuoc[matEdit]}} <br><br>
-				Mã Khoa:            <input type ="number" name="mak" ng-model="makEdit"><br><br>
-				Khoa: {{khoa[makEdit]}}<br><br>
+				<!-- Mã Khoa:            <input type ="number" name="mak" ng-model="makEdit"><br><br> -->
+				<!-- Khoa: {{khoa[makEdit]}}<br><br> -->
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
@@ -115,8 +115,8 @@
 				Bệnh:     {{benhEdit}}  <br><br>
 				Mã Thuốc: {{matEdit}}       <br><br>
 				Thuốc:    {{thuoc[matEdit]}}  <br><br>
-				Mã Khoa:    {{makEdit}}       <br><br>
-				Khoa: {{khoa[makEdit]}}<br><br>
+				<!-- Mã Khoa:    {{makEdit}}       <br><br> -->
+				<!-- Khoa: {{khoa[makEdit]}}<br><br> -->
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>

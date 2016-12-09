@@ -4,6 +4,35 @@
 	<h1 class="text-center">Thông tin Bác Sĩ</h1>
 
 	<%-data%>
+	<div class='row'>
+	 	<div class="col-xs-4"></div>
+	 	<div class="col-xs-6">
+		    <form action="/user/update-bac-si" method="post" class="formThongTinBacSi">
+			      <div class="modal-header">
+			      	<h3 class="idBacSi">
+			        	ID: {{data.mabs}} <input type="hidden" value={{data.mabs}} name="mabs"><br><br>
+			        </h3>
+			      </div>
+			      <div class="modal-body">
+			        
+			        Họ Tên:     <input type="text"   value={{data.hoten}} name="hoten"><br><br>
+			        Ngày Sinh:  <input type="number" value={{ngaysinh}} name="ngaysinh" max='31' min='1' class='ngaysinh'  placeholder="Ngày">
+			        			<input type="number" value={{thangsinh}} name="thangsinh" max='12' min='1' class='thangsinh' placeholder="Tháng">
+			        			<input type="number" value={{namsinh}} name="namsinh" max='2017' min='1900' class='namsinh' placeholder="Năm"><br><br>
+			        Giới tính:  <input type="radio"  value="Nam" ng-checked='nam' name="gioitinh" />Nam
+							    <input type="radio"  value="Nữ"  ng-checked='!nam'  name="gioitinh" />Nữ<br><br>
+			        Địa chỉ:    <input type="text"   value={{data.diachi}} name="diachi"><br><br>
+			        Kinh nghiệm:<input style="width: 40px" type="number"   value={{data.kinhnghiem}} name="kinhnghiem"  min='0' max="50" > năm<br><br>
+			        Trạng thái: <span value={{trangthai}} ng-show='data.trangthai==-2' name="trangthai" >{{data.trangthai}} Bệnh nhân </span>
+							    <span value="0" ng-show='!data.trangthai' name="trangthai" >Trống</span><br><br>
+					Tài khoản: {{data.username}}  <input type="hidden" value={{data.username}} name="username"><br><br>
+			      </div>
+			      <div class=" text-center">
+			        <button type="submit" class="btn btn-primary" value="Save">Cập nhật</button>
+			      </div>
+		     </form>
+		</div>
+	</div>
 
 
 
@@ -16,7 +45,17 @@
 app.controller('userBacSiCtrl', ['$scope', function($scope){
 	var s = '<%-data%>';
 	var data = JSON.parse(s);
+	data = data[0];
 	$scope.data = data;
+
+	var s = data.ngaysinh;
+	$scope.ngaysinh = parseInt(s.slice(0, 2), 10);
+	$scope.thangsinh = parseInt(s.slice(3, 5), 10);
+	$scope.namsinh = parseInt(s.slice(6, 10), 10); 	
+
+
+	if(data.gioitinh == 'Nam')   $scope.nam = true;
+	else $scope.nam = false;
 
 
 

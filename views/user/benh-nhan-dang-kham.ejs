@@ -1,13 +1,31 @@
 <% include ../layout %>
 
 <div class="content container " ng-controller="benhNhanDangKhamCtrl">
-	<h3 class="text-center"><%-username%></h3>
-		<div class='row'>
+	<div class="row search-add-sort">
+		<div  class="col-xs-5 search">
+			Tìm Kiếm: <input type="text" ng-model='search'>
+		</div>
+		<div  class="col-xs-2">
+			
+		</div>
+		<div  class="col-xs-5 sort " ng-init="sort='makb'">
+			Sắp xếp: 
+			<select ng-model="sort">
+				<option value ="makb">Mã khám bệnh</option>
+				<option value ="benhnhan">Bệnh nhân</option>
+				<option value ="bacsi">Bác sĩ</option>
+				<option value ="phong">Phòng</option>
+				<option value ="ngaykham">Ngày đăng kí</option>
+				<option value ="noidungkham">Ngày nhận khám</option>
+	        </select>
+		</div>
+	</div>
+	<div class='row'>
 		<div class="col-xs-4 text-center">
 			<a href="/user/benh-nhan-dang-cho"><h3 class='text-center text-info'>Chưa khám bệnh</h3></a>
 		</div>
 		<div class="col-xs-4 text-center">
-			<h2 class='text-center text-success'>Đang khám bệnh</h2>
+			<h2 class='text-center text-success'>Đang khám bệnh ({{benhnhandangkham.length}})</h2>
 		</div>
 		<div class="col-xs-4 text-center">
 			<a href="/user/benh-nhan-da-kham"><h3 class='text-center text-info'>Đã khám bệnh</h3></a>
@@ -18,7 +36,7 @@
 		<div class="col-xs-3"></div>
 		<div class="col-xs-6">
 			<div class='dangKiKhamBenhForm' ng-repeat="x in benhnhandangkham | orderBy: sort | filter: search track by $index">
-				<b>{{x.makb}}. {{x.hoten}}</b> 
+				<b>{{x.makb}}. {{x.hoten}}({{x.mabn}})</b> 
 				<input type="hidden" value={{x.makb}} name="makb">
 				<input type="hidden" value={{x.mabn}} name="mabn">
 				<span class="text">
@@ -54,8 +72,8 @@
 			<div class='dangKiKhamBenhForm' ng-repeat="x in benhnhandangkham | orderBy: sort | filter: search track by $index">
 				<div  class='text-center'><b>{{x.makb}}. Phòng: {{x.phong}}</b></div><hr>
 				<div class="row">
-					<div class="col-xs-6"><b>Bệnh nhân: </b>{{x.benhnhan}}</div>
-					<div class="col-xs-6"><b>Bác sĩ: </b>{{x.bacsi}}</div>
+					<div class="col-xs-6"><b>Bệnh nhân: </b>{{x.benhnhan}}({{x.mabn}})</div>
+					<div class="col-xs-6"><b>Bác sĩ: </b>{{x.bacsi}}({{x.mabs}})</div>
 				</div>
 				<span class="text">
 					
@@ -261,6 +279,7 @@ app.controller('benhNhanDangKhamCtrl', ['$scope', '$http','$timeout', function($
 		$http.get('/table/benhnhandangkham-admin').success(function (res) {
 			$scope.benhnhandangkham = res;
 			benhnhandangkham = $scope.benhnhandangkham;
+			console.log(benhnhandangkham);
 	    });
 	}
 	

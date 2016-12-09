@@ -1,0 +1,34 @@
+<% include ../layout.ejs %>
+
+<div class='content' ng-controller="tienCtrl">
+	<h1 class="text-center">Thống kê</h1>
+	<div class="container">
+		<h4>
+			<ul>
+				<li>Tổng số tiền thu được: </li>
+				<li>Số tiền khám bệnh trung bình 1 lần: </li>
+				<li>Tổng tiền thuốc: </li>
+				<li>Tổng tiền phòng: </li>
+
+				<li>Bệnh nhân khám bệnh nhiều hơn 1 lần: </li>
+				<li>Lần khám bệnh nhiều tiền nhất: </li>
+				<li>Bệnh nhân đã uống nhiều thuốc nhất: </li>
+
+				<li>Bác sĩ khám nhiều bệnh nhân nhất: </li>
+				<li>Bác sĩ cấp nhiều đơn thuốc nhất: </li>
+				<li>Bác sĩ đang làm việc: </li>
+				<li>Bác sĩ đang trống lịch: </li>
+				
+			</ul>
+		</h4>
+	</div>  <!-- container -->
+</div>  <!-- controller -->
+
+<script>
+app.controller('tienCtrl', ['$scope', '$http', function($scope, $http){
+	$scope.username = '<%-username%>';
+	
+
+}]);
+
+</script>
