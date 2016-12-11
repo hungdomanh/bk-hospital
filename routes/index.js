@@ -688,7 +688,6 @@ router.post('/add-phong', function(req, res) {
         client.query('INSERT INTO phong VALUES($1, $2, $3, $4)',
             [map, phong, gia1ngaydem, trangthai]
         );
-        
     }
     else
         res.render('login-register/login',{ 

@@ -1,6 +1,7 @@
-@import url('http://fonts.googleapis.com/css?family=Amarante');
+@import url('https://fonts.googleapis.com/css?family=Amarante');
+
 a {
-  color: #00B7FF;
+  color: #00B7dF;
 }
 
 .add {
@@ -102,7 +103,10 @@ body {
   background-color: #D5EBEB;
 }
 
+.chiPhi ul li span{
+  color: grey;
 
+}
 #chinhSachChatLuong {
   background-color: #8596A0; /* Dark Blue */
   color: white;

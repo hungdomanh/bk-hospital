@@ -32,15 +32,15 @@
 				<th scope ="col" >Thuốc</th>
 				<th scope ="col" >Số lượng</th>
 				<th scope ="col" >Giá (VNĐ)</th>
-		     </tr>
-		  <tr ng-repeat="x in donthuoc | orderBy: sort | filter: search track by $index">
-		    <td>{{ x.hoten}}</td>
-		    <td>{{ x.makb}}</td>
-		    <td>{{ x.mat}}</td>
-		    <td>{{ x.thuoc}}</td>
-		    <td>{{ x.soluong}}</td>
-		    <td>{{ x.gia}}</td>
-		  </tr>
+		    </tr>
+			<tr ng-repeat ="x in donthuoc | orderBy: sort | filter: search track by $index">
+				<td>{{ x.hoten}}</td>
+				<td>{{ x.makb}}</td>
+				<td>{{ x.mat}}</td>
+				<td>{{ x.thuoc}}</td>
+				<td>{{ x.soluong}}</td>
+				<td>{{ x.gia}}</td>
+			</tr>
 		</table>
 
 	</div>  <!-- container -->
