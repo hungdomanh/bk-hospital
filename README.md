@@ -17,6 +17,7 @@ Bài tập lớn Cơ sở dữ liệu - Quản lí bệnh viện
 	npm install
 
 	nodemon
+	
 - Mở trình duyệt(Chrome, Firefox ...) địa chỉ
 	localhost:3000
 
