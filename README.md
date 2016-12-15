@@ -20,13 +20,13 @@ Bài tập lớn Cơ sở dữ liệu - Quản lí bệnh viện
 	localhost:3000
 
 2. Tài khoản 
-	Bệnh nhân: 
+	+ Bệnh nhân: 
 		id: benhnhhan12
 		pass: 12
-	Bác sĩ: 
+	+ Bác sĩ: 
 		id: bacsi12
 		pass: 12
-	Admin: 
+	+ Admin: 
 		liên hệ https://www.facebook.com/domanhhunghp96
 
 ----------------------------------------------------------------------
@@ -53,11 +53,11 @@ Database - Setup hospital
 	localhost:3000
 
 2. Account 
-	Patient: 
+	+ Patient: 
 		id: benhnhhan12
 		pass: 12
-	Doctor: 
+	+ Doctor: 
 		id: bacsi12
 		pass: 12
-	Admin: 
+	+ Admin: 
 		inbox with https://www.facebook.com/domanhhunghp96
