@@ -3,9 +3,10 @@
 Bài tập lớn Cơ sở dữ liệu - Quản lí bệnh viện
 
 1.Cài đặt: 
--Yêu cầu: Đã cài đặt nodejs https://nodejs.org/en/
 
--Mở Command line chạy từng lệnh:
+- Yêu cầu: Đã cài đặt nodejs https://nodejs.org/en/
+
+- Mở Command line chạy từng lệnh:
 
 	git clone  https://github.com/hungdomanh/bk-hospital.git
 
@@ -16,25 +17,27 @@ Bài tập lớn Cơ sở dữ liệu - Quản lí bệnh viện
 	npm install
 
 	nodemon
+	
 - Mở trình duyệt(Chrome, Firefox ...) địa chỉ
 	localhost:3000
 
-2. Tài khoản 
-	Bệnh nhân: 
-		id: benhnhhan12
-		pass: 12
-	Bác sĩ: 
-		id: bacsi12
-		pass: 12
-	Admin: 
-		liên hệ https://www.facebook.com/domanhhunghp96
+2.Tài khoản:
+
+	+ Bệnh nhân: 
+		+ id: benhnhhan12
+		+ pass: 12
+	+ Bác sĩ: 
+		+ id: bacsi12
+		+ pass: 12
+	+ Admin: 
+		+ liên hệ https://www.facebook.com/domanhhunghp96
 
 ----------------------------------------------------------------------
 ----------------------------------------------------------------------
 
 Database - Setup hospital 
 
-1. Setup: 
+1.Setup: 
 - Require: Installed nodejs https://nodejs.org/en/
 
 - Open Command line run:
@@ -52,12 +55,13 @@ Database - Setup hospital
 - Open brower(Chrome, Firefox ...):  
 	localhost:3000
 
-2. Account 
-	Patient: 
-		id: benhnhhan12
-		pass: 12
-	Doctor: 
-		id: bacsi12
-		pass: 12
-	Admin: 
-		inbox with https://www.facebook.com/domanhhunghp96
+2.Account:
+
+	+ Patient: 
+		+ id: benhnhhan12
+		+ pass: 12
+	+ Doctor: 
+		+ id: bacsi12
+		+ pass: 12
+	+ Admin: 
+		+ inbox with https://www.facebook.com/domanhhunghp96
