@@ -21,13 +21,13 @@ Bài tập lớn Cơ sở dữ liệu - Quản lí bệnh viện
 
 2. Tài khoản 
 	+ Bệnh nhân: 
-		id: benhnhhan12
-		pass: 12
+		+ id: benhnhhan12
+		+ pass: 12
 	+ Bác sĩ: 
-		id: bacsi12
-		pass: 12
+		+ id: bacsi12
+		+ pass: 12
 	+ Admin: 
-		liên hệ https://www.facebook.com/domanhhunghp96
+		+ liên hệ https://www.facebook.com/domanhhunghp96
 
 ----------------------------------------------------------------------
 ----------------------------------------------------------------------
@@ -54,10 +54,10 @@ Database - Setup hospital
 
 2. Account 
 	+ Patient: 
-		id: benhnhhan12
-		pass: 12
+		+ id: benhnhhan12
+		+ pass: 12
 	+ Doctor: 
-		id: bacsi12
-		pass: 12
+		+ id: bacsi12
+		+ pass: 12
 	+ Admin: 
-		inbox with https://www.facebook.com/domanhhunghp96
+		+ inbox with https://www.facebook.com/domanhhunghp96
