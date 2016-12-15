@@ -21,7 +21,7 @@ Bài tập lớn Cơ sở dữ liệu - Quản lí bệnh viện
 - Mở trình duyệt(Chrome, Firefox ...) địa chỉ
 	localhost:3000
 
-2.Tài khoản :
+2.Tài khoản:
 
 	+ Bệnh nhân: 
 		+ id: benhnhhan12
@@ -55,7 +55,8 @@ Database - Setup hospital
 - Open brower(Chrome, Firefox ...):  
 	localhost:3000
 
-2.Account :
+2.Account:
+
 	+ Patient: 
 		+ id: benhnhhan12
 		+ pass: 12
