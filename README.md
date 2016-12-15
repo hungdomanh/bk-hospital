@@ -3,9 +3,9 @@
 Bài tập lớn Cơ sở dữ liệu - Quản lí bệnh viện
 
 1.Cài đặt: 
--Yêu cầu: Đã cài đặt nodejs https://nodejs.org/en/
+- Yêu cầu: Đã cài đặt nodejs https://nodejs.org/en/
 
--Mở Command line chạy từng lệnh:
+- Mở Command line chạy từng lệnh:
 
 	git clone  https://github.com/hungdomanh/bk-hospital.git
 
