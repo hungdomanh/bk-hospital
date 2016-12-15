@@ -107,7 +107,7 @@ router.get('/ho-so/:mabn', function(req, res){
 	   console.log(result.rows);
 	});
 });
-// Tien
+///////////// Tien
 // sum(tienphong), sum(tienthuoc), sum(tongchiphi), avg(tongchiphi)
 router.get('/chi-phi/tong-so-tien-thu-duoc', function(req, res){
 	client.query('select sum(tienphong) as tienphong, sum(tienthuoc) as tienthuoc, sum(tongchiphi) as tongchiphi, ROUND(avg(tongchiphi), 3) as trungbinh from khambenh', function(err, result) {
@@ -189,38 +189,5 @@ router.get('/chi-phi/benh-nhan-da-xuat-vien', function(req, res){
 	});
 });
 
-
-
-// Tổng tiền thuốc:
-// Tổng tiền phòng:
-// Bệnh nhân khám bệnh nhiều hơn 1 lần:
-// Lần khám bệnh nhiều tiền nhất:
-
-// Bác sĩ khám nhiều bệnh nhân nhất:
-
-
-// Bác sĩ đang làm việc:
-// Bác sĩ đang trống lịch:
-
-
-
-
 module.exports = router;
-
-
-
-
-/*
-
-with t as (
-	select * from bacsi join (select mabs, count(*) from khambenh group by mabs) as m using(mabs)
-) 
-select * from t where count in (select max(count) from t) order by mabs
-
-
-
-
-
-
-*/
 

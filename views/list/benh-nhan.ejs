@@ -40,13 +40,13 @@
 				<th scope="col" >		Tài Khoản  </th>
 				<th ng-show=<%-type=='boss'%> scope="col" title="quantri"><div class="text-center">Quản trị</div></th>
 			</tr>
-		  <tr ng-repeat="x in data | orderBy: sort | filter: search track by $index">
-		    <td>{{ x.mabn}}</td>
-		    <td>{{ x.hoten }}</td>
-		    <td>{{ x.ngaysinh }}</td>
-		    <td>{{ x.gioitinh }}</td>
-		    <td>{{ x.diachi }}</td>
-		    <td>{{ x.dienthoai }}</td>
+		  <tr ng-repeat="x in data | orderBy: sort | filter: search track by $index" >
+		    <td>{{ x.mabn       }}</td>
+		    <td>{{ x.hoten      }}</td>
+		    <td>{{ x.ngaysinh   }}</td>
+		    <td>{{ x.gioitinh   }}</td>
+		    <td>{{ x.diachi     }}</td>
+		    <td>{{ x.dienthoai  }}</td>
 		    <td><span ng-show="x.trangthai" class='text-danger'>Khám bệnh</span><span class='text-info' ng-hide="x.trangthai">Khỏe mạnh</span></td>
 			<td>{{ x.username }}</td>
 		    <td ng-show=<%-type=='boss'%> class="row" >
@@ -194,6 +194,9 @@
 		 	var dm = $scope.mabnAdd ;
 		 	$scope.usernameAdd = 'benhnhan' + dm.toString();
 		 };
+
+
+
 
 	}]);
 

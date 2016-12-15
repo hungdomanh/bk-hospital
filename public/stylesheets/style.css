@@ -156,6 +156,14 @@ h3 {
 	margin: 0 auto;
 }
 
+.highlight {
+  background: yellow;
+}
+
+.highlightedText {
+    background: yellow;
+}
+
 .homePage {
   position: relative;
   top: 30px;
