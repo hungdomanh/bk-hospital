@@ -173,7 +173,7 @@ h3 {
     /*background-color: #1abc9c; /* Green */*/
     color: #ffffff;
     padding-bottom: 10px;
-    background-image: url("https://img.infonet.vn/Uploaded/thanhhuyen/2015_10_28/DH_Bach_Khoa.jpg");
+    background-image: url("http://img.infonet.vn/Uploaded/thanhhuyen/2015_10_28/DH_Bach_Khoa.jpg");
     background-size: cover;
     /* center the image vertically and horizontally */
     background-position: center;
@@ -236,7 +236,7 @@ input[class=phone]{
   margin: 0 auto;
   width: 370px;
   height: 370px;
-  background-image: url("https://60.hust.edu.vn/documents/22244/28577/2016321+BK2.jpg/ed42f813-0a03-4aeb-8fb9-3054a1cd8474?version=1.1&t=1467688379000");
+  background-image: url("http://60.hust.edu.vn/documents/22244/28577/2016321+BK2.jpg/ed42f813-0a03-4aeb-8fb9-3054a1cd8474?version=1.1&t=1467688379000");
   background-size: cover;
   /*background-position: center;*/
 }
