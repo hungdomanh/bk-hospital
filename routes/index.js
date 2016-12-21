@@ -829,21 +829,12 @@ router.post('/delete-thuoc', function(req, res) {
 router.get('/hoi-dap', function(req, res) {
     req.session.lastPage = '/hoi-dap';
     if(req.session.loggedIn) {
-        client.query('select * from hoidap FULL JOIN khoadieutri on hoidap.title = khoadieutri.khoa order by hoidap.mahd', function(err, result){
-            if(err) return console.log("Can't SELECT FROM TABLE");
-            var str = result.rows;
-            var data  = JSON.stringify(result.rows);
-            if(str) 
-                res.render('hoi-dap', {
-                    data: data, 
-                    title: 'Hỏi đáp',
-                    logined: req.session.loggedIn,
-                    username: req.session.username,
-                    type: req.session.type
-
-                });
-            else res.end("CAN'T GET LINK");
-        })
+        res.render('hoi-dap', {
+            title: 'Hỏi đáp',
+            logined: req.session.loggedIn,
+            username: req.session.username,
+            type: req.session.type
+        });
     }
     else 
         res.render('login-register/login',{ 

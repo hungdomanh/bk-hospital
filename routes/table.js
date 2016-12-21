@@ -189,5 +189,24 @@ router.get('/chi-phi/benh-nhan-da-xuat-vien', function(req, res){
 	});
 });
 
+// hoi-dap-khoa
+router.get('/hoi-dap-khoa', function(req, res){
+	 client.query('select * from hoidap left join (select count(*), mahd from comment group by mahd order by mahd) as t using (mahd)', function(err, result){
+	   if(err) return console.log("Can't SELECT FROM hoi-dap-khoa");
+	   res.send(result.rows);
+	   console.log(result.rows);
+	});
+});
+
+
+
+
+
+
+
+
+
+
+
 module.exports = router;
 
