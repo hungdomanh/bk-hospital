@@ -15,11 +15,11 @@
 					<select ng-model="title" name='title' >
 						<!-- <option value="">------Tất cả------</option> -->
 						<option value="">Chủ đề(nếu có)</option>
-						<option ng-repeat="x in khoa track by $index" value="{{x.khoa}}">{{x.khoa}}</option>
+						<option ng-repeat="x in khoa  track by $index" value="{{x.khoa}}">{{x.khoa}}</option>
 				 	</select>
 				</span>
 			</div>
-
+							
 			<textarea class="form-control" placeholder="Nội dung..." rows="4" id="newQuestion" ng-model="content" name='content'></textarea>
 			<div class="row dateAndUser">
 				<span class="col-xs-6">
@@ -41,17 +41,20 @@
 				Chủ đề: <b>{{x.title}}</b>
 				<span ng-show=<%-type=='boss'%> ><button class="btn btn-danger" ng-click="Delete($index)">Xóa</button></span>
 			</div>
-			<hr>
+			
 			<div class="contentQuestion">
-				<b>Nội dung: </b><br> <p>{{x.content}}</p> <br>
+				<b>Nội dung: </b> {{x.content}}
 			</div>
-			<hr>
+			<hr><hr>
 			<div class="row">
 				<span class="col-xs-6">
 					{{date | date: medium}} by <a ng-href="/user/{{x.username}}">{{x.username}}</a>
 				</span>
 				<span class="col-xs-6 text-right" style="margin-top:10px;">
-					 <p ng-click="Comment($index)"  class="btn-link btn">Bình luận (<span ng-show="x.count">{{x.count}}</span><span ng-show="!x.count">0<span>)</p>
+					 <p class="glyphicon glyphicon-thumbs-up text-info"></p>{{x.like}}
+					 <p ng-click="Like($index)" class="btn-link btn ">Thích</p>
+					 <p class="glyphicon glyphicon glyphicon-comment text-info"></p>{{x.comment.length}}
+					 <p ng-click="Comment($index)" class="btn-link btn">Bình luận</p>
 				</span>
 			</div>
 			
@@ -59,14 +62,14 @@
 				<div><span class='glyphicon glyphicon-user'></span><a ng-href="/user/{{cm.id}}">{{cm.id}}</a> : {{cm.text}}</div>
 			</div>
 
-			<form action="{{'/binh-luan-moi/' + x.mahd}}" class="form-group" ng-show="showComment[$index]"><hr>
+			<!-- <form action="{{'/binh-luan-moi/' + x.mahd}}" class="form-group" ng-show="showComment[$index]"><hr> -->
 				<div class="input-group">
 				  <input type="text" class="form-control" placeholder="{{username}}" ng-model="textNewComment[$index]">
 				  <span class="input-group-btn">
 				    <button class="btn btn-info" id="newCommentButton" ng-click="NewComment(x.mahd)" type="submit">Bình luận</button>
 				  </span>
 				</div>
-			</form>	
+			<!-- </form>	 -->
 		</div>	
 	</div>
 	
@@ -85,28 +88,33 @@ app.controller('hoidapCtrl', ['$scope', '$timeout', '$http', function($scope, $t
 	$scope.title = "";
 	var username = '<%-username%>';
 	$scope.username = username;
-
+	var s = '<%-data%>';
+	var data = JSON.parse(s);
+	$scope.data = data;
 	localStorage.id = 0;
 	$scope.showComment = [];
 	$scope.textNewComment = [];
 
 
-	$http.get('/table/hoi-dap-khoa').success(function(res){
-		$scope.hoidap = {};
-		$scope.hoidap = res;
-		console.log(res);
-	});
-
-	$http.get('/table/show/khoadieutri').success(function(res){
-		$scope.khoa = {};
-		$scope.khoa = res;
-	});
-
-	
-
-	
-
-
+	var khoa = [], hoidap = [], j=0;
+	for(var i=0; i<data.length; i++) {
+		if(data[i].content) {
+			hoidap[j] = {};
+			hoidap[j].mahd = data[i].mahd;
+			hoidap[j].title = data[i].title ;
+			hoidap[j].content = data[i].content ;
+			hoidap[j].username = data[i].username ;
+			hoidap[j].update = data[i].update ;
+			hoidap[j].likecount = data[i].likecount ;
+			hoidap[j].comment = data[i].comment ;
+			j++;
+		}
+		khoa[i] = {}
+		khoa[i].mak = data[i].mak;
+		khoa[i].khoa = data[i].khoa;
+	}
+	$scope.khoa = khoa;
+	$scope.hoidap = hoidap;
 
     for(var i=0; i<10000; i++) {
 		$timeout(function(){
@@ -124,16 +132,12 @@ app.controller('hoidapCtrl', ['$scope', '$timeout', '$http', function($scope, $t
 
 	$scope.Comment = function(index) {
       $scope.showComment[index] = !$scope.showComment[index];
-      	$http.get('/table/comment/').success(function(res){
-			$scope.khoa = {};
-			$scope.khoa = res;
-		});
     }
    
   
    $scope.Delete = function(index) {
    	var r = confirm("Xóa mục thảo luận này?");
-   	// if(r)   $scope.notes.splice(index, 1);
+   	if(r)   $scope.notes.splice(index, 1);
    }
 
 
