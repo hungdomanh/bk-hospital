@@ -52,17 +52,13 @@ router.get('/', function(req, res, next) {
                 type: req.session.type
             });
    }
-   else {
-        req.session.loggedIn = false;
-        req.session.username = null;
-        req.session.type = 'khach';
-        res.render('login-register/login',{
-            title: "Login",
-            logined: req.session.loggedIn,
-            username: req.session.username,
-            type: req.session.type
-        });
-    }
+   else 
+    res.render('login-register/login',{
+        title: "Login",
+        logined: false,
+        username: null,
+        type: 'khach'
+    });
 });
 router.get('/benh-nhan/:mabn', function(req, res, next) {
     var mabn = req.params.mabn ;
@@ -83,17 +79,13 @@ router.get('/benh-nhan/:mabn', function(req, res, next) {
             else res.end("CAN'T GET LINK");
         })
     }
-    else {
-        req.session.loggedIn = false;
-        req.session.username = null;
-        req.session.type = 'khach';
-        res.render('login-register/login',{
-            title: "Login",
-            logined: req.session.loggedIn,
-            username: req.session.username,
-            type: req.session.type
-        });
-    }
+    else 
+    res.render('login-register/login',{
+        title: "Login",
+        logined: false,
+        username: null,
+        type: 'khach'
+    });
 });
 router.get('/bac-si/:mabs', function(req, res, next) {
     var mabn = req.params.mabs ;
@@ -114,18 +106,13 @@ router.get('/bac-si/:mabs', function(req, res, next) {
             else res.end("CAN'T GET LINK");
         })
     }
-    else {
-        req.session.loggedIn = false;
-        req.session.username = null;
-        req.session.type = 'khach';
-        res.render('login-register/login',{
-            title: "Login",
-            logined: req.session.loggedIn,
-            username: req.session.username,
-            type: req.session.type
-        });
-    }
-       
+    else 
+    res.render('login-register/login',{
+        title: "Login",
+        logined: false,
+        username: null,
+        type: 'khach'
+    });       
 });
 
 ////////////////////////////////////////////////// KHACK
@@ -149,17 +136,13 @@ router.get('/cap-nhat-thong-tin', function(req, res, next) {
        		})
    		}
    }
-   else {
-        req.session.loggedIn = false;
-        req.session.username = null;
-        req.session.type = 'khach';
-        res.render('login-register/login',{
-            title: "Login",
-            logined: req.session.loggedIn,
-            username: req.session.username,
-            type: req.session.type
-        });
-    }
+   else 
+    res.render('login-register/login',{
+        title: "Login",
+        logined: false,
+        username: null,
+        type: 'khach'
+    });
 });
 // khach -> cap nhat thong tin -> benh nhan
 router.post('/update-khach', function (req, res) {
@@ -223,17 +206,13 @@ router.get('/dang-ki-kham-benh', function(req, res, next) {
 	        else res.end("CAN'T GET LINK");
 		})
    }
-   else {
-        req.session.loggedIn = false;
-        req.session.username = null;
-        req.session.type = 'khach';
-        res.render('login-register/login',{
-            title: "Login",
-            logined: req.session.loggedIn,
-            username: req.session.username,
-            type: req.session.type
-        });
-    }
+   else 
+    res.render('login-register/login',{
+        title: "Login",
+        logined: false,
+        username: null,
+        type: 'khach'
+    });
 });
 
 router.post('/dang-ki-kham-benh', function(req, res, next) {
@@ -250,17 +229,13 @@ router.post('/dang-ki-kham-benh', function(req, res, next) {
    			[max, req.body.mabn, req.body.content, 0, ngaydangki]);	
     	});   		
    }
-   else {
-        req.session.loggedIn = false;
-        req.session.username = null;
-        req.session.type = 'khach';
-        res.render('login-register/login',{
-            title: "Login",
-            logined: req.session.loggedIn,
-            username: req.session.username,
-            type: req.session.type
-        });
-    }
+   else 
+    res.render('login-register/login',{
+        title: "Login",
+        logined: false,
+        username: null,
+        type: 'khach'
+    });
 });
 
 ///////////////////////////////////////////////////////////////// BAC SI
@@ -274,17 +249,13 @@ router.get('/benh-nhan-dang-cho', function(req, res, next) {
 	        type: req.session.type
 	    });
    }
-   else {
-        req.session.loggedIn = false;
-        req.session.username = null;
-        req.session.type = 'khach';
-        res.render('login-register/login',{
-            title: "Login",
-            logined: req.session.loggedIn,
-            username: req.session.username,
-            type: req.session.type
-        });
-    }
+   else 
+    res.render('login-register/login',{
+        title: "Login",
+        logined: false,
+        username: null,
+        type: 'khach'
+    });
 });
 
 router.post('/nhan-dang-ki-kham-benh',  function(req, res, next) {
@@ -301,17 +272,13 @@ router.post('/nhan-dang-ki-kham-benh',  function(req, res, next) {
         client.query('UPDATE phong    set trangthai=1 WHERE map  =$1',[req.body.map]);
         client.query('UPDATE bacsi    set trangthai = trangthai+1 WHERE mabs =$1',[req.body.mabs]);
 	}
-   else {
-        req.session.loggedIn = false;
-        req.session.username = null;
-        req.session.type = 'khach';
-        res.render('login-register/login',{
-            title: "Login",
-            logined: req.session.loggedIn,
-            username: req.session.username,
-            type: req.session.type
-        });
-    }
+   else 
+    res.render('login-register/login',{
+        title: "Login",
+        logined: false,
+        username: null,
+        type: 'khach'
+    });
 });
 
 router.get('/benh-nhan-dang-kham', function(req, res, next) {
@@ -338,17 +305,13 @@ router.get('/benh-nhan-dang-kham', function(req, res, next) {
 	        type: req.session.type
 	    });
 	}
-   else {
-        req.session.loggedIn = false;
-        req.session.username = null;
-        req.session.type = 'khach';
-        res.render('login-register/login',{
-            title: "Login",
-            logined: req.session.loggedIn,
-            username: req.session.username,
-            type: req.session.type
-        });
-    }
+   else 
+    res.render('login-register/login',{
+        title: "Login",
+        logined: false,
+        username: null,
+        type: 'khach'
+    });
 });
 
 router.post('/kham-benh',  function(req, res, next) {
@@ -405,17 +368,13 @@ router.post('/kham-benh',  function(req, res, next) {
 	    	}
     	})
 	}
-   else {
-        req.session.loggedIn = false;
-        req.session.username = null;
-        req.session.type = 'khach';
-        res.render('login-register/login',{
-            title: "Login",
-            logined: req.session.loggedIn,
-            username: req.session.username,
-            type: req.session.type
-        });
-    }
+   else 
+    res.render('login-register/login',{
+        title: "Login",
+        logined: false,
+        username: null,
+        type: 'khach'
+    });
 });
 
 router.get('/benh-nhan-da-kham', function(req, res, next) {
@@ -438,25 +397,20 @@ router.get('/benh-nhan-da-kham', function(req, res, next) {
         else if(req.session.type=='boss') {
             res.render('user/benh-nhan-da-kham',{
                 mabs: 'khongco',
-                title: "Bệnh nhân đang khám bệnh",
+                title: "Bệnh nhân đã khám bệnh",
                 logined: req.session.loggedIn,
                 username: req.session.username,
                 type: req.session.type
             });
         }
     }
-   else {
-        req.session.loggedIn = false;
-        req.session.username = null;
-        req.session.type = 'khach';
-        res.render('login-register/login',{
-            title: "Login",
-            logined: req.session.loggedIn,
-            username: req.session.username,
-            type: req.session.type
-        });
-   }
-    
+   else 
+    res.render('login-register/login',{
+        title: "Login",
+        logined: false,
+        username: null,
+        type: 'khach'
+    });
 });
 
 ///////// HO SO BENH AN
@@ -478,17 +432,13 @@ router.get('/ho-so', function(req, res, next) {
             else res.end("CAN'T GET LINK");
         })
     }
-    else {
-        req.session.loggedIn = false;
-        req.session.username = null;
-        req.session.type = 'khach';
-        res.render('login-register/login',{
-            title: "Login",
-            logined: req.session.loggedIn,
-            username: req.session.username,
-            type: req.session.type
-        });
-   }
+    else 
+    res.render('login-register/login',{
+        title: "Login",
+        logined: false,
+        username: null,
+        type: 'khach'
+    });
 });
 
 

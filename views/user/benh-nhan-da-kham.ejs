@@ -78,7 +78,7 @@
 					</div>
 					<div class="col-xs-4 text-center">
 						<div ng-show=<%-type=='boss'%> class="buttonCapHoaDon">
-								<button ng-click='setHoaDon($index); ShowDonThuoc($index)' data-target='#hoaDonAddFormModal' data-toggle="modal" class='btn btn-info'>Cấp hóa đơn</button>
+							<button ng-click='setHoaDon($index); ShowDonThuoc($index)' data-target='#hoaDonAddFormModal' data-toggle="modal" class='btn btn-info'>Cấp hóa đơn</button>
 						</div>
 					</div>
 					<div class="col-xs-4">
@@ -242,6 +242,7 @@ app.controller('benhNhanDaKhamCtrl', ['$scope', '$http', function($scope, $http)
 			data = $scope.data;
 	    });
 	} else if(type == 'boss') {
+		console.log("boss");
 		$http.get('/table/benhnhandakham-admin').success(function (res) {
 			$scope.data = res;
 			data = $scope.data;

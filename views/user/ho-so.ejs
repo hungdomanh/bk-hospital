@@ -10,14 +10,14 @@
 	        	<h3 class="text-center">ID: {{data.mabn}} <input type="hidden" value={{data.mabn}} name="mabn"><br></h3>
 	      </div>
 	      <div class="modal-body">
-	        Họ Tên: <input  size="20" type="text"   value={{data.hoten}} name="hoten"><br><br>
-	        Ngày Sinh:  <input type="number" value={{ngaysinh}} name="ngaysinh" max='31' min='1' class='ngaysinh'  placeholder="Ngày">
-	        			<input type="number" value={{thangsinh}} name="thangsinh" max='12' min='1' class='thangsinh' placeholder="Tháng">
-	        			<input type="number" value={{namsinh}} name="namsinh" max='2017' min='1900' class='namsinh' placeholder="Năm"><br><br>
-	        Giới tính:  <input type="radio"  value="Nam" ng-checked='nam' name="gioitinh" />Nam
-					    <input type="radio"  value="Nữ"  ng-checked='!nam'  name="gioitinh" />Nữ<br><br>
-	        Địa chỉ:    <input type="text"   value={{data.diachi}} name="diachi"><br><br>
-	        Điện Thoại: <input class='phone' type="number" value={{data.dienthoai}} min='010000000' name="dienthoai"><br><br>
+	        Họ Tên: <input required  size="20" type="text"   value={{data.hoten}} name="hoten"><br><br>
+	        Ngày Sinh:  <input required type="number" value={{ngaysinh}} name="ngaysinh" max='31' min='1' class='ngaysinh'  placeholder="Ngày">
+	        			<input required type="number" value={{thangsinh}} name="thangsinh" max='12' min='1' class='thangsinh' placeholder="Tháng">
+	        			<input required type="number" value={{namsinh}} name="namsinh" max='2017' min='1900' class='namsinh' placeholder="Năm"><br><br>
+	        Giới tính:  <input required type="radio"  value="Nam" ng-checked='nam' name="gioitinh" />Nam
+					    <input required type="radio"  value="Nữ"  ng-checked='!nam'  name="gioitinh" />Nữ<br><br>
+	        Địa chỉ:    <input required type="text"   value={{data.diachi}} name="diachi"><br><br>
+	        Điện Thoại: <input required class='phone' type="number" value={{data.dienthoai}} min='010000000' name="dienthoai"><br><br>
 	        Trạng thái: <span value="1" ng-show='trangthai' name="trangthai" >Khám bệnh </span>
 					    <span value="0" ng-show='!trangthai' name="trangthai" >Khỏe mạnh</span><br><br>
 			Tài khoản: {{data.username}}  <input type="hidden" value={{data.username}} name="username"><br>
