@@ -11,14 +11,14 @@
 			      </div>
 			      <div class="modal-body">
 			        ID: {{mabnAdd}} <input type="hidden" value={{mabnAdd}} name="mabn"><br><br>
-			        Họ Tên:     <input type="text" name="hoten"><br><br>
-			        Ngày Sinh:  <input type="number" name="ngaysinh" max='31' min='1' class='ngaysinh'  placeholder="Ngày">
-			        			<input type="number" name="thangsinh" max='12' min='1' class='thangsinh' placeholder="Tháng">
-			        			<input type="number" name="namsinh" max='2017' min='1900' class='namsinh' placeholder="Năm"><br><br>
-			        Giới tính:  <input type="radio"  value="Nam" name="gioitinh" />Nam
-							    <input type="radio"  value="Nữ"  name="gioitinh" />Nữ<br><br>
-			        Địa chỉ:    <input type="text"   name="diachi"><br><br>
-			        Điện Thoại: <input type="number" min='010000000' name="dienthoai"><br><br>
+			        Họ Tên:     <input required type="text" name="hoten" ><br><br>
+			        Ngày Sinh:  <input required type="number" name="ngaysinh" max='31' min='1' class='ngaysinh'  placeholder="Ngày">
+			        			<input required type="number" name="thangsinh" max='12' min='1' class='thangsinh' placeholder="Tháng">
+			        			<input required type="number" name="namsinh" max='2017' min='1900' class='namsinh' placeholder="Năm"><br><br>
+			        Giới tính:  <input required type="radio"  value="Nam" name="gioitinh" />Nam
+							    <input required type="radio"  value="Nữ"  name="gioitinh" />Nữ<br><br>
+			        Địa chỉ:    <input required type="text"   name="diachi"><br><br>
+			        Điện Thoại: <input required type="number" min='010000000' name="dienthoai"><br><br>
 			        Trạng thái: Khỏe mạnh<br><br>
 					Username: <%-username%>
 			      </div>

@@ -53,7 +53,7 @@ router.get('/', function(req, res, next) {
             });
    }
    else 
-   	res.render('login-register/login',{
+    res.render('login-register/login',{
         title: "Login",
         logined: false,
         username: null,
@@ -80,12 +80,12 @@ router.get('/benh-nhan/:mabn', function(req, res, next) {
         })
     }
     else 
-        res.render('login-register/login',{
-            title: "Login",
-            logined: false,
-            username: null,
-            type: 'khach'
-        });
+    res.render('login-register/login',{
+        title: "Login",
+        logined: false,
+        username: null,
+        type: 'khach'
+    });
 });
 router.get('/bac-si/:mabs', function(req, res, next) {
     var mabn = req.params.mabs ;
@@ -107,12 +107,12 @@ router.get('/bac-si/:mabs', function(req, res, next) {
         })
     }
     else 
-        res.render('login-register/login',{
-            title: "Login",
-            logined: false,
-            username: null,
-            type: 'khach'
-        });
+    res.render('login-register/login',{
+        title: "Login",
+        logined: false,
+        username: null,
+        type: 'khach'
+    });       
 });
 
 ////////////////////////////////////////////////// KHACK
@@ -137,7 +137,7 @@ router.get('/cap-nhat-thong-tin', function(req, res, next) {
    		}
    }
    else 
-   	res.render('login-register/login',{
+    res.render('login-register/login',{
         title: "Login",
         logined: false,
         username: null,
@@ -207,7 +207,7 @@ router.get('/dang-ki-kham-benh', function(req, res, next) {
 		})
    }
    else 
-   	res.render('login-register/login',{
+    res.render('login-register/login',{
         title: "Login",
         logined: false,
         username: null,
@@ -230,7 +230,7 @@ router.post('/dang-ki-kham-benh', function(req, res, next) {
     	});   		
    }
    else 
-   	res.render('login-register/login',{
+    res.render('login-register/login',{
         title: "Login",
         logined: false,
         username: null,
@@ -250,7 +250,7 @@ router.get('/benh-nhan-dang-cho', function(req, res, next) {
 	    });
    }
    else 
-   	res.render('login-register/login',{
+    res.render('login-register/login',{
         title: "Login",
         logined: false,
         username: null,
@@ -273,7 +273,7 @@ router.post('/nhan-dang-ki-kham-benh',  function(req, res, next) {
         client.query('UPDATE bacsi    set trangthai = trangthai+1 WHERE mabs =$1',[req.body.mabs]);
 	}
    else 
-   	res.render('login-register/login',{
+    res.render('login-register/login',{
         title: "Login",
         logined: false,
         username: null,
@@ -306,7 +306,7 @@ router.get('/benh-nhan-dang-kham', function(req, res, next) {
 	    });
 	}
    else 
-   	res.render('login-register/login',{
+    res.render('login-register/login',{
         title: "Login",
         logined: false,
         username: null,
@@ -334,7 +334,6 @@ router.post('/kham-benh',  function(req, res, next) {
     		tongGia = req.body.gia1;
     		count = 1;
     	} 
-        console.log(req.body.noidungkham);
         // kham benh xong nhung chua xuat vien
 		client.query('UPDATE khambenh set trangthai=2 WHERE makb=$1',[req.body.makb], function(){
 			res.redirect(req.session.lastPage);
@@ -370,7 +369,7 @@ router.post('/kham-benh',  function(req, res, next) {
     	})
 	}
    else 
-   	res.render('login-register/login',{
+    res.render('login-register/login',{
         title: "Login",
         logined: false,
         username: null,
@@ -381,14 +380,29 @@ router.post('/kham-benh',  function(req, res, next) {
 router.get('/benh-nhan-da-kham', function(req, res, next) {
     req.session.lastPage = '/user/benh-nhan-da-kham';
     if(req.session.loggedIn && loai23(req.session.type)) {
-        
-        res.render('user/benh-nhan-da-kham',{
-            title: "Bệnh nhân đã khám bệnh", 
-            logined: true,
-            username: req.session.username,
-            type: req.session.type
-    
-        })
+        if(req.session.type == 'bacsi') {
+            client.query('SELECT mabs FROM bacsi where username=$1',[req.session.username], function(err, result){
+                var mabs = result.rows[0].mabs;
+                if(err) return console.log("Can't SELECT FROM TABLE");
+                
+                res.render('user/benh-nhan-da-kham',{
+                    mabs: mabs,
+                    title: "Bệnh nhân đã khám bệnh",
+                    logined: req.session.loggedIn,
+                    username: req.session.username,
+                    type: req.session.type
+                });
+            })
+        }
+        else if(req.session.type=='boss') {
+            res.render('user/benh-nhan-da-kham',{
+                mabs: 'khongco',
+                title: "Bệnh nhân đã khám bệnh",
+                logined: req.session.loggedIn,
+                username: req.session.username,
+                type: req.session.type
+            });
+        }
     }
    else 
     res.render('login-register/login',{
@@ -407,7 +421,6 @@ router.get('/ho-so', function(req, res, next) {
             if(err) return console.log("Can't SELECT FROM benhnhan");
             var str = result.rows;
             var data  = JSON.stringify(result.rows);
-            console.log("data");
             if(str) 
                 res.render('user/ho-so',{
                     data: data,
@@ -419,7 +432,7 @@ router.get('/ho-so', function(req, res, next) {
             else res.end("CAN'T GET LINK");
         })
     }
-   else 
+    else 
     res.render('login-register/login',{
         title: "Login",
         logined: false,

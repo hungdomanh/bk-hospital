@@ -14,7 +14,7 @@ a {
 
 #avatar {
     /* This image is 687 wide by 1024 tall, similar to your aspect ratio */
-    background-image: url('http://www.reviewcompany.vn/public/media/uploads/company/logo/2014-06-21/c5c3183a-19b7-4e2b-9a2e-d0cfedc4da54.jpg');
+    background-image: url('https://www.reviewcompany.vn/public/media/uploads/company/logo/2014-06-21/c5c3183a-19b7-4e2b-9a2e-d0cfedc4da54.jpg');
     /* make a square container */
     width: 100px;
     height: 70px;
@@ -44,7 +44,7 @@ a.back-to-top {
 body {
   position: relative;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-  background: #eee url('http://i.imgur.com/eeQeRmk.png');
+  background: #eee url('https://i.imgur.com/eeQeRmk.png');
   background-color: #F6F6F6;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
@@ -86,6 +86,10 @@ body {
   text-decoration:none;
 } 
 
+.buttonCapHoaDon {
+    margin-top:-5px;
+    /*margin-left: 30px;*/
+}
 
 .content {
   margin-top: 50px;
@@ -94,7 +98,16 @@ body {
   /*margin-bottom: -1000px;*/
 }
 
-.benhNhanDaKhamForm {
+.benhNhanDaKham1Form {
+  border-radius: 3%;
+  border: solid 1px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #D5EddB;
+}
+
+.benhNhanDaKham2Form {
   border-radius: 3%;
   border: solid 1px;
   margin-top: 20px;
@@ -118,6 +131,7 @@ body {
   margin-top: 20px;
   margin-bottom: 10px;
   padding: 10px;
+  background-color: #f1f1f1;
 }
 
 .dangKiKhamBenhForm .text {
@@ -238,7 +252,7 @@ input[class=phone]{
   height: 370px;
   background-image: url("http://60.hust.edu.vn/documents/22244/28577/2016321+BK2.jpg/ed42f813-0a03-4aeb-8fb9-3054a1cd8474?version=1.1&t=1467688379000");
   background-size: cover;
-  /*background-position: center;*/
+  
 }
 
 input {

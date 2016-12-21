@@ -43,14 +43,15 @@
 					<select name="map" id="">
 						<option ng-repeat="p in phong | orderBy: 'map' track by $index" value="{{p.map}}">{{p.phong}}</option>
 					</select>
-					<button class="btn btn-success">Nhận khám</button>
-
 				</span>
 				<br>
 				<hr>
 				<p><b>Triệu chứng:</b> {{x.trieuchung}}</p> <br>
 				<hr>
-				Ngày đăng kí: {{x.ngaydangki | date: 'dd.MM.yy'}}
+				<div class="row">
+					<div class="col-xs-6">Ngày đăng kí: {{x.ngaydangki | date: 'dd.MM.yy'}}</div>
+					<div ng-show="type=='bacsi'" class="col-xs-6 text-right"><button class="btn btn-success">Nhận khám</button></div>
+				</div>				
 			</form>
 		</div>
 		<div class="col-xs-3"></div>

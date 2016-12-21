@@ -23,12 +23,12 @@ router.get('/', function(req, res) {
     if(!req.session.loggedIn) req.session.loggedIn = false;
     if(!req.session.type)     req.session.type = 'khach';
     req.session.lastPage = '/';
-	res.render('home',{
-		title: "BK-Hospital",
-		logined: req.session.loggedIn,
+    res.render('home',{
+        title: "BK-Hospital",
+        logined: req.session.loggedIn,
         username: req.session.username,
-		type: req.session.type
-	});
+        type: req.session.type
+    });
 
 });
 // BAN QUAN TRI   /////////////////////
@@ -41,7 +41,6 @@ router.get('/thong-tin/ban-quan-tri', function(req, res) {
     });
 });
 /// DANH SACH THONG KE
-
 router.get('/thong-ke/khoa-dieu-tri',  function(req, res) {
     req.session.lastPage = 'thong-ke/khoa-dieu-tri';
     if(req.session.loggedIn) {
@@ -103,26 +102,26 @@ router.get('/thong-ke/benh-thuong-gap',  function(req, res) {
 
 /////////////////////////////////////////////////////////////////////////////  LOGIN - REGISTER
 router.get('/login', function(req, res) {
-	if(!req.session.loggedIn) {
+    if(!req.session.loggedIn) {
         req.session.type = 'khach';
        
         res.render('login-register/login', {
-        	title: "Login", 
-        	logined: req.session.loggedIn,
+            title: "Login", 
+            logined: req.session.loggedIn,
             username: null,
-        	type: req.session.type
+            type: req.session.type
         });
     }
-	else {
+    else {
         if(!req.session.lastPage) req.session.lastPage ='/';
-		res.redirect('/');
-	}
+        res.redirect('/');
+    }
 });
 router.post('/login', function(req, res) {
     if(!req.session.lastPage)   req.session.lastPage ='/';
-	if(req.body.username && req.body.password){
-		var username = req.body.username;
-		var password = req.body.password;
+    if(req.body.username && req.body.password){
+        var username = req.body.username;
+        var password = req.body.password;
 
         client.query('SELECT id FROM users order by id', function(err, result){
             var ids = result.rows;
@@ -276,8 +275,7 @@ router.post('/add-bac-si', function(req, res) {
         res.redirect('/bac-si');
         client.query('INSERT INTO bacsi VALUES($1, $2, $3, $4, $5, $6, $7, $8)',
             [mabs, hoten, s, gioitinh, diachi, mak, kinhnghiem, trangthai]
-        );
-        
+        ); 
     }
     else 
         res.render('login-register/login',{ 
@@ -829,21 +827,12 @@ router.post('/delete-thuoc', function(req, res) {
 router.get('/hoi-dap', function(req, res) {
     req.session.lastPage = '/hoi-dap';
     if(req.session.loggedIn) {
-        client.query('select * from hoidap FULL JOIN khoadieutri on hoidap.title = khoadieutri.khoa order by hoidap.mahd', function(err, result){
-            if(err) return console.log("Can't SELECT FROM TABLE");
-            var str = result.rows;
-            var data  = JSON.stringify(result.rows);
-            if(str) 
-                res.render('hoi-dap', {
-                    data: data, 
-                    title: 'Hỏi đáp',
-                    logined: req.session.loggedIn,
-                    username: req.session.username,
-                    type: req.session.type
-
-                });
-            else res.end("CAN'T GET LINK");
-        })
+        res.render('hoi-dap', {
+            title: 'Hỏi đáp',
+            logined: req.session.loggedIn,
+            username: req.session.username,
+            type: req.session.type
+        });
     }
     else 
         res.render('login-register/login',{ 
@@ -855,7 +844,6 @@ router.get('/hoi-dap', function(req, res) {
 });
 router.post('/add-hoi-dap', function(req, res) {
     req.session.lastPage = '/hoi-dap';
-    console.log(req.body);
     if(req.session.loggedIn && req.body.mahd){
         var mahd = req.body.mahd;
         var title   = req.body.title ;
@@ -878,7 +866,6 @@ router.post('/add-hoi-dap', function(req, res) {
 
 router.post('/binh-luan-moi', function(req, res) {
     req.session.lastPage = '/hoi-dap';
-    console.log(req.body);
     if(req.session.loggedIn && req.body.mahd){
         var mahd = req.body.mahd;
         var title   = req.body.title ;
@@ -910,7 +897,6 @@ router.post('/in-hoa-don', function(req, res) {
         });
         // trang thai benh nhan
         client.query('SELECT min(trangthai), max(trangthai) from khambenh WHERE mabn =$1',[req.body.mabn], function(err, result) {
-            console.log(result.rows);
             if(result.rows.min !=0 && result.rows.max !=3)
                  client.query('UPDATE benhnhan set trangthai = 1 WHERE mabn =$1',[req.body.mabn]);
             else client.query('UPDATE benhnhan set trangthai = 0 WHERE mabn =$1',[req.body.mabn]);
@@ -926,7 +912,6 @@ router.post('/in-hoa-don', function(req, res) {
             username: null,
             type: 'khach'
         });
-    console.log(req.body);
 });
 ///////////////////////////////////////////////////////////////////////////// THONG KE TIEN
 router.get('/thong-ke/chi-phi', function(req, res) {
