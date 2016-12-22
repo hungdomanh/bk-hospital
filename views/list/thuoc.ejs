@@ -25,7 +25,7 @@
 			</div>
 		</div>
 
-		<table>
+		<table class="tableThuoc">
 			<tr class="titleTable">
 				<th scope="col" title="mat">		ID		</th>
 				<th scope="col" title="thuoc">		Thuốc	</th>
@@ -36,7 +36,7 @@
 			<tr ng-repeat="x in data | orderBy: sort | filter: search track by $index">
 
 				<td>{{ x.mat}}</td>
-				<td>{{ x.thuoc }}</td>
+				<td><span class="tenThuoc">{{x.thuoc}}</span></td>
 				<td>{{ x.donvi}}</td>
 				<td>{{ x.gia }}</td>
 				<td ng-show=<%-type=='boss'%> >

@@ -309,6 +309,9 @@ input {
     padding: 30px;
 }
 
+.tableThuoc .tenThuoc {
+  font-size: 15px;
+}
 
 /*TABLE*/
 table, th , td {

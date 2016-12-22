@@ -41,7 +41,6 @@ router.get('/thong-tin/ban-quan-tri', function(req, res) {
     });
 });
 /// DANH SACH THONG KE
-
 router.get('/thong-ke/khoa-dieu-tri',  function(req, res) {
     req.session.lastPage = 'thong-ke/khoa-dieu-tri';
     if(req.session.loggedIn) {
@@ -74,7 +73,7 @@ router.get('/thong-ke/khoa-dieu-tri',  function(req, res) {
 router.get('/thong-ke/benh-thuong-gap',  function(req, res) {
     req.session.lastPage = 'thong-ke/benh-thuong-gap';
     if(req.session.loggedIn) {
-        client.query('SELECT mab, mat, benh, mak, thuoc FROM benh right join thuoc using (mat) order by mab', function(err, result){
+        client.query('SELECT mab, mat, benh, thuoc FROM benh right join thuoc using (mat) order by mab', function(err, result){
             if(err) return console.log("Can't SELECT FROM TABLE");
 
             var str = result.rows;
@@ -100,12 +99,11 @@ router.get('/thong-ke/benh-thuong-gap',  function(req, res) {
         });
 });
 
-
 /////////////////////////////////////////////////////////////////////////////  LOGIN - REGISTER
 router.get('/login', function(req, res) {
 	if(!req.session.loggedIn) {
         req.session.type = 'khach';
-       
+        req.session.username = null;
         res.render('login-register/login', {
         	title: "Login", 
         	logined: req.session.loggedIn,
@@ -274,10 +272,12 @@ router.post('/add-bac-si', function(req, res) {
         var s = ngaysinh + '/' + thangsinh +'/' + namsinh;
 
         res.redirect('/bac-si');
-        client.query('INSERT INTO bacsi VALUES($1, $2, $3, $4, $5, $6, $7, $8)',
-            [mabs, hoten, s, gioitinh, diachi, mak, kinhnghiem, trangthai]
+        client.query('INSERT INTO bacsi VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9)',
+            [mabs, hoten, s, gioitinh, diachi, mak, kinhnghiem, trangthai, req.body.username]
         );
-        
+        client.query('INSERT INTO users VALUES($1, $2, $3, $4, $5)',
+            ['bacsi'+mabs, '12', 'bacsi', 'by admin', 'bacsi'+mabs+'@gmail.com']
+        );
     }
     else 
         res.render('login-register/login',{ 
@@ -292,14 +292,13 @@ router.post('/edit-bac-si', function(req, res) {
     if(req.session.type=='boss' && req.body.mabs && req.body.mak 
         && req.body.hoten && req.body.gioitinh && req.body.diachi 
         && req.body.kinhnghiem && req.body.ngaysinh && req.body.thangsinh 
-        && req.body.namsinh && req.body.trangthai){
+        && req.body.namsinh){
         var mabs = req.body.mabs ;
         var mak = req.body.mak ;
         var hoten = req.body.hoten ;
         var gioitinh = req.body.gioitinh ;
         var diachi = req.body.diachi ;
         var kinhnghiem = req.body.kinhnghiem ;
-        var trangthai =  req.body.trangthai;
         var ngaysinh = req.body.ngaysinh ;
         var thangsinh = req.body.thangsinh ;
         var namsinh = req.body.namsinh ;
@@ -307,8 +306,8 @@ router.post('/edit-bac-si', function(req, res) {
         if(thangsinh < 10 ) thangsinh = '0' + thangsinh;
         var s = ngaysinh + '/' + thangsinh +'/' + namsinh;
         res.redirect('/bac-si');
-        client.query('UPDATE bacsi SET hoten = $2, ngaysinh = $3, gioitinh = $4, diachi = $5, mak = $6, kinhnghiem = $7, trangthai = $8 WHERE mabs = $1',
-            [mabs, hoten, s, gioitinh, diachi, mak, kinhnghiem, trangthai]
+        client.query('UPDATE bacsi SET hoten = $2, ngaysinh = $3, gioitinh = $4, diachi = $5, mak = $6, kinhnghiem = $7 WHERE mabs = $1',
+            [mabs, hoten, s, gioitinh, diachi, mak, kinhnghiem]
         );
     }
     else 
@@ -342,8 +341,8 @@ router.post('/delete-bac-si', function(req, res) {
 router.get('/benh',  function(req, res) {
     req.session.lastPage = '/benh';
     if(req.session.loggedIn) {
-        client.query('SELECT mab, mat, benh, mak, thuoc FROM benh right join thuoc using (mat) order by mab', function(err, result){
-            if(err) return console.log("Can't SELECT FROM TABLE");
+        client.query('SELECT mab, mat, benh, thuoc FROM benh right join thuoc using (mat) order by mab', function(err, result){
+            if(err) return console.log("Can't SELECT FROM benh");
             var str = result.rows;
             var data  = JSON.stringify(result.rows);
             if(str) 
@@ -369,21 +368,18 @@ router.get('/benh',  function(req, res) {
 router.post('/add-benh', function(req, res) {
     req.session.lastPage = '/benh';
     if(req.session.type=='boss' && req.body.mab && req.body.mat
-        && req.body.benh && req.body.mak){
+        && req.body.benh){
         var mab = req.body.mab ;
         var benh = req.body.benh ;
         var mat = req.body.mat ;
-        var mak = req.body.mak ;
 
         res.redirect('/benh');
-        client.query('INSERT INTO benh VALUES($1, $2, $3, $4)',
-            [mab, benh, mat, mak]
+        client.query('INSERT INTO benh VALUES($1, $2, $3)',
+            [mab, benh, mat]
         );
-        
     }
     else
         res.render('login-register/login',{ 
-            
             title: "TRY Login",
             logined: false,
             username: null,
@@ -392,19 +388,14 @@ router.post('/add-benh', function(req, res) {
 });
 router.post('/edit-benh', function(req, res) {
     req.session.lastPage = '/benh';
-    console.log(req.session.type +"&&"+ req.body.mab +"&&"+ req.body.mat
-        +"&&"+ req.body.benh +"&&"+ req.body.mak);
     if(req.session.type=='boss' && req.body.mab && req.body.mat
-        && req.body.benh && req.body.mak){
+        && req.body.benh ){
         var mab = req.body.mab ;
         var benh = req.body.benh ;
         var mat = req.body.mat ;
-        var mak = req.body.mak ;
 
         res.redirect('/benh');
-        client.query('UPDATE INTO benh VALUES($1, $2, $3, $4)',
-            [mab, benh, mat, mak]
-        );
+        client.query('UPDATE benh set benh=$1, mat=$2 WHERE mab = $3', [benh, mat, mab]);
     }
     else 
         res.render('login-register/login',{ 
@@ -498,14 +489,13 @@ router.post('/add-benh-nhan', function(req, res) {
 });
 router.post('/edit-benh-nhan', function(req, res) {
     req.session.lastPage = '/benh-nhan';
-    if(req.session.type=='boss' && req.body.mabn && req.body.trangthai 
+    if(req.session.type=='boss' && req.body.mabn 
         && req.body.hoten && req.body.gioitinh && req.body.diachi 
         && req.body.dienthoai && req.body.ngaysinh){
         var mabn = req.body.mabn ;
         var hoten = req.body.hoten ;
         var gioitinh = req.body.gioitinh ;
         var diachi = req.body.diachi ;
-        var trangthai = req.body.trangthai;
         var dienthoai = '0' + req.body.dienthoai;
         var ngaysinh = req.body.ngaysinh ;
         var thangsinh = req.body.thangsinh ;
@@ -515,8 +505,8 @@ router.post('/edit-benh-nhan', function(req, res) {
         var s = ngaysinh + '/' + thangsinh +'/' + namsinh;
 
         res.redirect('/benh-nhan');
-        client.query('UPDATE benhnhan SET hoten = $2, ngaysinh = $3, gioitinh = $4, diachi = $5, dienthoai = $6, trangthai = $7 WHERE mabn = $1',
-            [mabn, hoten, s, gioitinh, diachi, dienthoai, trangthai]
+        client.query('UPDATE benhnhan SET hoten = $2, ngaysinh = $3, gioitinh = $4, diachi = $5, dienthoai = $6 WHERE mabn = $1',
+            [mabn, hoten, s, gioitinh, diachi, dienthoai]
         );
     }
     else 
@@ -606,7 +596,7 @@ router.post('/add-khoa', function(req, res) {
     if(req.session.type=='boss' && req.body.mak && req.body.khoa){
         var mak = req.body.mak;
         var khoa = req.body.khoa;
-        client.query('INSERT INTO khoadieutri VALUES($1, $2)',[mak, khoa])
+        client.query('INSERT INTO khoadieutri VALUES($1, $2)',[mak, khoa]);
         res.redirect('/khoa');
     }
     else 
@@ -858,7 +848,6 @@ router.get('/hoi-dap', function(req, res) {
 });
 router.post('/add-hoi-dap', function(req, res) {
     req.session.lastPage = '/hoi-dap';
-    console.log(req.body);
     if(req.session.loggedIn && req.body.mahd){
         var mahd = req.body.mahd;
         var title   = req.body.title ;
@@ -881,7 +870,6 @@ router.post('/add-hoi-dap', function(req, res) {
 
 router.post('/binh-luan-moi', function(req, res) {
     req.session.lastPage = '/hoi-dap';
-    console.log(req.body);
     if(req.session.loggedIn && req.body.mahd){
         var mahd = req.body.mahd;
         var title   = req.body.title ;
@@ -929,7 +917,6 @@ router.post('/in-hoa-don', function(req, res) {
             username: null,
             type: 'khach'
         });
-    console.log(req.body);
 });
 ///////////////////////////////////////////////////////////////////////////// THONG KE TIEN
 router.get('/thong-ke/chi-phi', function(req, res) {

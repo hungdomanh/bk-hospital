@@ -23,7 +23,7 @@
 		          <option value="gioitinh">Giới Tính</option>
 		          <option value="diachi">Địa Chỉ</option>
 		          <option value="kinhnghiem">Kinh Nghiệm</option>
-		          <option value="trangthai">Trạng Thái</option>
+		          <option value="-trangthai">Trạng Thái</option>
 		           <option value="username">	Username 	</option>
 		        </select>
 			</div>
@@ -84,6 +84,8 @@
 						    <input type="radio" name="gioitinh" value="Nữ" />Nữ<br><br>
 		        Địa chỉ:    <input type="text" name="diachi"><br><br>
 		        Năm Kinh Nghiệm:      <input type="number" name="kinhnghiem"> năm<br><br>
+		        Trạng thái: Trống <br><br>
+				Tài khoản: {{usernameAdd}}  <input type="hidden" value={{usernameAdd}} name="username"><br>
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
@@ -112,9 +114,8 @@
 						    <input type="radio"  value="Nữ"  ng-checked='nu'  name="gioitinh" />Nữ<br><br>
 		        Địa chỉ:    <input type="text"   value={{diachiEdit}} name="diachi"><br><br>
 		        Năm Kinh Nghiệm:   <input type="number" value={{kinhnghiemEdit}} name="kinhnghiem"> năm<br><br>
-		        Trạng thái: <input type="radio"  value="1" ng-checked='trangthaiEdit' name="trangthai" />Hoạt động
-						    <input type="radio"  value="0" ng-checked='!trangthaiEdit' name="trangthai" />Trống<br><br>
-
+		        Trạng thái: <span ng-show="trangthaiEdit" class='text-danger'>Hoạt động</span><span ng-hide="trangthaiEdit">Trống</span>
+		        			
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
@@ -234,6 +235,8 @@
 		 	if(test == 0) {
 		 		$scope.mabsAdd = bacsi[i].mabs+1;
 		 	}
+		 	var dm = $scope.mabsAdd ;
+		 	$scope.usernameAdd = 'bacsi' + dm.toString();
 		 };
 
 	}]);
