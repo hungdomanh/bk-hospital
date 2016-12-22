@@ -242,6 +242,7 @@ app.controller('benhNhanDaKhamCtrl', ['$scope', '$http', function($scope, $http)
 			data = $scope.data;
 	    });
 	} else if(type == 'boss') {
+		console.log("boss");
 		$http.get('/table/benhnhandakham-admin').success(function (res) {
 			$scope.data = res;
 			data = $scope.data;

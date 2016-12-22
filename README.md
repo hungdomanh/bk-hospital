@@ -2,7 +2,7 @@
 
 Bài tập lớn Cơ sở dữ liệu - Quản lí bệnh viện
 
-1. Cài đặt: 
+1.Cài đặt: 
 
 - Yêu cầu: Đã cài đặt nodejs https://nodejs.org/en/
 
@@ -21,7 +21,7 @@ Bài tập lớn Cơ sở dữ liệu - Quản lí bệnh viện
 - Mở trình duyệt(Chrome, Firefox ...) địa chỉ
 	localhost:3000
 
-2. Tài khoản:
+2.Tài khoản:
 
 	+ Bệnh nhân: 
 		+ id: benhnhhan12
@@ -37,7 +37,7 @@ Bài tập lớn Cơ sở dữ liệu - Quản lí bệnh viện
 
 Database - Setup hospital 
 
-1. Setup: 
+1.Setup: 
 - Require: Installed nodejs https://nodejs.org/en/
 
 - Open Command line run:
@@ -55,7 +55,7 @@ Database - Setup hospital
 - Open brower(Chrome, Firefox ...):  
 	localhost:3000
 
-2. Account:
+2.Account:
 
 	+ Patient: 
 		+ id: benhnhhan12
