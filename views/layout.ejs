@@ -4,32 +4,32 @@
   <title><%-title%></title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="BK-hospital">
-  <meta name="keywords" content="bk-hospital.herokuapp">
-  <meta name="author" content="Đỗ Mạnh Hùng">
+  <meta name="description" content="BK hospital">
+  <meta name="keywords" content="bk-hospital.heroku">
+  <meta name="author" content="Hege Refsnes">
   
-  <!-- ANGULAR -->
-  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
+
+  <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
   <link rel="icon" href="https://vieclam24h.vn/upload/userpics/1293608510_NTD_logoBKCchuancopy.png">
+  
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
   <!-- Optional theme -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-  <!-- CSS -->
   <link rel="stylesheet" type="text/css" href="/stylesheets/style.css" />
- 
+  
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js" integrity="sha384-BLiI7JTZm+JWlgKa0M0kGRpJbF2J8q+qreVrKBC47e3K6BW78kGLrCkeRX6I9RoK" crossorigin="anonymous"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+
   <!-- Angular Material Library -->
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.3/angular-route.min.js" type="text/javascript" charset="utf-8"></script>
-  <!-- IQUERY -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
-  <!-- BOOTSTRAP  -->
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-  <!-- JS -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script src="/javascripts/layout.js"></script>
 
 </head>
@@ -117,7 +117,7 @@
         <li>
           <a href="/user/cap-nhat-thong-tin"><span class="glyphicon glyphicon-star-empty"></span>Đăng kí khám bệnh<span class="glyphicon glyphicon-star-empty"></span></a>
         </li>
-        <li><a href="/user/cap-nhat-thong-tin"><span class="glyphicon glyphicon-user"></span> Cá Nhân</a></li>
+        <li><a href="/user"><span class="glyphicon glyphicon-user"></span> Cá Nhân</a></li>
         <li><a href="/logout">Thoát <span class="glyphicon glyphicon-log-out"></span></a></li>
       </ul>
     </div>
@@ -196,6 +196,7 @@
             <li><a href="/benh-nhan">Bệnh nhân</a></li>
             <li><a href="/benh">Bệnh</a></li>
             <li><a href="/don-thuoc">Đơn thuốc</a></li>
+            <li><a href="/kham-benh">Khám Bệnh</a></li>
             <li><a href="/khoa">Khoa</a></li>
             <li><a href="/phong">Phòng</a></li>
             <li><a href="/thuoc">Thuốc</a></li>     
