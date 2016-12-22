@@ -3,24 +3,29 @@
 <div class='content' ng-controller="tienCtrl">
 	<h1 class="text-center">Thống kê</h1>
 	<div class="container">
-		<h4>
+		<h3 class="chiPhi">
 			<ul>
-				<li>Tổng số tiền thu được: </li>
-				<li>Số tiền khám bệnh trung bình 1 lần: </li>
-				<li>Tổng tiền thuốc: </li>
-				<li>Tổng tiền phòng: </li>
+				<li><span>Tổng số tiền thu được:</span> {{tongchiphi}} VNĐ</li>
+				<li><span>Số tiền khám bệnh trung bình 1 lần:</span> {{trungbinh}} VNĐ</li>
+				<li><span>Tổng tiền thuốc:</span> {{tienthuoc}} VNĐ</li>
+				<li><span>Tổng tiền phòng:</span> {{tienphong}} VNĐ</li>
+				<br>
+				<li><span>Bệnh nhân khám bệnh nhiều hơn 1 lần:</span> {{benhNhanKhamNhieuHon1Lan.length}} người</li>
+				<li><span>Lần khám bệnh nhiều tiền nhất:</span> {{lanKhamNhieuTienNhat}} VNĐ</li>
+				<li><span>Thuốc uống nhiều nhất:</span> {{thuocUongNhieuNhat[0].thuoc}} ({{thuocUongNhieuNhat[0].sum}} {{thuocUongNhieuNhat[0].donvi}})</li>
+				<br>
+				<li><span>Bác sĩ khám nhiều bệnh nhân nhất:</span> {{bacSiKhamNhieuBenhNhanNhat[0].count}} bệnh nhân</li>
+				<li><span>Bác sĩ đang làm việc:</span> {{bacSiDangLamViec}} bác sĩ</li>
+				<li><span>Bác sĩ đang trống lịch:</span> {{bacSiDangTrong}} bác sĩ</li>
 
-				<li>Bệnh nhân khám bệnh nhiều hơn 1 lần: </li>
-				<li>Lần khám bệnh nhiều tiền nhất: </li>
-				<li>Bệnh nhân đã uống nhiều thuốc nhất: </li>
 
-				<li>Bác sĩ khám nhiều bệnh nhân nhất: </li>
-				<li>Bác sĩ cấp nhiều đơn thuốc nhất: </li>
-				<li>Bác sĩ đang làm việc: </li>
-				<li>Bác sĩ đang trống lịch: </li>
+				<br>
+				<li><span>Bệnh nhân đang chờ khám:</span> {{benhNhanDangCho}} người </li>
+				<li><span>Bệnh nhân đang khám:</span> {{benhNhanDangKham}} người</li>
+				<li><span>Bệnh nhân đã khám:</span> {{benhNhanDaKham}} người: chưa xuất viện({{benhNhanChuaXuatVien}}) &  đã xuất viện({{benhNhanDaXuatVien}}) </li>
 				
 			</ul>
-		</h4>
+		</h3 >
 	</div>  <!-- container -->
 </div>  <!-- controller -->
 
@@ -28,6 +33,53 @@
 app.controller('tienCtrl', ['$scope', '$http', function($scope, $http){
 	$scope.username = '<%-username%>';
 	
+	$http.get('/table/chi-phi/tong-so-tien-thu-duoc').success(function(res){
+		$scope.tienphong = res[0].tienphong;
+		$scope.tienthuoc = res[0].tienthuoc;
+		$scope.tongchiphi = res[0].tongchiphi;
+		$scope.trungbinh = res[0].trungbinh;
+
+	});
+
+	$http.get('/table/chi-phi/benh-nhan-kham-nhieu-hon-1-lan').success(function(res){
+		$scope.benhNhanKhamNhieuHon1Lan = res;
+		$scope.lanKhamNhieuTienNhat = res[0].max;
+	});
+
+	$http.get('/table/chi-phi/thuoc-uong-nhieu-nhat').success(function(res){
+		$scope.thuocUongNhieuNhat = res;
+	});
+// bac si
+	$http.get('/table/chi-phi/bac-si-dang-trong').success(function(res){
+		$scope.bacSiDangTrong = res[0].count;
+	});
+
+	$http.get('/table/chi-phi/bac-si-dang-lam-viec').success(function(res){
+		$scope.bacSiDangLamViec = res[0].count;
+	});
+
+	$http.get('/table/chi-phi/bac-si-kham-nhieu-benh-nhan-nhat').success(function(res){
+		$scope.bacSiKhamNhieuBenhNhanNhat = res;
+	});
+// benh nhan
+	$http.get('/table/chi-phi/benh-nhan-dang-cho').success(function(res){
+		$scope.benhNhanDangCho = res[0].count;
+	});
+
+	$http.get('/table/chi-phi/benh-nhan-dang-kham').success(function(res){
+		$scope.benhNhanDangKham = res[0].count;
+	});
+
+	$http.get('/table/chi-phi/benh-nhan-chua-xuat-vien').success(function(res){
+		$scope.benhNhanChuaXuatVien = res[0].count;
+		$http.get('/table/chi-phi/benh-nhan-da-xuat-vien').success(function(res){
+			$scope.benhNhanDaXuatVien = res[0].count;
+			$scope.benhNhanDaKham = parseInt($scope.benhNhanChuaXuatVien) + parseInt($scope.benhNhanDaXuatVien);
+		});
+	});
+
+	
+
 
 }]);
 

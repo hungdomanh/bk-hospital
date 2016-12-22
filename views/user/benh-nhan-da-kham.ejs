@@ -42,9 +42,11 @@
 	<div ng-show="loc == 'chuaxuatvien' || loc=='tatca'" class="row">
 		<div class="col-xs-3"></div>
 		<div class="col-xs-6">
-			<div ng-show="x.trangthai==2" class='benhNhanDaKhamForm' ng-repeat="x in data | orderBy: sort | filter: search track by $index">
-				<b>{{x.makb}}</b>. 
-				<span>Bệnh nhân: {{x.benhnhan}}</span>. 
+			<div ng-show="x.trangthai==2" class='benhNhanDaKham1Form benhNhanDaKhamForm' ng-repeat="x in data | orderBy: sort | filter: search track by $index">
+				<div class="row">
+					<div class="col-xs-6"><b>{{x.makb}}. Bệnh nhân:</b> {{x.benhnhan}}({{x.mabn}})</div>
+					<div class="col-xs-6"><b>Bác sĩ:</b> {{x.bacsi}}({{x.mabs}})</div>
+				</div> 
 				<hr>
 				<div class="row">
 					<div class="col-xs-6">
@@ -74,15 +76,13 @@
 					<div class="col-xs-4">
 						<div>Ngày vào: {{x.ngaydangki | date: "dd.MM.y"}}</div>
 					</div>
-					<div class="col-xs-4">
-						
+					<div class="col-xs-4 text-center">
+						<div ng-show=<%-type=='boss'%> class="buttonCapHoaDon">
+							<button ng-click='setHoaDon($index); ShowDonThuoc($index)' data-target='#hoaDonAddFormModal' data-toggle="modal" class='btn btn-info'>Cấp hóa đơn</button>
+						</div>
 					</div>
 					<div class="col-xs-4">
-						<div class='text-danger'>Chưa xuất viện
-							<div ng-show=<%-type=='boss'%>>
-								<button ng-click='setHoaDon($index); ShowDonThuoc($index)' data-target='#hoaDonAddFormModal' data-toggle="modal" class='btn btn-info'>Cấp hóa đơn</button>
-							</div>
-						</div>
+						<div class='text-danger'>Chưa xuất viện</div>
 					</div>
 				</div>
 			</div>
@@ -93,7 +93,7 @@
 	<div ng-show="loc == 'daxuatvien' || loc=='tatca'" class="row">
 		<div class="col-xs-3"></div>
 		<div class="col-xs-6">
-			<div ng-show="x.trangthai==3" class='benhNhanDaKhamForm' ng-repeat="x in data | orderBy: sort | filter: search track by $index">
+			<div ng-show="x.trangthai==3" class='benhNhanDaKham2Form' ng-repeat="x in data | orderBy: sort | filter: search track by $index">
 				<div class="row">
 					<div class="col-xs-6"><b>{{x.makb}}. Bệnh nhân:</b> {{x.benhnhan}}({{x.mabn}})</div>
 					<div class="col-xs-6"><b>Bác sĩ:</b> {{x.bacsi}}({{x.mabs}})</div>
@@ -222,16 +222,32 @@
 <script>
 app.controller('benhNhanDaKhamCtrl', ['$scope', '$http', function($scope, $http){
 	var username = '<%-username%>';
-var data = []
+	var data = [];
+	var type = '<%-type%>';
+	$scope.type = type;
 
 	var date = new Date();
 
-	$http.get('/table/benh-nhan-da-kham').success(function(res){
-		$scope.data = [];
-		$scope.data = res;
-		data = $scope.data;
-		console.log(res);
-	});
+	// $http.get('/table/benh-nhan-da-kham').success(function(res){
+	// 	$scope.data = [];
+	// 	$scope.data = res;
+	// 	data = $scope.data;
+	// });
+
+	if(type == 'bacsi') {
+		var mabs = '<%-mabs%>';
+		$scope.mabs = mabs;
+		$http.get('/table/benhnhandakham/'+mabs).success(function (res) {
+			$scope.data = res;
+			data = $scope.data;
+	    });
+	} else if(type == 'boss') {
+		console.log("boss");
+		$http.get('/table/benhnhandakham-admin').success(function (res) {
+			$scope.data = res;
+			data = $scope.data;
+	    });
+	}
 
 	$scope.donthuoc = [];
 	$scope.showDonThuoc = [];
