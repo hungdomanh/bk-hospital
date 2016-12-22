@@ -74,8 +74,8 @@ router.get('/thong-ke/khoa-dieu-tri',  function(req, res) {
 router.get('/thong-ke/benh-thuong-gap',  function(req, res) {
     req.session.lastPage = 'thong-ke/benh-thuong-gap';
     if(req.session.loggedIn) {
-        client.query('SELECT mab, mat, benh, thuoc FROM benh left join thuoc using (mat) order by mab', function(err, result){
-            if(err) return console.log("Can't SELECT FROM Benh thuong gap");
+        client.query('SELECT mab, mat, benh, mak, thuoc FROM benh right join thuoc using (mat) order by mab', function(err, result){
+            if(err) return console.log("Can't SELECT FROM TABLE");
 
             var str = result.rows;
             var data  = JSON.stringify(result.rows);
@@ -342,7 +342,7 @@ router.post('/delete-bac-si', function(req, res) {
 router.get('/benh',  function(req, res) {
     req.session.lastPage = '/benh';
     if(req.session.loggedIn) {
-        client.query('SELECT mab, mat, benh, thuoc FROM benh right join thuoc using (mat) order by mab', function(err, result){
+        client.query('SELECT mab, mat, benh, mak, thuoc FROM benh right join thuoc using (mat) order by mab', function(err, result){
             if(err) return console.log("Can't SELECT FROM TABLE");
             var str = result.rows;
             var data  = JSON.stringify(result.rows);
@@ -373,11 +373,11 @@ router.post('/add-benh', function(req, res) {
         var mab = req.body.mab ;
         var benh = req.body.benh ;
         var mat = req.body.mat ;
-
+        var mak = req.body.mak ;
 
         res.redirect('/benh');
-        client.query('INSERT INTO benh VALUES($1, $2, $3)',
-            [mab, benh, mat]
+        client.query('INSERT INTO benh VALUES($1, $2, $3, $4)',
+            [mab, benh, mat, mak]
         );
         
     }
@@ -392,16 +392,18 @@ router.post('/add-benh', function(req, res) {
 });
 router.post('/edit-benh', function(req, res) {
     req.session.lastPage = '/benh';
-
+    console.log(req.session.type +"&&"+ req.body.mab +"&&"+ req.body.mat
+        +"&&"+ req.body.benh +"&&"+ req.body.mak);
     if(req.session.type=='boss' && req.body.mab && req.body.mat
-        && req.body.benh){
+        && req.body.benh && req.body.mak){
         var mab = req.body.mab ;
         var benh = req.body.benh ;
         var mat = req.body.mat ;
+        var mak = req.body.mak ;
 
         res.redirect('/benh');
-        client.query('UPDATE INTO benh VALUES($1, $2, $3)',
-            [mab, benh, mat]
+        client.query('UPDATE INTO benh VALUES($1, $2, $3, $4)',
+            [mab, benh, mat, mak]
         );
     }
     else 
@@ -688,6 +690,7 @@ router.post('/add-phong', function(req, res) {
         client.query('INSERT INTO phong VALUES($1, $2, $3, $4)',
             [map, phong, gia1ngaydem, trangthai]
         );
+        
     }
     else
         res.render('login-register/login',{ 

@@ -1,7 +1,6 @@
-@import url('https://fonts.googleapis.com/css?family=Amarante');
-
+@import url('http://fonts.googleapis.com/css?family=Amarante');
 a {
-  color: #00B7dF;
+  color: #00B7FF;
 }
 
 .add {
@@ -103,10 +102,7 @@ body {
   background-color: #D5EBEB;
 }
 
-.chiPhi ul li span{
-  color: grey;
 
-}
 #chinhSachChatLuong {
   background-color: #8596A0; /* Dark Blue */
   color: white;
@@ -154,14 +150,6 @@ h1 {
 
 h3 {
 	margin: 0 auto;
-}
-
-.highlight {
-  background: yellow;
-}
-
-.highlightedText {
-    background: yellow;
 }
 
 .homePage {

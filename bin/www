@@ -7,7 +7,7 @@
 var app = require('../app');
 var debug = require('debug')('ok:server');
 var http = require('http');
-var reload = require('reload');
+
 
 /**
  * Get port from environment and store in Express.
@@ -22,8 +22,6 @@ app.set('port', port);
 
 var server = http.createServer(app);
 
-// reload page (with module)
-reload(server, app);
 /**
  * Listen on provided port, on all network interfaces.
  */

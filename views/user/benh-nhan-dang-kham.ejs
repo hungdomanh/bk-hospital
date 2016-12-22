@@ -302,7 +302,7 @@ app.controller('benhNhanDangKhamCtrl', ['$scope', '$http','$timeout', function($
 	$http.get('/table/show/thuoc').success(function(res){
 		$scope.thuoc = res;
 		$scope.matThuoc = [];
-		console.log($scope.thuoc.length);
+
 		for (var i=0; i < $scope.thuoc.length; i++) {
 			$scope.matThuoc[$scope.thuoc[i].mat] = {};
 			$scope.matThuoc[$scope.thuoc[i].mat].thuoc = $scope.thuoc[i].thuoc;

@@ -20,7 +20,7 @@
 					<option value ="mak">Mã Phòng</option>
 					<option value ="phong">Tên Phòng</option>
 					<option value ="gia1ngaydem">Giá/24h</option>
-					<option value ="-trangthai">Trạng Thái</option>
+					<option value ="trangthai">Trạng Thái</option>
 		        </select>
 			</div>
 		</div>
@@ -38,7 +38,7 @@
 				<td>{{ x.map}}</td>
 				<td>{{ x.phong }}</td>
 				<td>{{ x.gia1ngaydem}}</td>
-				<td><span ng-show="x.trangthai" class="text-danger">Đang sử dụng</span><span ng-hide="x.trangthai">Trống</span></td>
+				<td><span ng-show="x.trangthai">Đang sử dụng</span><span ng-hide="x.trangthai">Trống</span></td>
 				<td ng-show=<%-type=='boss'%> >
 					<button ng-click="setEdit(x.map)" class="editButton" data-target='#phongEditFormModal' data-toggle="modal" >
 						Sửa
@@ -63,7 +63,8 @@
 				Mã Phòng: {{mapAdd}}    <input type ="hidden" value={{mapAdd}} name="map"><br><br>
 				Tên Phòng Mới: 			<input type="text" name="phong"><br><br>
 				Giá/24h:     			<input type="number" name="gia1ngaydem"><br><br>
-				Trạng Thái: 			<input type="hidden" name="trangthai" value="0" /> Trống <br><br>
+				Trạng Thái: 			<input type="radio" name="trangthai" value="1" /> Đang sử dụng 
+						    			<input type="radio" name="trangthai" value="0" /> Trống <br><br>
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>

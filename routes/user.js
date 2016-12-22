@@ -218,7 +218,7 @@ router.get('/dang-ki-kham-benh', function(req, res, next) {
 router.post('/dang-ki-kham-benh', function(req, res, next) {
 	req.session.lastPage = '/user/dang-ki-kham-benh';
     if(req.session.loggedIn && req.session.type =='benhnhan') {
-    	res.redirect('/user/ho-so');
+    	res.redirect('/');
     	client.query('select max(makb), count(*) from khambenh',function(err, result){
     		var max;
             var ngaydangki = new Date();
@@ -237,6 +237,9 @@ router.post('/dang-ki-kham-benh', function(req, res, next) {
         type: 'khach'
     });
 });
+
+
+
 
 ///////////////////////////////////////////////////////////////// BAC SI
 router.get('/benh-nhan-dang-cho', function(req, res, next) {

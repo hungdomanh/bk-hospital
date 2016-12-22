@@ -43,10 +43,8 @@
 		<div class="col-xs-3"></div>
 		<div class="col-xs-6">
 			<div ng-show="x.trangthai==2" class='benhNhanDaKhamForm' ng-repeat="x in data | orderBy: sort | filter: search track by $index">
-				<div class="row">
-					<div class="col-xs-6"><b>{{x.makb}}. Bệnh nhân:</b> {{x.benhnhan}}({{x.mabn}})</div>
-					<div class="col-xs-6"><b>Bác sĩ:</b> {{x.bacsi}}({{x.mabs}})</div>
-				</div> 
+				<b>{{x.makb}}</b>. 
+				<span>Bệnh nhân: {{x.benhnhan}}</span>. 
 				<hr>
 				<div class="row">
 					<div class="col-xs-6">
