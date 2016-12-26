@@ -1,5 +1,5 @@
 # bk_hospital
-Bai tap lon CSDL
+###Bài tập lớn CSDL
 
 Require: Installed nodejs
 
