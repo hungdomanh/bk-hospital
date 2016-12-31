@@ -3,7 +3,7 @@
 
 **1.Cài đặt:**
 
-- Yêu cầu: Đã cài đặt nodejs https://nodejs.org/en/
+- Yêu cầu: Đã cài đặt [nodejs] (https://nodejs.org/en/)
 
 - Mở Command line chạy từng lệnh:
 ```bash
@@ -17,7 +17,7 @@ npm install
 
 nodemon
 ```
-- Mở trình duyệt(Chrome, Firefox ...) địa chỉ:  `localhost:3000`
+- Mở trình duyệt(Chrome, Firefox ...) địa chỉ:  [localhost:3000]
 
 **2.Tài khoản:**
 
@@ -28,7 +28,7 @@ nodemon
     + id: bacsi12
     + pass: 12
 - Admin: 
-    + liên hệ https://www.facebook.com/domanhhunghp96
+    + liên hệ [Admin] (https://www.facebook.com/domanhhunghp96)
     
     
 /////////////////////////////////////////////////////////////////////
@@ -38,7 +38,7 @@ nodemon
 
 **1.Setup:**
 
-- Require: Installed nodejs https://nodejs.org/en/
+- Require: Installed [nodejs] (https://nodejs.org/en/)
 
 - Open Command line run:
 ```bash
@@ -52,7 +52,7 @@ npm install
 
 nodemon
 ```
-- Open brower(Chrome, Firefox ...): `localhost:3000`
+- Open brower(Chrome, Firefox ...): [localhost:3000]
 
 **2.Account:**
 
@@ -63,4 +63,4 @@ nodemon
     + id: bacsi12
     + pass: 12
 - Admin: 
-    + inbox with https://www.facebook.com/domanhhunghp96
+    + inbox with [Admin] (https://www.facebook.com/domanhhunghp96)
