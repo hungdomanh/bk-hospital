@@ -3,9 +3,9 @@
 
 **1.Cài đặt:**
 
-Yêu cầu: Đã cài đặt nodejs https://nodejs.org/en/
+- Yêu cầu: Đã cài đặt nodejs https://nodejs.org/en/
 
-Mở Command line chạy từng lệnh:
+- Mở Command line chạy từng lệnh:
 ```bash
 git clone https://github.com/hungdomanh/bk-hospital.git
 
@@ -17,9 +17,9 @@ npm install
 
 nodemon
 ```
-Mở trình duyệt(Chrome, Firefox ...) địa chỉ:  `localhost:3000`
+- Mở trình duyệt(Chrome, Firefox ...) địa chỉ:  `localhost:3000`
 
-**2.Tài khoản:
+**2.Tài khoản:**
 
 + Bệnh nhân: 
     + id: benhnhhan12
@@ -36,7 +36,7 @@ Mở trình duyệt(Chrome, Firefox ...) địa chỉ:  `localhost:3000`
     
 Database - Setup hospital
 
-**1.Setup:
+**1.Setup:**
 
 Require: Installed nodejs https://nodejs.org/en/
 
@@ -54,7 +54,7 @@ nodemon
 ```
 Open brower(Chrome, Firefox ...): `localhost:3000`
 
-**2.Account:
+**2.Account:**
 
 + Patient: 
     + id: benhnhhan12
