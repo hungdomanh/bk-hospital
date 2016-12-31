@@ -16,7 +16,7 @@ npm install
 
 nodemon
 ```
-- Mở trình duyệt(Chrome, Firefox ...) địa chỉ:  [localhost:3000] (https://localhost:3000)
+- Mở trình duyệt(Chrome, Firefox ...) địa chỉ:  [localhost:3000] (localhost:3000)
 
 **2.Tài khoản:**
 
@@ -51,7 +51,7 @@ npm install
 
 nodemon
 ```
-- Open brower(Chrome, Firefox ...): [localhost:3000] (https://localhost:3000)
+- Open brower(Chrome, Firefox ...): [localhost:3000] (localhost:3000)
 
 **2.Account:**
 
