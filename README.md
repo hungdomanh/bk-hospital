@@ -21,13 +21,13 @@ nodemon
 
 **2.Tài khoản:**
 
-+ Bệnh nhân: 
+- Bệnh nhân: 
     + id: benhnhhan12
     + pass: 12
-+ Bác sĩ: 
+- Bác sĩ: 
     + id: bacsi12
     + pass: 12
-+ Admin: 
+- Admin: 
     + liên hệ https://www.facebook.com/domanhhunghp96
     
     
@@ -38,9 +38,9 @@ Database - Setup hospital
 
 **1.Setup:**
 
-Require: Installed nodejs https://nodejs.org/en/
+- Require: Installed nodejs https://nodejs.org/en/
 
-Open Command line run:
+- Open Command line run:
 ```bash
 git clone https://github.com/hungdomanh/bk-hospital.git
 
@@ -52,15 +52,15 @@ npm install
 
 nodemon
 ```
-Open brower(Chrome, Firefox ...): `localhost:3000`
+- Open brower(Chrome, Firefox ...): `localhost:3000`
 
 **2.Account:**
 
-+ Patient: 
+- Patient: 
     + id: benhnhhan12
     + pass: 12
-+ Doctor: 
+- Doctor: 
     + id: bacsi12
     + pass: 12
-+ Admin: 
+- Admin: 
     + inbox with https://www.facebook.com/domanhhunghp96
