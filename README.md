@@ -1,9 +1,8 @@
-# bk_hospital
-###Bài tập lớn Cơ sở dữ liệu - Quản lí bệnh viện
+# Bài tập lớn Cơ sở dữ liệu - Quản lí bệnh viện
 
 **1.Cài đặt:**
 
-- Yêu cầu: Đã cài đặt [nodejs] (https://nodejs.org/en/)
+- Yêu cầu: Đã cài đặt [Nodejs] (https://nodejs.org/en/)
 
 - Mở Command line chạy từng lệnh:
 ```bash
@@ -17,7 +16,7 @@ npm install
 
 nodemon
 ```
-- Mở trình duyệt(Chrome, Firefox ...) địa chỉ:  [localhost:3000]
+- Mở trình duyệt(Chrome, Firefox ...) địa chỉ:  [localhost:3000] (localhost:3000)
 
 **2.Tài khoản:**
 
@@ -31,14 +30,14 @@ nodemon
     + liên hệ [Admin] (https://www.facebook.com/domanhhunghp96)
     
     
-/////////////////////////////////////////////////////////////////////
+------
     
     
-###Database - Setup hospital
+# Database - Setup hospital
 
 **1.Setup:**
 
-- Require: Installed [nodejs] (https://nodejs.org/en/)
+- Require: Installed [Nodejs] (https://nodejs.org/en/)
 
 - Open Command line run:
 ```bash
@@ -52,7 +51,7 @@ npm install
 
 nodemon
 ```
-- Open brower(Chrome, Firefox ...): [localhost:3000]
+- Open brower(Chrome, Firefox ...): [localhost:3000] (localhost:3000)
 
 **2.Account:**
 
