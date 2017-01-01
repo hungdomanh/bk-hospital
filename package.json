@@ -4,7 +4,8 @@
   "description": "Free code camp BE-API application",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
     "node",
@@ -26,6 +27,7 @@
     "morgan": "~1.7.0",
     "nodemon": "~1.11.0",
     "pg": "6.1.0",
-    "serve-favicon": "~2.3.0"
+    "serve-favicon": "~2.3.0",
+    "lite-server": "^2.2.2"
   }
 }

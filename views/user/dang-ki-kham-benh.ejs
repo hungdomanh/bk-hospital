@@ -8,12 +8,12 @@
 		<form action="/user/dang-ki-kham-benh" method="post" class="dangKiKhamBenh">
 			<div class="modal-header">
 				<p class="idBenhNhan">
-					ID Cá Nhân: {{data.mabn}} <input type="hidden" value={{data.mabn}} name="mabn"><br><br>
+					ID Cá Nhân: <a href="/user/ho-so">{{data.mabn}} </a> <input type="hidden" value={{data.mabn}} name="mabn"><br>
+					Họ Tên:  <a href="/user/ho-so">{{data.hoten}} </a>   <br>
 				</p>
 			</div>
 			<div class="modal-body">
-			Họ Tên:     {{data.hoten}} <br><br>
-			Mô tả triệu chứng:
+			<div class="text-center text-info">Mô tả triệu chứng:</div>
 			
 			<textarea placeholder="Triệu chứng..." ng-model="content" name="content" rows="8" cols="64" class="form-control input-no-width rounded shaded left clearboth" id="msg" required>
 		</textarea>

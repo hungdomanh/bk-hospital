@@ -55,6 +55,10 @@ body {
   width: 95px;
 }
 
+.buttonBanQuanTri {
+  border: none;
+}
+
 .buttonDKKB {
   margin:15px;
   font-family: 'open sans', helvetica, arial, sans;
@@ -89,6 +93,11 @@ body {
 .buttonCapHoaDon {
     margin-top:-5px;
     /*margin-left: 30px;*/
+}
+
+#coSoVatChat {
+  background-color: #f2f2f2; /* Dark Blue */
+  /*padding-bottom: 20px;*/
 }
 
 .content {
@@ -179,18 +188,25 @@ h3 {
 }
 
 .homePage {
-  position: relative;
-  top: 30px;
+  /*position: relative;*/
+  /*top: 50px;*/
+  margin-top: 50px;
+  /*padding: 10px;*/
+  padding-bottom: 50px;
+  /*margin-bottom: -1000px;*/
 }
 
 #homePage {
-    /*background-color: #1abc9c; /* Green */*/
-    color: #ffffff;
-    padding-bottom: 10px;
-    background-image: url("http://img.infonet.vn/Uploaded/thanhhuyen/2015_10_28/DH_Bach_Khoa.jpg");
-    background-size: cover;
-    /* center the image vertically and horizontally */
-    background-position: center;
+  /*margin-bottom: 200px*/
+  padding-bottom: 10px;
+  /*margin-top: 100px;*/
+  background-image: url("/image/home.jpg");
+  background-size: cover;
+  /* center the image vertically and horizontally */
+  background-position: center;
+  height: 700px;
+  width: 100%;
+
 }
 
 hr {
@@ -242,17 +258,17 @@ hr {
 }
 
 input[class=phone]{
-    width: 120px;
+    width: 150px;
 } 
 
 .imgHomePage {
   border-radius: 50%;
   margin: 0 auto;
-  width: 370px;
-  height: 370px;
-  background-image: url("http://60.hust.edu.vn/documents/22244/28577/2016321+BK2.jpg/ed42f813-0a03-4aeb-8fb9-3054a1cd8474?version=1.1&t=1467688379000");
+  /*margin-top: 100px;*/
+  width: 360px;
+  height: 360px;
+  background-image: url("/image/logo.jpg");
   background-size: cover;
-  
 }
 
 input {
@@ -262,6 +278,16 @@ input {
     border-right: none;
     border-bottom: 2px solid;
     border-bottom-color: #CCC;
+}
+
+.listBenhNhanDaKham input[type=checkbox]
+{
+  /* Double-sized Checkboxes */
+  -ms-transform: scale(2); /* IE */
+  -moz-transform: scale(2); /* FF */
+  -webkit-transform: scale(2); /* Safari and Chrome */
+  -o-transform: scale(2); /* Opera */
+  padding: 8px;
 }
 
 .modal-body{
@@ -290,6 +316,11 @@ input {
     box-shadow: 5px 1px 5px grey;
 }
 
+/*#registerCtrl {
+  background-image: url("/image/home.jpg");
+  background-position: cover;
+}
+*/
 .sort {
   padding-left: 25%;
   padding-right: 0px;

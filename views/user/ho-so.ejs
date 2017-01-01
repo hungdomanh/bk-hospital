@@ -11,9 +11,9 @@
 	      </div>
 	      <div class="modal-body">
 	        Họ Tên: <input  size="20" type="text"   value={{data.hoten}} name="hoten"><br><br>
-	        Ngày Sinh:  <input type="number" value={{ngaysinh}} name="ngaysinh" max='31' min='1' class='ngaysinh'  placeholder="Ngày">
-	        			<input type="number" value={{thangsinh}} name="thangsinh" max='12' min='1' class='thangsinh' placeholder="Tháng">
-	        			<input type="number" value={{namsinh}} name="namsinh" max='2017' min='1900' class='namsinh' placeholder="Năm"><br><br>
+	        Ngày Sinh:  <input style="width: 40px" type="number" value={{ngaysinh}} name="ngaysinh" max='31' min='1' class='ngaysinh'  placeholder="Ngày">
+	        			<input style="width: 40px" type="number" value={{thangsinh}} name="thangsinh" max='12' min='1' class='thangsinh' placeholder="Tháng">
+	        			<input style="width: 80px" type="number" value={{namsinh}} name="namsinh" max='2017' min='1900' class='namsinh' placeholder="Năm"><br><br>
 	        Giới tính:  <input type="radio"  value="Nam" ng-checked='nam' name="gioitinh" />Nam
 					    <input type="radio"  value="Nữ"  ng-checked='!nam'  name="gioitinh" />Nữ<br><br>
 	        Địa chỉ:    <input type="text"   value={{data.diachi}} name="diachi"><br><br>
@@ -35,7 +35,6 @@
 			Vì sức khỏe của cá nhân và cộng đồng <br><br><br>
 			<a href="/user/dang-ki-kham-benh"><button type="button" class="buttonDKKB"><h2>Đăng kí khám bệnh</h2></button></a>
 		</h2>
-	
 	</div>
 <!-- Đã đăng kí khám bệnh -->
 	<div class="col-xs-6 hoSo" ng-show='khambenh'>
@@ -176,6 +175,8 @@
 		<option value ="chuaxuatvien">Chưa xuất viện</option>
 		<option value ="daxuatvien">Đã xuất viện</option>
     </select>
+    <br> <br>
+    <a href="https://www.facebook.com/messages/domanhhunghp96">Trở thành bác sĩ</a>
 </div>
 
 
@@ -229,13 +230,6 @@ app.controller('hoSoBenhAnCtrl', ['$scope','$http', function($scope, $http){
 			$scope.khambenh = false;
 		}
 	});
-
-	
-
-
-
-
-
 
 }]);
 

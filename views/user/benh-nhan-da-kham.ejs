@@ -36,111 +36,138 @@
 		</div>
 		<div class="col-xs-4 text-center"><h2 class='text-center text-success'>Đã khám bệnh ({{data.length}})</h2></div>
 	</div>
-	
-	<!-- chua xuat vien -->
-	<div ng-show="loc == 'chuaxuatvien' || loc=='tatca'" class="row">
+	<div class="row">
 		<div class="col-xs-3"></div>
 		<div class="col-xs-6">
-			<div ng-show="x.trangthai==2" class='benhNhanDaKham1Form benhNhanDaKhamForm' ng-repeat="x in data | orderBy: sort | filter: search track by $index">
-				<div class="row">
-					<div class="col-xs-6"><b>{{x.makb}}. Bệnh nhân:</b> {{x.benhnhan}}({{x.mabn}})</div>
-					<div class="col-xs-6"><b>Bác sĩ:</b> {{x.bacsi}}({{x.mabs}})</div>
-				</div> 
-				<hr>
-				<div class="row">
-					<div class="col-xs-6">
-						<b>Phòng:</b> {{x.phong}} <br><br>
-						<b>Triệu chứng:</b>
-						<p>- {{x.trieuchung}}</p>
-					</div>
-					<div class="col-xs-6">
-						<b>Bệnh:</b> {{x.benh}}<br><br>
-						<b>Nội dung khám:</b>
-						<p>- {{x.noidungkham}}</p>
-					</div>
-				</div><br><hr>
-				Tiền thuốc: {{x.tienthuoc}} VNĐ
-				<div ng-init="showDonThuoc[$index]=false">
-					<button ng-show='!showDonThuoc[$index]' class='btn btn-link' ng-click="ShowDonThuoc($index)">Xem đơn thuốc</button>
-					<button ng-show='showDonThuoc[$index]' class='btn btn-link' ng-click="ShowDonThuoc($index)">Ẩn đơn thuốc</button>
-					<div ng-show='showDonThuoc[$index]'>
-						<ul ng-repeat="t in donthuoc[$index] ">
-							<li>Thuốc: {{t.thuoc}}</li>
-							<li>Số lượng: {{t.soluong}}</li>
-							<li>Giá: {{t.gia}}</li>
-						</ul>
-					</div>
-				</div><hr>
-				<div class="row">
-					<div class="col-xs-4">
-						<div>Ngày vào: {{x.ngaydangki | date: "dd.MM.y"}}</div>
-					</div>
-					<div class="col-xs-4 text-center">
-						<div ng-show=<%-type=='boss'%> class="buttonCapHoaDon">
-							<button ng-click='setHoaDon($index); ShowDonThuoc($index)' data-target='#hoaDonAddFormModal' data-toggle="modal" class='btn btn-info'>Cấp hóa đơn</button>
+			<div style="margin-left: 20px" class="row listBenhNhanDaKham">
+				<div class="col-xs-3"><input type="checkbox" ng-model="showHoTen" ng-checked="true"> Họ tên</div>
+				<div class="col-xs-3"><input type="checkbox" ng-model="showNoiDung" ng-checked="true"> Nội dung</div>
+				<div class="col-xs-3"><input type="checkbox" ng-model="showChiPhi" ng-checked="true"> Chi phí</div>
+				<div class="col-xs-3"><input type="checkbox" ng-model="showNgay" ng-checked="true"> Ngày</div>
+			</div>
+		</div>
+		<div class="col-xs-3"></div>
+	</div>
+	<div ng-show="showHoTen || showNoiDung || showChiPhi || showNgay">  <!-- ca hai -->
+		<!-- chua xuat vien -->
+		<div ng-show="loc == 'chuaxuatvien' || loc=='tatca'" class="row">
+			<div class="col-xs-3"></div>
+			<div class="col-xs-6">
+				<div ng-show="x.trangthai==2" class='benhNhanDaKham1Form benhNhanDaKhamForm' ng-repeat="x in data | orderBy: sort | filter: search track by $index">
+					<div class="row" ng-show="showHoTen">
+						<div class="col-xs-6"><b>{{x.makb}}. Bệnh nhân:</b> {{x.benhnhan}}({{x.mabn}})</div>
+						<div class="col-xs-6"><b>Bác sĩ:</b> {{x.bacsi}}({{x.mabs}})</div>
+					</div> 
+					<hr ng-show="showHoTen && (showNoiDung || showChiPhi )">
+
+					<div class="row" ng-show="showNoiDung">
+						<div class="col-xs-6">
+							<b>Phòng:</b> {{x.phong}} <br><br>
+							<b>Triệu chứng:</b>
+							<p>- {{x.trieuchung}}</p>
+						</div>
+						<div class="col-xs-6">
+							<b>Bệnh:</b> {{x.benh}}<br><br>
+							<b>Nội dung khám:</b>
+							<p>- {{x.noidungkham}}</p>
 						</div>
 					</div>
-					<div class="col-xs-4">
-						<div class='text-danger'>Chưa xuất viện</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="col-xs-3"></div>
-	</div>
-	<!-- da xuat vien -->
-	<div ng-show="loc == 'daxuatvien' || loc=='tatca'" class="row">
-		<div class="col-xs-3"></div>
-		<div class="col-xs-6">
-			<div ng-show="x.trangthai==3" class='benhNhanDaKham2Form' ng-repeat="x in data | orderBy: sort | filter: search track by $index">
-				<div class="row">
-					<div class="col-xs-6"><b>{{x.makb}}. Bệnh nhân:</b> {{x.benhnhan}}({{x.mabn}})</div>
-					<div class="col-xs-6"><b>Bác sĩ:</b> {{x.bacsi}}({{x.mabs}})</div>
-				</div> 
-				<hr>
-				<div class="row">
-					<div class="col-xs-6">
-						<b>Phòng:</b> {{x.phong}} <br><br>
-						<b>Triệu chứng:</b>
-						<p>- {{x.trieuchung}}</p>
-					</div>
-					<div class="col-xs-6">
-						<b>Bệnh:</b> {{x.benh}}<br><br>
-						<b>Nội dung khám:</b>
-						<p>- {{x.noidungkham}}</p>
-					</div>
-				</div><br><hr>
-				Tiền thuốc: {{x.tienthuoc}} VNĐ
-				<div ng-init="showDonThuoc[$index]=false">
-					<button ng-show='!showDonThuoc[$index]' class='btn btn-link' ng-click="ShowDonThuoc($index)">Xem đơn thuốc</button>
-					<button ng-show='showDonThuoc[$index]' class='btn btn-link' ng-click="ShowDonThuoc($index)">Ẩn đơn thuốc</button>
-					<div ng-show='showDonThuoc[$index]'>
-						<ul ng-repeat="t in donthuoc[$index] ">
-							<li>Thuốc: {{t.thuoc}}</li>
-							<li>Số lượng: {{t.soluong}}</li>
-							<li>Giá: {{t.gia}}</li>
-						</ul>
-					</div>
-				</div>
-				Tiền phòng: {{x.tienphong}} VNĐ<hr>
-				<b>Tổng chi phí:</b> {{x.tongchiphi}} VNĐ
-				<hr>
-				<div class="row">
-					<div class="col-xs-4">
-						<div>Ngày vào: {{x.ngaydangki | date: "dd.MM.y"}}</div>
-					</div>
-					<div class="col-xs-4">
-						
-					</div>
-					<div class="col-xs-4">
-						<div ng-show="x.trangthai == 3" class='text-info'>Ngày ra: {{x.ngayravien | date: "dd.MM.y"}}</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="col-xs-3"></div>
-	</div>
+					<br ng-show="showNoiDung && showChiPhi"><hr ng-show="showNoiDung && showChiPhi">
 
+					<div ng-show="showChiPhi">
+						Tiền thuốc: {{x.tienthuoc}} VNĐ
+						<div ng-init="showDonThuoc[$index]=false">
+							<button ng-show='!showDonThuoc[$index]' class='btn btn-link' ng-click="ShowDonThuoc($index)">Xem đơn thuốc</button>
+							<button ng-show='showDonThuoc[$index]' class='btn btn-link' ng-click="ShowDonThuoc($index)">Ẩn đơn thuốc</button>
+							<div ng-show='showDonThuoc[$index]'>
+								<ul ng-repeat="t in donthuoc[$index] ">
+									<li>Thuốc: {{t.thuoc}}</li>
+									<li>Số lượng: {{t.soluong}}</li>
+									<li>Giá: {{t.gia}}</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<hr ng-show="showNgay">
+
+					<div class="row" ng-show="showNgay">
+						<div class="col-xs-4">
+							<div>Ngày vào: {{x.ngaydangki | date: "dd.MM.y"}}</div>
+						</div>
+						<div class="col-xs-4 text-center">
+							<div ng-show=<%-type=='boss'%> class="buttonCapHoaDon">
+								<button ng-click='setHoaDon($index); ShowDonThuoc($index)' data-target='#hoaDonAddFormModal' data-toggle="modal" class='btn btn-info'>Cấp hóa đơn</button>
+							</div>
+						</div>
+						<div class="col-xs-4">
+							<div class='text-danger'>Chưa xuất viện</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+			<div class="col-xs-3"></div>
+		</div>
+		<!-- da xuat vien -->
+		<div ng-show="loc == 'daxuatvien' || loc=='tatca'" class="row">
+			<div class="col-xs-3"></div>
+			<div class="col-xs-6">
+				<div ng-show="x.trangthai==3" class='benhNhanDaKham2Form' ng-repeat="x in data | orderBy: sort | filter: search track by $index">
+					<div class="row" ng-show="showHoTen">
+						<div class="col-xs-6"><b>{{x.makb}}. Bệnh nhân:</b> {{x.benhnhan}}({{x.mabn}})</div>
+						<div class="col-xs-6"><b>Bác sĩ:</b> {{x.bacsi}}({{x.mabs}})</div>
+					</div> 
+					<hr ng-show="showHoTen && (showNoiDung || showChiPhi )">
+
+					<div class="row" ng-show="showNoiDung">
+						<div class="col-xs-6">
+							<b>Phòng:</b> {{x.phong}} <br><br>
+							<b>Triệu chứng:</b>
+							<p>- {{x.trieuchung}}</p>
+						</div>
+						<div class="col-xs-6">
+							<b>Bệnh:</b> {{x.benh}}<br><br>
+							<b>Nội dung khám:</b>
+							<p>- {{x.noidungkham}}</p>
+						</div>
+					</div>
+					<br ng-show="showNoiDung && showChiPhi"><hr ng-show="showNoiDung && showChiPhi">
+
+					<div ng-show="showChiPhi">
+						Tiền thuốc: {{x.tienthuoc}} VNĐ
+						<div ng-init="showDonThuoc[$index]=false">
+							<button ng-show='!showDonThuoc[$index]' class='btn btn-link' ng-click="ShowDonThuoc($index)">Xem đơn thuốc</button>
+							<button ng-show='showDonThuoc[$index]' class='btn btn-link' ng-click="ShowDonThuoc($index)">Ẩn đơn thuốc</button>
+							<div ng-show='showDonThuoc[$index]'>
+								<ul ng-repeat="t in donthuoc[$index] ">
+									<li>Thuốc: {{t.thuoc}}</li>
+									<li>Số lượng: {{t.soluong}}</li>
+									<li>Giá: {{t.gia}}</li>
+								</ul>
+							</div>
+						</div>
+						Tiền phòng: {{x.tienphong}} VNĐ<hr>
+						<b>Tổng chi phí:</b> {{x.tongchiphi}} VNĐ
+					</div>
+					<hr ng-show="showNgay">
+
+					<div class="row" ng-show="showNgay">
+						<div class="col-xs-4">
+							<div>Ngày vào: {{x.ngaydangki | date: "dd.MM.y"}}</div>
+						</div>
+						<div class="col-xs-4">
+							
+						</div>
+						<div class="col-xs-4">
+							<div ng-show="x.trangthai == 3" class='text-info'>Ngày ra: {{x.ngayravien | date: "dd.MM.y"}}</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+			<div class="col-xs-3"></div>
+		</div>
+	</div> <!-- ca hai -->
 
 	<!-- Add Form Modal -->
 	<div class="modal fade" id="hoaDonAddFormModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -224,7 +251,10 @@ app.controller('benhNhanDaKhamCtrl', ['$scope', '$http', function($scope, $http)
 	var data = [];
 	var type = '<%-type%>';
 	$scope.type = type;
-
+	$scope.showHoTen = true;
+	$scope.showNoiDung = true;
+	$scope.showChiPhi = true;
+	$scope.showNgay = true;
 	var date = new Date();
 
 	// $http.get('/table/benh-nhan-da-kham').success(function(res){
